@@ -1,0 +1,27 @@
+<div class="login-bg" ng-controller="Reset2Controller">
+    <div class="login-content">
+        <h1 class="login-title">重置密码</h1>
+        <div class="login-line">
+            <span><i class="iconfont login-icon">&#xe635;</i></span>
+            <input type="password" placeholder="新密码">
+        </div>
+        <div class="login-line">
+            <span><i class="iconfont login-icon">&#xe635;</i></span>
+            <input type="password" placeholder="确认新密码">
+        </div>
+        <div class="login-btn"><a>确定重置</a></div>
+        <div class="login-link" ui-sref="index.regist">没有帐号？<a>点击注册</a></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    // 左侧导航栏滚动条自适应
+    function layout() {
+        $(".login-bg").css("height", $(window).height() - 148);
+    };
+    layout();
+    $(window).resize(function () { layout() });
+
+</script>
+
