@@ -1,0 +1,84 @@
+<div ng-controller="ComplaintCenterCtrl">
+     <div ng-show="State=='index'">
+    <div class="choice-box clearfix">
+        <select class="select-u">
+            <option>全部</option>
+            <option>按时间逆序</option>
+            <option>按投诉类型</option>
+        </select>
+        <div class="search-box">
+            <span class="search-img"><img src="images/search.png"></span>
+            <input type="text" placeholder="Search">
+        </div>
+    </div>
+    <div class="dis-table">
+        <table class="table-list">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>联系方式</th>
+                <th>投诉类型</th>
+                <th>内容</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>刘丽</td>
+                <td>18345698523</td>
+                <td>导游服务</td>
+                <td>不负责任，态度差</td>
+                <td>2017.02.28 16:02</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>刘丽</td>
+                <td>18345698523</td>
+                <td>导游服务</td>
+                <td>不负责任，态度差</td>
+                <td>2017.02.28 16:02</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="m-t-10">分页</div>
+    </div>
+</div>
+     <div ng-show="State=='detail'">
+            <p class="intro-stitle">投诉建议</p>
+            <div class="m-l-13">
+                <p class="complaint-title">旅行社服务</p>
+                <div class="complaint-content">
+                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>
+                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>
+                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目涂乱刻等原因。</p>
+                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目涂乱刻等原因。</p>
+                </div>
+                <ul class="uploadimg clearfix">
+                    <li><img src="images/img01.png">
+							   <span class="shadow-btn">
+								   <a class="btn-uplook"><i class="iconfont">&#xe626;</i></a>
+							   </span>
+                    </li>
+                    <li><img src="images/img01.png">
+							   <span class="shadow-btn">
+								   <a class="btn-uplook"><i class="iconfont">&#xe626;</i></a>
+							   </span>
+                    </li>
+                    <li><img src="images/img01.png">
+							   <span class="shadow-btn">
+								   <a class="btn-uplook"><i class="iconfont">&#xe626;</i></a>
+							   </span>
+                    </li>
+                </ul>
+            </div>
+            <p class="intro-stitle">投诉人</p>
+            <div class="m-l-13">
+                <span class="complaint-img"><img src="images/default_person.png">吴曦</span>
+                <span class="complaint-phone"> 联系方式：<b>13541452144</b></span>
+            </div>
+        </div>
+</div>
+
+

@@ -68,11 +68,71 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('manage.infoCenter', {
             url: '/infoCenter',
-            templateUrl: 'Views/Manage/infoCenter/infoCenter.html'
+            templateUrl: 'Views/Manage/infoCenter.html'
         })
-        .state('manage.guideManger', {
-            url: '/infocenter',
-            templateUrl: 'Views/Manage/GuideManage/guideManage.html'
+        .state('manage.guideMange', {
+            url: '/guideMange',
+            templateUrl: 'Views/Manage/guideManage.html'
+        })
+        .state('manage.agencyMange', {
+            url: '/agencyMange',
+            templateUrl: 'Views/Manage/agencyManage.html'
+        })
+        .state('manage.verifyCenter', {
+            url: '/verifyCenter',
+            templateUrl: 'Views/Manage/verifyCenter.html'
+        })
+        .state('manage.orderManage', {
+            url: '/orderManage',
+            templateUrl: 'Views/Manage/orderManage.html'
+        })
+        .state('manage.complaintCenter', {
+            url: '/complaintCenter',
+            templateUrl: 'Views/Manage/complaintCenter.html'
+        })
+        .state('manage.messageSetting', {
+            url: '/messageSetting',
+            templateUrl: 'Views/Manage/messageSetting.html'
+        })
+        .state('manage.statisticsCenter', {
+            url: '/statisticsCenter',
+            templateUrl: 'Views/Manage/statisticsCenter.html'
+        })
+        .state('guideClient', {
+            url: '/guideClient',
+            templateUrl: 'Views/GuideClient/index.html'
+        })
+        .state('guideClient.guideInfoCenter', {
+            url: '/guideInfoCenter',
+            templateUrl: 'Views/GuideClient/guideInfoCenter.html'
+        })
+        .state('guideClient.guideEdit', {
+            url: '/guideEdit',
+            templateUrl: 'Views/GuideClient/guideEdit.html'
+        })
+        .state('guideClient.orderDetail', {
+            url: '/orderDetail',
+            templateUrl: 'Views/GuideClient/orderDetail.html'
+        })
+        .state('guideClient.orderReceive', {
+            url: '/orderReceive',
+            templateUrl: 'Views/GuideClient/orderReceive.html'
+        })
+        .state('guideClient.orderNow', {
+            url: '/orderNow',
+            templateUrl: 'Views/GuideClient/orderNow.html'
+        })
+        .state('guideClient.orderEnd', {
+            url: '/orderEnd',
+            templateUrl: 'Views/GuideClient/orderEnd.html'
+        })
+        .state('guideClient.guideComplaint', {
+            url: '/guideComplaint',
+            templateUrl: 'Views/GuideClient/guideComplaint.html'
+        })
+        .state('guideClient.joinUs', {
+            url: '/joinUs',
+            templateUrl: 'Views/GuideClient/joinUs.html'
         })
 });
 

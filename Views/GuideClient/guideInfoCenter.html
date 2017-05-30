@@ -1,0 +1,29 @@
+<div ng-controller="GuideInfoCenterCtrl">
+    <div class="choice-box clearfix">
+        <select class="select-u">
+            <option>全部</option>
+            <option>新订单</option>
+            <option>新确认</option>
+            <option>新结束</option>
+            <option>新评价</option>
+        </select>
+        <div class="search-box">
+            <span class="search-img"><img src="images/search.png"></span>
+            <input type="text" class="" placeholder="Search">
+        </div>
+    </div>
+    <div class="teams-part">
+        <div class="radius-top"><img src="images/radius_top.png"></div>
+        <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+        <div class="team-infor clearfix">
+            <div class="team-img color-01"><img src="images/state01.png"></div>
+            <div class="massage-notice">
+                <h5>温馨提示<p class="message-time">2017-02-15 15:31</p></h5>
+                <p class="team-detail">只有与导服中心签约合同，成为导服中心的会员导游才能在本平台接订单哦，可进入个人中心下载合同模块，上传合同，等待导服中心审核。</p>
+            </div>
+        </div>
+        <div class="team-btn">
+            <a class="btn-cn btn-yellow" ng-click="ToEdit()">立即签约</a>
+        </div>
+    </div>
+</div>

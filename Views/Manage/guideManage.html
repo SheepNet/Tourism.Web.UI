@@ -238,7 +238,7 @@
                 </div>
                 <div class="col-sm-4 intro-line">
                     <label>历史带团记录：</label>
-                    <span><a class="look-hisrecord">查看</a></span>
+                    <span><a class="look-hisrecord" ng-click="ShowGudieHistory()">查看</a></span>
                 </div>
                 <div class="col-sm-12 intro-line">
                     <label>常<span class="m-l-19"></span>带<span class="m-l-19"></span>路<span class="m-l-19"></span>线：</label>
@@ -337,4 +337,65 @@
                 <a class="btn-cn btn-yellow">升为品牌导游</a>
             </div>
         </div>
+    <div ng-show="State=='history'">
+        <div class="choice-box clearfix">
+            <select class="select-u">
+                <option>按星级顺序</option>
+                <option>按时间倒序</option>
+            </select>
+            <div class="search-box">
+                <span class="search-img"><img src="images/search.png"></span>
+                <input type="text" class="" placeholder="Search">
+            </div>
+        </div>
+        <div class="teams-box">
+            <div class="teams-part">
+                <div class="radius-top"><img src="images/radius_top.png"></div>
+                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+                <div class="team-infor clearfix">
+                    <div class="team-img"><img src="images/team01.png"></div>
+                    <div class="team-text">
+                        <h5>周庄烟雨水乡一日游</h5>
+                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
+                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
+                    </div>
+                    <div class="team-state">
+                        <p>2017-02-15  15:31</p>
+                        <div class="team-pay">
+                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
+                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-comment">
+                    <p><img src="images/star.png"></p>
+                    <p class="team-comment-text">认真负责，有责任心。</p>
+                </div>
+            </div>
+            <div class="teams-part">
+                <div class="radius-top"><img src="images/radius_top.png"></div>
+                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+                <div class="team-infor clearfix">
+                    <div class="team-img"><img src="images/team02.png"></div>
+                    <div class="team-text">
+                        <h5>周庄烟雨水乡一日游</h5>
+                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
+                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
+                    </div>
+                    <div class="team-state">
+                        <p>2017-02-15  15:31</p>
+                        <div class="team-pay">
+                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
+                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-comment">
+                    <p><img src="images/star.png"></p>
+                    <p class="team-comment-text">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>
+                </div>
+            </div>
+            <div>分页</div>
+        </div>
+    </div>
 </div>
