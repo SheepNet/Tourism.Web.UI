@@ -1,7 +1,7 @@
 //登录界面控制器
 Ctrl.controller("LoginController", ["$scope","$http","$sce","$state",function ($scope, $http, $sce,$state) {
     $scope.login=function(){
-        $state.go('manager');
+        $state.go('manage');
     }
 }]);
 

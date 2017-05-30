@@ -61,10 +61,18 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
             params: {"test": "1"},
             templateUrl: 'Views/Login/reset2.html'
         })
-        .state('manager', {
-            url: '/manager',
+        .state('manage', {
+            url: '/manage',
             params: {"test": "1"},
-            templateUrl: 'Views/Manager/index.html'
+            templateUrl: 'Views/Manage/index.html'
+        })
+        .state('manage.infoCenter', {
+            url: '/infoCenter',
+            templateUrl: 'Views/Manage/infoCenter/infoCenter.html'
+        })
+        .state('manage.guideManger', {
+            url: '/infocenter',
+            templateUrl: 'Views/Manage/GuideManage/guideManage.html'
         })
 });
 
