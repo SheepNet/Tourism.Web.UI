@@ -1,12 +1,12 @@
-<div class="header" ng-controller="ManageCenterCtrl">
+<div class="header" ng-controller="GuideClientCtrl">
     <ul class="header-nav clearfix">
-        <li class="headlogo"><img src="images/logo.png"><span class="headlabel">导服中心端</span></li>
+        <li class="headlogo"><img src="images/logo.png"><span class="headlabel">导游端</span></li>
         <li class="header-nav-right">
             <ul>
                 <li class="usercenter">
                     <a>
                         <span>管理员</span>
-							<span class="person-img">
+							<span class="person-img" ui-sref=".guideEdit">
 								<img src="images/default_person.png">
 							</span>
                     </a>
@@ -26,38 +26,28 @@
                     <img src="images/default_person.png"/>
                 </div>
                 <div class="profile-info">
-                    你好，<span class="login-user-name">导服中心！</span>
+                    你好，<span class="login-user-name">王晓曦！</span>
                 </div>
             </a>
         </div>
         <ul class="sidebar-content">
             <li class="c-active">
-                <a ui-sref=".infoCenter"><i class="iconfont">&#xe605;</i>消息中心</a>
+                <a ui-sref=".guideInfoCenter"><i class="iconfont">&#xe605;</i>消息中心</a>
             </li>
             <li>
-                <a ui-sref=".verifyCenter"><i class="iconfont">&#xe6fd;</i>审核中心</a>
+                <a><i class="iconfont">&#xe604;</i><b></b>订单中心<i class="iconfont icon-show">&#xe640;</i></a>
+                <ul>
+                    <li><a ui-sref=".orderReceive">可接订单<b>10</b></a></li>
+                    <li><a ui-sref=".orderNow">进行中</a></li>
+                    <li><a ui-sref=".orderEnd">已完成</a></li>
+                </ul>
             </li>
             <li>
-                <a ui-sref=".orderManage"><i class="iconfont">&#xe604;</i>订单管理</a>
-            </li>
-            <li>
-                <a ui-sref=".guideMange"><i class="iconfont">&#xe60a;</i>导游管理</a>
-            </li>
-            <li>
-                <a ui-sref=".agencyMange"><i class="iconfont">&#xe602;</i>旅行社管理</a>
-            </li>
-            <li>
-                <a ui-sref=".statisticsCenter"><i class="iconfont">&#xe61e;</i>统计中心</a>
-            </li>
-            <li>
-                <a ui-sref=".complaintCenter"><i class="iconfont">&#xe654;</i>投诉中心</a>
-            </li>
-            <li>
-                <a ui-sref=".messageSetting"><i class="iconfont">&#xe660;</i>短信配置</a>
+                <a ui-sref=".guideComplaint"><i class="iconfont">&#xe654;</i>投诉建议</a>
             </li>
         </ul>
     </div>
-    <div class="container-box"  >
+    <div class="container-box">
         <div class="container-m">
             <div class="container-title">
                 <i class="iconfont">&#xe6a2;</i><span>消息中心</span>
@@ -84,6 +74,19 @@
     // 左侧导航栏样式
     $(".sidebar-content>li").click(function(){
         $(this).addClass("c-active").removeClass("").siblings().addClass("").removeClass("c-active");
+    });
+    $(".sidebar-content>li>a").click(function(){
+        var ul=$(this).parent("li").children("ul");
+        if(ul.is(":hidden")){
+            ul.slideToggle();
+            $(this).children(".icon-show").html("&#xe640;");
+        }else{
+            ul.slideToggle();
+            $(this).children(".icon-show").html("&#xe6bf;");
+        }
+    });
+    $(".sidebar-content>li>ul>li").click(function(){
+        $(this).addClass("a-active").removeClass("").siblings().addClass("").removeClass("a-active");
     });
 </script>
 

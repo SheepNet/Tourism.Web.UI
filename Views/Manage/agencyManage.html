@@ -1,0 +1,552 @@
+<div ng-controller="AgencyManageCtrl">
+    <div ng-show="State=='index'">
+        <div class="choice-box clearfix">
+            <select class="select-u">
+                <option>全部</option>
+                <option>星级从高到低</option>
+                <option>品牌导游</option>
+                <option>按性别排序</option>
+                <option>按会员类型</option>
+            </select>
+            <div class="search-box">
+                <span class="search-img"><img src="images/search.png"></span>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="fr m-t-5"><a class="btn-import"><i class="iconfont">&#xe633;</i>导入旅行社</a></div>
+        </div>
+        <div class="dis-table">
+            <table class="table-list">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>星级</th>
+                    <th>统一社会信用代码</th>
+                    <th>单位座机</th>
+                    <th>法人代表</th>
+                    <th>法人手机</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>苏州青年旅行社</td>
+                    <td>4.5</td>
+                    <td>LHUN-01084</td>
+                    <td>0512-67678903</td>
+                    <td>张拉力</td>
+                    <td>18345698523</td>
+                    <td>
+                        <a><i class="iconfont" ng-click="ShowDetail()">&#xe645;</i></a>
+                        <a><i class="iconfont">&#xe6cf;</i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>苏州青年旅行社</td>
+                    <td>4.5</td>
+                    <td>LHUN-01084</td>
+                    <td>0512-67678903</td>
+                    <td>张拉力</td>
+                    <td>18345698523</td>
+                    <td>
+                        <a><i class="iconfont">&#xe645;</i></a>
+                        <a><i class="iconfont">&#xe6cf;</i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="m-t-10">分页</div>
+        </div>
+    </div>
+
+    <div ng-show="State=='detail'">
+        <p class="intro-stitle">基础资料</p>
+        <div class="m-l-13 m-b-25">
+            <p class="p-title">1.资料信息</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>旅行社营业执照：</label>
+                        <a class="btn-upload1">下载</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>旅行社许可证：</label>
+                        <a class="btn-upload1">下载</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>许可文号：</label>
+                        <span>############</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>许可时间：</label>
+                        <span>##########</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>许可证号码：</label>
+                        <span>##########</span>
+                    </div>
+                </div>
+            </div>
+            <p class="p-title">2.信息介绍</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>单位名称：</label>
+                        <span>苏州青年旅行社</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>英文名称：</label>
+                        <span>Suzhou Youth Travel Service Co.,Ltd.</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>统一社会信用代码：</label>
+                        <span>L-HUN-01084</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>企业形式：</label>
+                        <span>有限责任公司</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>单位座机：</label>
+                        <span>0512-67678905</span>
+                    </div>
+                </div>
+            </div>
+            <p class="p-title">3.法人信息</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>法人姓名：</label>
+                        <span>王敏</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>法人手机：</label>
+                        <span>13862373985</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>法人身份证号码：</label>
+                        <span>320581199112212563</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>身份证正面：</label>
+                        <a class="btn-upload1">下载</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>身份证反面：</label>
+                        <a class="btn-upload1">下载</a>
+                    </div>
+                </div>
+            </div>
+            <p class="p-title">4.旅游业务范围</p>
+            <div class="check-line">
+                <span>国内旅游业务、入境旅游业务、出境旅游业务</span>
+            </div>
+            <p class="p-title">5.联系人信息</p>
+            <div class="dis-table">
+                <table class="table-list">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>联系人</th>
+                        <th>职务</th>
+                        <th>联系电话</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>张爱明</td>
+                        <td>总经理</td>
+                        <td>15142144414</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>张爱明</td>
+                        <td>总经理</td>
+                        <td>15142144414</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="p-title">6.股权情况</p>
+            <div class="dis-table">
+                <table class="table-list table-firsttr">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>股东类型</th>
+                        <th>股东名称</th>
+                        <th>出资方式</th>
+                        <th>单位</th>
+                        <th>认缴出资额</th>
+                        <th>实缴出资额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>自然人-境内中国公民</td>
+                        <td>苏州星熙数据科技有限公司</td>
+                        <td>货币</td>
+                        <td>万元人民币</td>
+                        <td>10</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>自然人-境内中国公民</td>
+                        <td>苏州星熙数据科技有限公司</td>
+                        <td>货币</td>
+                        <td>万元人民币</td>
+                        <td>10</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">合计</td>
+                        <td>10</td>
+                        <td>10</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="p-title">7.位置信息</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>公司所在辖区：</label>
+                        <span>苏州市工业园区若水路388号</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>公司详细地址：</label>
+                        <span>中国人民银行苏州吴中中行</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="intro-stitle">旅行社旅游质量保证金信息</p>
+        <div class="m-l-13 m-b-25">
+            <p class="p-title">1.资料信息</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>保证金存单：</label>
+                        <a class="btn-upload1">下载</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>保证金协议书：</label>
+                        <a class="btn-upload1">下载</a>
+                    </div>
+                </div>
+            </div>
+            <p class="p-title">2.信息介绍</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>旅行社总部保证金金额：</label>
+                        <span>1000元</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>保证金存入日期：</label>
+                        <span>2017-02-12</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>保证金存入银行电话：</label>
+                        <span>中国人民银行苏州吴中中行</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>保证金存入银行电话 </label>
+                        <span>0512-67678955</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>可以支取的保证金金额：</label>
+                        <span>5000元</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="intro-stitle">旅行社责任险信息</p>
+        <div class="m-l-13 m-b-25">
+            <p class="p-title">1.资料信息</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>责任险保单：</label>
+                        <a class="btn-upload1">下载</a>
+                    </div>
+                </div>
+            </div>
+            <p class="p-title">2.信息介绍</p>
+            <div class="clearfix">
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>责任险保额：</label>
+                        <span>1000元</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>责任险有效期：</label>
+                        <span>2017-07-05</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>保险公司名称：</label>
+                        <span>平安保险</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-box">
+                        <label>保险公司电话：</label>
+                        <span>0512-67678955</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="intro-stitle">评价信息</p>
+        <div class="clearfix">
+            <div class="col-sm-4">
+                <div class="input-box">
+                    <label>星级评分：</label>
+                    <span><img src="images/star.png"></span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-box">
+                    <label>开团次数：</label>
+                    <span>520次</span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="intro-line">
+                    <label>历史开团记录：</label>
+                    <span><a class="look-hisrecord" ng-click="ShowAgrncyHistory()">查看</a></span>
+                </div>
+            </div>
+            <div class="col-sm-12 m-t-20">
+                <label>导游评价：</label>
+                <div class="commentbox">
+                    <ul class="tab-comment clearfix">
+                        <li>全部<span>（2）</span></li>
+                        <li>好评<span>（1）</span></li>
+                        <li>中评<span>（1）</span></li>
+                        <li>差评<span>（0）</span></li>
+                    </ul>
+                    <div class="comment-list">
+                        <ul class="comment-m">
+                            <li>
+                                <div class="comment-mleft">
+                                    <span class="cm-img"><img src="images/default_person.png"></span>
+                                    <span class="cm-name">吴曦</span>
+                                    <span class="cm-honor"><img src="images/honer.png"></span>
+                                </div>
+                                <div class="comment-mright">
+                                    <p class="cm-star"><img src="images/star.png"></p>
+                                    <p class="cm-txt">旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。</p>
+                                    <p class="cm-data"> 2016-09-22 11:27</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="comment-mleft">
+                                    <span class="cm-img"><img src="images/default_person.png"></span>
+                                    <span class="cm-name">吴曦</span>
+                                    <span class="cm-honor"><img src="images/honer.png"></span>
+                                </div>
+                                <div class="comment-mright">
+                                    <p class="cm-star"><img src="images/star.png"></p>
+                                    <p class="cm-txt">旅行社总是无故取消订单。</p>
+                                    <p class="cm-data"> 2016-09-22 11:27</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="text-center">分页</div>
+                    </div>
+                    <div class="comment-list">
+                        <ul class="comment-m">
+                            <li>
+                                <div class="comment-mleft">
+                                    <span class="cm-img"><img src="images/default_person.png"></span>
+                                    <span class="cm-name">吴曦</span>
+                                    <span class="cm-honor"><img src="images/honer.png"></span>
+                                </div>
+                                <div class="comment-mright">
+                                    <p class="cm-star"><img src="images/star.png"></p>
+                                    <p class="cm-txt">旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。</p>
+                                    <p class="cm-data"> 2016-09-22 11:27</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="comment-list">
+                        <ul class="comment-m">
+                            <li>
+                                <div class="comment-mleft">
+                                    <span class="cm-img"><img src="images/default_person.png"></span>
+                                    <span class="cm-name">吴曦</span>
+                                    <span class="cm-honor"><img src="images/honer.png"></span>
+                                </div>
+                                <div class="comment-mright">
+                                    <p class="cm-star"><img src="images/star.png"></p>
+                                    <p class="cm-txt">旅行社总是无故取消订单。</p>
+                                    <p class="cm-data"> 2016-09-22 11:27</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="comment-list">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 m-t-20">
+                <label>导服评价：</label>
+                <span>旅行社总是无故取消订单</span>
+            </div>
+        </div>
+        <div class="text-center m-t-30 m-b-30">
+            <a class="btn-cn btn-yellow">停&nbsp;&nbsp;&nbsp;&nbsp;用</a>
+        </div>
+    </div>
+
+    <div ng-show="State=='history'">
+        <div class="choice-box clearfix">
+            <select class="select-u">
+                <option>按星级顺序</option>
+                <option>按时间倒序</option>
+            </select>
+            <div class="search-box">
+                <span class="search-img"><img src="images/search.png"></span>
+                <input type="text" class="" placeholder="Search">
+            </div>
+        </div>
+        <div class="teams-box">
+            <div class="teams-part">
+                <div class="radius-top"><img src="images/radius_top.png"></div>
+                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+                <div class="team-infor clearfix">
+                    <div class="travelagency-img"><span><img src="images/people03.png"></span></div>
+                    <div class="team-text">
+                        <h5>周庄烟雨水乡一日游</h5>
+                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
+                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
+                    </div>
+                    <div class="team-state">
+                        <p>2017-02-15  15:31</p>
+                        <div class="team-pay">
+                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
+                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-comment">
+                    <p><img src="images/star.png"></p>
+                    <p class="team-comment-text">旅行社总是无故取消订单。</p>
+                </div>
+            </div>
+            <div class="teams-part">
+                <div class="radius-top"><img src="images/radius_top.png"></div>
+                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+                <div class="team-infor clearfix">
+                    <div class="travelagency-img">
+                        <span class="two01"><img src="images/people01.png"></span>
+                        <span class="two02"><img src="images/people02.png"></span>
+                    </div>
+                    <div class="team-text">
+                        <h5>周庄烟雨水乡一日游</h5>
+                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
+                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
+                    </div>
+                    <div class="team-state">
+                        <p>2017-02-15  15:31</p>
+                        <div class="team-pay">
+                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
+                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-comment">
+                    <p><img src="images/star.png"></p>
+                    <p class="team-comment-text">旅行社总是无故取消订单。</p>
+                </div>
+            </div>
+            <div class="teams-part">
+                <div class="radius-top"><img src="images/radius_top.png"></div>
+                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+                <div class="team-infor clearfix">
+                    <div class="travelagency-img">
+                        <span class="three01"><img src="images/people01.png"></span>
+                        <span class="three02"><img src="images/people02.png"></span>
+                        <span class="three03"><img src="images/people03.png"></span>
+                    </div>
+                    <div class="team-text">
+                        <h5>周庄烟雨水乡一日游</h5>
+                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
+                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
+                    </div>
+                    <div class="team-state">
+                        <p>2017-02-15  15:31</p>
+                        <div class="team-pay">
+                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
+                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-comment">
+                    <p><img src="images/star.png"></p>
+                    <p class="team-comment-text">旅行社总是无故取消订单。</p>
+                </div>
+            </div>
+            <div>分页</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // tab切换
+    $(".comment-list:first").show();
+    $(".tab-comment li:first").addClass("comment-on");
+    $(".tab-comment li").click( function(){
+        $(this).addClass("comment-on").removeClass("").siblings().removeClass("comment-on").addClass("");
+        $(".comment-list").hide().eq($(".tab-comment li").index(this)).show();
+    });
+</script>
