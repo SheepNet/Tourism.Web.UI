@@ -1,0 +1,102 @@
+<div ng-controller="OrderPublishAgencyCtrl">
+    <p class="intro-stitle">订单信息</p>
+    <div class="m-b-30 clearfix">
+        <div class="col-sm-3 order-line">
+            <label>旅行社名称</label>
+            <input type="text">
+        </div>
+        <div class="col-sm-3 order-line">
+            <label>团号</label>
+            <input type="text">
+        </div>
+        <div class="col-sm-6 order-line">
+            <label>开始时间</label>
+            <span class="order-line-time"><input type="text"> 至 <input type="text"></span>
+        </div>
+        <div class="col-sm-12 order-line">
+            <label>行程简介</label>
+            <textarea rows="5"></textarea>
+        </div>
+        <div class="col-sm-6 order-line">
+            <label>集合地点</label>
+            <input type="text">
+        </div>
+        <div class="col-sm-3 order-line">
+            <label>游客人数</label>
+            <input type="text"> 人
+        </div>
+        <div class="col-sm-12 order-line">
+            <label>特殊备注</label>
+            <textarea rows="4"></textarea>
+        </div>
+        <div class="col-sm-3 order-line">
+            <label>截止时间</label>
+            <input type="text">
+        </div>
+        <div class="col-sm-3 order-line">
+            <label>人均酬金</label>
+            <input type="text"> 元
+        </div>
+    </div>
+    <p class="intro-stitle">导游要求</p>
+    <div class="orderbox clearfix">
+        <div class="col-sm-3 order-line">
+            <label>导游人数</label>
+            <input type="text"> 人
+        </div>
+        <div class="col-sm-3 order-line">
+            <label>性别要求</label>
+							<span class="sex-require">
+							    <span><input type="radio" name="sex"> 无要求</span>
+							    <span><input type="radio" name="sex"> 男</span>
+							    <span><input type="radio" name="sex"> 女</span>
+							</span>
+        </div>
+        <div class="col-sm-6 order-line">
+            <label>品牌导游</label>
+							<span class="sex-require">
+							    <span><input type="radio" name="guide"> 无要求</span>
+							    <span><input type="radio" name="guide"> 是</span>
+							</span>
+        </div>
+        <div class="col-sm-3 order-line">
+            <label>评分要求</label>
+							<span class="sex-require">
+							    <img src="images/star.png">
+							</span>
+        </div>
+        <div class="col-sm-3 order-line">
+            <label>学历要求</label>
+            <select class="">
+                <option>本科</option>
+            </select>
+        </div>
+        <div class="col-sm-6 order-line">
+            <label>语言要求</label>
+							<span class="language">
+							    <span>西班牙语<img src="images/language_close.png"></span>
+								<a class="add-language"><i class="iconfont">&#xe61d;</i>
+                                    <ul class="language-choice">
+                                        <li class="language-checked">阿尔巴尼亚文</li>
+                                        <li>阿拉伯文</li>
+                                        <li>爱沙尼亚语</li>
+                                        <li>保加利亚文</li>
+                                        <li>西班牙语</li>
+                                    </ul>
+                                </a>
+							</span>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".add-language").click(function(){
+        $(".language-choice").show();
+    });
+    $(".add-language").mouseleave(function(){
+        $(".language-choice").hide();
+    });
+    $(".language-choice li").click(function(){
+        $(this).hasClass("language-checked")?$(this).removeClass("language-checked"):$(this).addClass("language-checked");
+    });
+</script>

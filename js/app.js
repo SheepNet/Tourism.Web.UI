@@ -134,6 +134,34 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
             url: '/joinUs',
             templateUrl: 'Views/GuideClient/joinUs.html'
         })
+        .state('agencyClient', {
+            url: '/agencyClient',
+            templateUrl: 'Views/AgencyClient/index.html'
+        })
+        .state('agencyClient.agencyInfoCenter', {
+            url: '/agencyInfoCenter',
+            templateUrl: 'Views/AgencyClient/agencyInfoCenter.html'
+        })
+        .state('agencyClient.agencyEdit', {
+            url: '/agencyEdit',
+            templateUrl: 'Views/AgencyClient/agencyEdit.html'
+        })
+        .state('agencyClient.orderDetailAgency', {
+            url: '/orderDetailAgency',
+            templateUrl: 'Views/AgencyClient/orderDetailAgency.html'
+        })
+        .state('agencyClient.orderEndAgency', {
+            url: '/orderEndAgency',
+            templateUrl: 'Views/AgencyClient/orderEndAgency.html'
+        })
+        .state('agencyClient.orderNowAgency', {
+            url: '/orderNowAgency',
+            templateUrl: 'Views/AgencyClient/orderNowAgency.html'
+        })
+        .state('agencyClient.orderPublishAgency', {
+            url: '/orderPublishAgency',
+            templateUrl: 'Views/AgencyClient/orderPublishAgency.html'
+        })
 });
 
 

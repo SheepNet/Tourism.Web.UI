@@ -1,0 +1,92 @@
+<div ng-controller="AgencyClientCtrl">
+    <div class="header">
+        <ul class="header-nav clearfix">
+            <li class="headlogo"><img src="images/logo.png"><span class="headlabel">旅行社端</span></li>
+            <li class="header-nav-right">
+                <ul>
+                    <li class="usercenter">
+                        <a>
+                            <span>管理员</span>
+							<span class="person-img" ui-sref=".agencyEdit">
+								<img src="images/default_person.png">
+							</span>
+                        </a>
+                    </li>
+                    <li class="setup">
+                        <a><i class="iconfont">&#xe60b;</i>退出</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a href="">
+                    <div class="profile-pic">
+                        <img src="images/default_person.png"/>
+                    </div>
+                    <div class="profile-info">
+                        你好，<span class="login-user-name">苏州旅游局！</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="sidebar-content">
+                <li>
+                    <a ui-sref=".agencyInfoCenter"><i class="iconfont" >&#xe605;</i>消息中心</a>
+                </li>
+                <li>
+                    <a><i class="iconfont">&#xe604;</i>订单中心<i class="iconfont icon-show">&#xe640;</i></a>
+                    <ul>
+                        <li><a ui-sref=".orderNowAgency">进行中</a></li>
+                        <li><a ui-sref=".orderEndAgency">已完成</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="container-box">
+            <div class="container-m">
+                <div class="container-title">
+                    <i class="iconfont">&#xe6a2;</i><span>消息中心</span>
+                </div>
+                <div class="container-bg"  ui-view="">
+
+                </div>
+                <div class="footer">
+                    苏ICP备08009322号&nbsp;&nbsp;&nbsp;苏州市旅游局&nbsp;&nbsp;&nbsp;版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术支持：苏州星熙数据科技有限公司<br>业务咨询：0512-67678905&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术咨询：0512-67678905
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // 左侧导航栏滚动条自适应
+    function layout() {
+        $(".sidebar").css("height", $(window).height() - 65);
+        $(".container-box").css("height", $(window).height() - 65);
+    }
+    ;
+    layout();
+    $(window).resize(function () {
+        layout()
+    });
+
+    // 左侧导航栏样式
+    $(".sidebar-content>li").click(function () {
+        $(this).addClass("c-active").removeClass("").siblings().addClass("").removeClass("c-active");
+    });
+    $(".sidebar-content>li>a").click(function () {
+        var ul = $(this).parent("li").children("ul");
+        if (ul.is(":hidden")) {
+            ul.slideToggle();
+            $(this).children(".icon-show").html("&#xe640;");
+        } else {
+            ul.slideToggle();
+            $(this).children(".icon-show").html("&#xe6bf;");
+        }
+    });
+    $(".sidebar-content>li>ul>li").click(function () {
+        $(this).addClass("a-active").removeClass("").siblings().addClass("").removeClass("a-active");
+    });
+</script>
+
