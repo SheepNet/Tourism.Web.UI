@@ -1,0 +1,5 @@
+<keymap version="1" name="Default复制" parent="$default">
+  <action id="ReformatCode">
+    <keyboard-shortcut first-keystroke="ctrl alt g" />
+  </action>
+</keymap>
