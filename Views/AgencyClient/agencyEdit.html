@@ -119,70 +119,70 @@
                 <span><label><input type="checkbox" value="出境旅游业务"></label>出境旅游业务</span>
             </div>
             <p class="p-title">5.联系人信息</p>
-            <div class="dis-table">
-                <table class="table-list">
+            <div class="dis-table table-responsive">
+                <table class="table-list table">
                     <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>联系人</th>
-                        <th>职务</th>
-                        <th>联系电话</th>
-                    </tr>
+                        <tr>
+                            <th>序号</th>
+                            <th>联系人</th>
+                            <th>职务</th>
+                            <th>联系电话</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>张爱明</td>
-                        <td>总经理</td>
-                        <td>15142144414</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>张爱明</td>
-                        <td>总经理</td>
-                        <td>15142144414</td>
-                    </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>张爱明</td>
+                            <td>总经理</td>
+                            <td>15142144414</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>张爱明</td>
+                            <td>总经理</td>
+                            <td>15142144414</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <p class="p-title">6.股权情况</p>
-            <div class="dis-table">
-                <table class="table-list table-firsttr">
+            <div class="dis-table table-responsive">
+                <table class="table-list table">
                     <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>股东类型</th>
-                        <th>股东名称</th>
-                        <th>出资方式</th>
-                        <th>单位</th>
-                        <th>认缴出资额</th>
-                        <th>实缴出资额</th>
-                    </tr>
+                        <tr>
+                            <th>序号</th>
+                            <th>股东类型</th>
+                            <th>股东名称</th>
+                            <th>出资方式</th>
+                            <th>单位</th>
+                            <th>认缴出资额</th>
+                            <th>实缴出资额</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>自然人-境内中国公民</td>
-                        <td>苏州星熙数据科技有限公司</td>
-                        <td>货币</td>
-                        <td>万元人民币</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>自然人-境内中国公民</td>
-                        <td>苏州星熙数据科技有限公司</td>
-                        <td>货币</td>
-                        <td>万元人民币</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">合计</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>自然人-境内中国公民</td>
+                            <td>苏州星熙数据科技有限公司</td>
+                            <td>货币</td>
+                            <td>万元人民币</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>自然人-境内中国公民</td>
+                            <td>苏州星熙数据科技有限公司</td>
+                            <td>货币</td>
+                            <td>万元人民币</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">合计</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -328,7 +328,7 @@
     // tab切换
     $(".teams-list:first").show();
     $(".tab-order li:first").addClass("active-tab");
-    $(".tab-order li").click( function(){
+    $(".tab-order li").click(function() {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
         $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
     });
