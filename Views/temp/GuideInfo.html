@@ -1,0 +1,164 @@
+<div>
+    <div class="person-detail clearfix">
+        <div class="person-left"><img src="images/default_person.png"></div>
+        <div class="person-infor">
+            <div class="p-m1">
+                <span class="pp-name" ng-bind="guideInfo.name"></span><i class="iconfont icon-woman">&#xe607;</i><span
+                    class="pp-age"><span ng-bind="guideInfo.age"></span>岁</span><span class="acrossline">|</span>
+                <span class="pp-gimg">品牌导游<img src="images/honer.png"></span><span class="acrossline">|</span>
+                <span class="pp-scroe">平均评分<img src="images/star.png"></span><span class="acrossline">|</span>带团年限：<span
+                   ><span ng-bind="guideInfo.year"></span>年</span>
+            </div>
+            <div class="p-m2">
+                <span><i class="iconfont icon-guide">&#xe603;</i>自由导游</span>
+                <span class="acrossline">|</span><span ng-bind="guideInfo.center_comment"></span>
+            </div>
+            <div class="p-m3"><span ng-bind="guideInfo.avatar"></span><a class="icon-edit"><i class="iconfont"></i></a>
+            </div>
+        </div>
+    </div>
+    <p class="intro-stitle">基础资料</p>
+    <div class="intro-part clearfix">
+        <div class="col-sm-4 intro-line">
+            <label>姓<span class="m-l-84"></span>名：</label>
+            <span ng-bind="guideInfo.name"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>性<span class="m-l-70"></span>别：</label>
+            <span ng-bind="guideInfo.sex==1?'男':'女'"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>语<span class="m-l-57"></span>言：</label>
+            <span ng-repeat="lan in guideInfo.language">
+                <span ng-bind="lan.type"></span>
+            </span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>带<span class="m-l-19"></span>团<span class="m-l-19"></span>年<span class="m-l-19"></span>限：</label>
+           <span><span ng-bind="guideInfo.year"></span>年</span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>带&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;次&nbsp;&nbsp;&nbsp;数：</label>
+            <span><span ng-bind="guideInfo.order_count"></span>次</span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>手&nbsp;&nbsp;机&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;码：</label>
+            <span ng-bind="guideInfo.mobile"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>导游资格证书号码：</label>
+            <span ng-bind="guideInfo.guide_card_id"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>导&nbsp;游&nbsp;&nbsp;证&nbsp;&nbsp;编&nbsp;&nbsp;号：</label>
+            <span ng-bind="guideInfo.guide_card_no">D-3320-0075461</span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>导游证IC卡号：</label>
+            <span>D-3320-0075461</span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>所&nbsp;&nbsp;属&nbsp;&nbsp;&nbsp;旅&nbsp;&nbsp;&nbsp;行&nbsp;&nbsp;社：</label>
+            <span ng-bind="guideInfo.travel_company"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>导服中心注册号：</label>
+            <span ng-bind="guideInfo.center_register_guide_id"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>历史带团记录：</label>
+            <span><a class="look-hisrecord">查看</a></span>
+        </div>
+        <div class="col-sm-12 intro-line">
+            <label>常<span class="m-l-19"></span>带<span class="m-l-19"></span>路<span class="m-l-19"></span>线：</label>
+            <span ng-bind="guideInfo.common_road">江浙沪一带</span>
+        </div>
+        <div class="col-sm-12 intro-line">
+            <label>简<span class="m-l-84"></span>介：</label>
+            <span ng-bind="guideInfo.remark"></span>
+        </div>
+    </div>
+    <p class="intro-stitle">图像资料</p>
+    <ul class="imgbox clearfix">
+        <li><img src="images/book01.png">
+            <span class="imgbox-num">导游资格证书（1）</span>
+							<span class="shadow-btn pop-h1">
+							   <a class="btn-uplook"><i class="iconfont"></i></a>
+							   <a class="btn-updel"><i class="iconfont"></i></a>
+							</span>
+        </li>
+        <li><img src="images/book02.png">
+            <span class="imgbox-num">导游证（1）</span>
+							<span class="shadow-btn pop-h1">
+							   <a class="btn-uplook"><i class="iconfont"></i></a>
+							   <a class="btn-updel"><i class="iconfont"></i></a>
+							</span>
+        </li>
+        <li><img src="images/book03.png">
+            <span class="imgbox-num">合同（16）</span>
+							<span class="shadow-btn pop-h1">
+							   <a class="btn-uplook"><i class="iconfont"></i></a>
+							   <a class="btn-updel"><i class="iconfont"></i></a>
+							</span>
+        </li>
+    </ul>
+    <p class="intro-stitle">详细资料</p>
+    <div class="intro-part clearfix">
+        <div class="col-sm-4 intro-line">
+            <label>身&nbsp;&nbsp;&nbsp;份&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;码：</label>
+            <span>320581199101011234</span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>出 生 日 期：</label>
+            <span ng-bind="guideInfo.birthday"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>民<span class="m-l-40"></span>族：</label>
+            <span ng-bind="guideInfo.birthday">汉族</span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>政<span class="m-l-20"></span>治<span class="m-l-20"></span>面<span class="m-l-20"></span>貌：</label>
+            <span ng-bind="guideInfo.idtype"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>户口所在地：</label>
+            <span ng-bind="guideInfo.birthday_area"></span>
+        </div>
+        <div class="col-sm-12 intro-line">
+            <label>现<span class="m-l-37"></span>住<span class="m-l-37"></span>址：</label>
+            <span ng-bind="guideInfo.address">江苏省苏州市工业园区车坊镇淞泽家园一区12栋501</span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>家<span class="m-l-20"></span>庭<span class="m-l-20"></span>电<span class="m-l-20"></span>话：</label>
+            <span ng-bind="guideInfo.phone">18862165874</span>
+        </div>
+        <div class="col-sm-8 intro-line">
+            <label>邮<span class="m-l-40"></span>箱：</label>
+            <span ng-bind="guideInfo.mail"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>毕<span class="m-l-20"></span>业<span class="m-l-20"></span>学<span class="m-l-20"></span>校：</label>
+            <span ng-bind="guideInfo.school"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>专<span class="m-l-40"></span>业：</label>
+            <span ng-bind="guideInfo.special"></span>
+        </div>
+        <div class="col-sm-4 intro-line">
+            <label>学<span class="m-l-40"></span>历：</label>
+            <span ng-bind="guideInfo.school_record">本科</span>
+        </div>
+        <div class="col-sm-12 intro-line">
+            <label>学&nbsp;习&nbsp;&nbsp;工&nbsp;作&nbsp;&nbsp;经&nbsp;&nbsp;历：</label>
+            <span ng-bind="guideInfo.work_remark"></span>
+        </div>
+        <div class="col-sm-12 intro-line">
+            <label>兴 趣 爱 好 / 特 长：</label>
+            <span ng-bind="guideInfo.interset"></span>
+        </div>
+        <div class="col-sm-12 intro-line">
+            <label>荣&nbsp;&nbsp;&nbsp;誉&nbsp;&nbsp;&nbsp;和&nbsp;&nbsp;&nbsp;奖&nbsp;&nbsp;励：</label>
+            <span ng-bind="guideInfo.reward"></span>
+        </div>
+    </div>
+</div>

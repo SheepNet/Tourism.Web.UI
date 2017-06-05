@@ -1,8 +1,8 @@
-//var  Url= 'http://jsjeda.net:20081/Service1.svc';
-var Url = 'http://localhost:29851/Service1.svc';
+//var Url = 'http://chinaz.live/';
+var Url = '';
 var Key = localStorage.UserKey;
 
-var myApp = angular.module('myApp', ['ui.router', 'ngGrid', 'ngCookies', 'Ctrl', 'ui.bootstrap', 'ngSanitize']);
+var myApp = angular.module('myApp', ['ui.router', 'ngGrid', 'ngCookies', 'Ctrl', 'ui.bootstrap', 'ngSanitize','Encrypt']);
 
 //myApp.filter('trustHtml', function ($sce) {
 //    return function (input) {
