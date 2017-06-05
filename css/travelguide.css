@@ -151,6 +151,7 @@ a:hover {
     top: 0;
     z-index: 10;
     padding: 0 30px 0 25px;
+    overflow: hidden;
 }
 
 .headlogo {

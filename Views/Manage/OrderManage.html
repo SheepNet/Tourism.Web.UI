@@ -1,297 +1,397 @@
 <div ng-controller="OrderManageCtrl">
-<div ng-show="State=='index'">
-    <ul class="tab-order clearfix">
-        <li>待接<span>（2）</span></li>
-        <li>进行中<span>（2）</span></li>
-        <li>待支付<span>（2）</span></li>
-        <li>异常订单<span>（2）</span></li>
-        <li>已完成<span>（2）</span></li>
-    </ul>
-    <!--   待接    -->
-    <div class="order-table">
-        <div class="choice-box clearfix">
-            <select class="select-u">
+    <div ng-show="State=='index'">
+        <ul class="tab-order clearfix">
+            <li>待接<span>（2）</span></li>
+            <li>进行中<span>（2）</span></li>
+            <li>待支付<span>（2）</span></li>
+            <li>异常订单<span>（2）</span></li>
+            <li>已完成<span>（2）</span></li>
+        </ul>
+        <!--   待接    -->
+        <div class="order-table">
+            <div class="choice-box clearfix">
+                <select class="select-u">
                 <option>按发单时间顺序</option>
                 <option>按开团人数顺序</option>
                 <option>按费用顺序</option>
             </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <div class="search-box">
+                    <span class="search-img"><img src="images/search.png"></span>
+                    <input type="text" class="" placeholder="Search">
+                </div>
+            </div>
+            <div class="dis-table">
+                <table class="table-list">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>旅游地</th>
+                            <th>团号</th>
+                            <th>人数</th>
+                            <th>开团旅行社</th>
+                            <th>上团时间</th>
+                            <th>所需人数</th>
+                            <th>人均日费用</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>苏州</td>
+                            <td>SZCG20170218</td>
+                            <td>35</td>
+                            <td>苏州春秋国际旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>5</td>
+                            <td>￥300</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>南京</td>
+                            <td>SZCG20170218</td>
+                            <td>40</td>
+                            <td>上海春秋旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>1</td>
+                            <td>￥300</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="dis-table">
-            <table class="table-list">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>旅游地</th>
-                    <th>团号</th>
-                    <th>人数</th>
-                    <th>开团旅行社</th>
-                    <th>上团时间</th>
-                    <th>所需人数</th>
-                    <th>人均日费用</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>苏州</td>
-                    <td>SZCG20170218</td>
-                    <td>35</td>
-                    <td>苏州春秋国际旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>5</td>
-                    <td>￥300</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>南京</td>
-                    <td>SZCG20170218</td>
-                    <td>40</td>
-                    <td>上海春秋旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>1</td>
-                    <td>￥300</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>分页</div>
-    </div>
-    <!--   进行中    -->
-    <div class="order-table">
-        <div class="choice-box clearfix">
-            <select class="select-u">
+        <!--   进行中    -->
+        <div class="order-table">
+            <div class="choice-box clearfix">
+                <select class="select-u">
                 <option>按发单时间顺序</option>
                 <option>按开团人数顺序</option>
                 <option>按费用顺序</option>
             </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <div class="search-box">
+                    <span class="search-img"><img src="images/search.png"></span>
+                    <input type="text" class="" placeholder="Search">
+                </div>
+            </div>
+            <div class="dis-table">
+                <table class="table-list">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>旅游地</th>
+                            <th>团号</th>
+                            <th>人数</th>
+                            <th>开团旅行社</th>
+                            <th>上团时间</th>
+                            <th>所需人数</th>
+                            <th>人均日费用</th>
+                            <th>接单导游</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>苏州</td>
+                            <td>SZCG20170218</td>
+                            <td>35</td>
+                            <td>苏州春秋国际旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>5</td>
+                            <td>￥300</td>
+                            <td>王悦、黎明</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>南京</td>
+                            <td>SZCG20170218</td>
+                            <td>40</td>
+                            <td>上海春秋旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>1</td>
+                            <td>￥300</td>
+                            <td>张翔</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="dis-table">
-            <table class="table-list">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>旅游地</th>
-                    <th>团号</th>
-                    <th>人数</th>
-                    <th>开团旅行社</th>
-                    <th>上团时间</th>
-                    <th>所需人数</th>
-                    <th>人均日费用</th>
-                    <th>接单导游</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>苏州</td>
-                    <td>SZCG20170218</td>
-                    <td>35</td>
-                    <td>苏州春秋国际旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>5</td>
-                    <td>￥300</td>
-                    <td>王悦、黎明</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>南京</td>
-                    <td>SZCG20170218</td>
-                    <td>40</td>
-                    <td>上海春秋旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>1</td>
-                    <td>￥300</td>
-                    <td>张翔</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>分页</div>
-    </div>
-    <!--   待支付    -->
-    <div class="order-table">
-        <div class="choice-box clearfix">
-            <select class="select-u">
+        <!--   待支付    -->
+        <div class="order-table">
+            <div class="choice-box clearfix">
+                <select class="select-u">
                 <option>按发单时间顺序</option>
                 <option>按开团人数顺序</option>
                 <option>按费用顺序</option>
             </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <div class="search-box">
+                    <span class="search-img"><img src="images/search.png"></span>
+                    <input type="text" class="" placeholder="Search">
+                </div>
+            </div>
+            <div class="dis-table">
+                <table class="table-list">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>旅游地</th>
+                            <th>团号</th>
+                            <th>人数</th>
+                            <th>开团旅行社</th>
+                            <th>上团时间</th>
+                            <th>所需人数</th>
+                            <th>人均日费用</th>
+                            <th>接单导游</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>杭州</td>
+                            <td>SZCG20170218</td>
+                            <td>35</td>
+                            <td>杭州旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>5</td>
+                            <td>￥300</td>
+                            <td>王悦、黎明</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>南京</td>
+                            <td>SZCG20170218</td>
+                            <td>40</td>
+                            <td>上海春秋旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>1</td>
+                            <td>￥300</td>
+                            <td>张翔、黎明</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="dis-table">
-            <table class="table-list">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>旅游地</th>
-                    <th>团号</th>
-                    <th>人数</th>
-                    <th>开团旅行社</th>
-                    <th>上团时间</th>
-                    <th>所需人数</th>
-                    <th>人均日费用</th>
-                    <th>接单导游</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>杭州</td>
-                    <td>SZCG20170218</td>
-                    <td>35</td>
-                    <td>杭州旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>5</td>
-                    <td>￥300</td>
-                    <td>王悦、黎明</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>南京</td>
-                    <td>SZCG20170218</td>
-                    <td>40</td>
-                    <td>上海春秋旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>1</td>
-                    <td>￥300</td>
-                    <td>张翔、黎明</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>分页</div>
-    </div>
-    <!--   异常订单    -->
-    <div class="order-table">
-        <div class="choice-box clearfix">
-            <select class="select-u">
+        <!--   异常订单    -->
+        <div class="order-table">
+            <div class="choice-box clearfix">
+                <select class="select-u">
                 <option>按发单时间顺序</option>
                 <option>按开团人数顺序</option>
                 <option>按费用顺序</option>
             </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <div class="search-box">
+                    <span class="search-img"><img src="images/search.png"></span>
+                    <input type="text" class="" placeholder="Search">
+                </div>
+            </div>
+            <div class="dis-table">
+                <table class="table-list">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>旅游地</th>
+                            <th>团号</th>
+                            <th>人数</th>
+                            <th>开团旅行社</th>
+                            <th>上团时间</th>
+                            <th>所需人数</th>
+                            <th>人均日费用</th>
+                            <th>接单导游</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>杭州</td>
+                            <td>SZCG20170218</td>
+                            <td>35</td>
+                            <td>杭州旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>5</td>
+                            <td>￥300</td>
+                            <td>王悦、黎明</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>南京</td>
+                            <td>SZCG20170218</td>
+                            <td>40</td>
+                            <td>上海春秋旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>1</td>
+                            <td>￥300</td>
+                            <td>张翔</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="dis-table">
-            <table class="table-list">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>旅游地</th>
-                    <th>团号</th>
-                    <th>人数</th>
-                    <th>开团旅行社</th>
-                    <th>上团时间</th>
-                    <th>所需人数</th>
-                    <th>人均日费用</th>
-                    <th>接单导游</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>杭州</td>
-                    <td>SZCG20170218</td>
-                    <td>35</td>
-                    <td>杭州旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>5</td>
-                    <td>￥300</td>
-                    <td>王悦、黎明</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>南京</td>
-                    <td>SZCG20170218</td>
-                    <td>40</td>
-                    <td>上海春秋旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>1</td>
-                    <td>￥300</td>
-                    <td>张翔</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>分页</div>
-    </div>
-    <!--   已完成    -->
-    <div class="order-table">
-        <div class="choice-box clearfix">
-            <select class="select-u">
+        <!--   已完成    -->
+        <div class="order-table">
+            <div class="choice-box clearfix">
+                <select class="select-u">
                 <option>按发单时间顺序</option>
                 <option>按开团人数顺序</option>
                 <option>按费用顺序</option>
             </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <div class="search-box">
+                    <span class="search-img"><img src="images/search.png"></span>
+                    <input type="text" class="" placeholder="Search">
+                </div>
+            </div>
+            <div class="dis-table">
+                <table class="table-list">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>旅游地</th>
+                            <th>团号</th>
+                            <th>人数</th>
+                            <th>开团旅行社</th>
+                            <th>上团时间</th>
+                            <th>所需人数</th>
+                            <th>人均日费用</th>
+                            <th>接单导游</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>杭州</td>
+                            <td>SZCG20170218</td>
+                            <td>35</td>
+                            <td>杭州旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>5</td>
+                            <td>￥300</td>
+                            <td>王悦、张翔</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>南京</td>
+                            <td>SZCG20170218</td>
+                            <td>20</td>
+                            <td>上海春秋旅行社</td>
+                            <td>2017-02-18 18:00</td>
+                            <td>1</td>
+                            <td>￥300</td>
+                            <td>王悦</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="dis-table">
-            <table class="table-list">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>旅游地</th>
-                    <th>团号</th>
-                    <th>人数</th>
-                    <th>开团旅行社</th>
-                    <th>上团时间</th>
-                    <th>所需人数</th>
-                    <th>人均日费用</th>
-                    <th>接单导游</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>杭州</td>
-                    <td>SZCG20170218</td>
-                    <td>35</td>
-                    <td>杭州旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>5</td>
-                    <td>￥300</td>
-                    <td>王悦、张翔</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>南京</td>
-                    <td>SZCG20170218</td>
-                    <td>20</td>
-                    <td>上海春秋旅行社</td>
-                    <td>2017-02-18 18:00</td>
-                    <td>1</td>
-                    <td>￥300</td>
-                    <td>王悦</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>分页</div>
     </div>
-</div>
 </div>
 
 <script type="text/javascript">
     // tab切换
     $(".order-table:first").show();
     $(".tab-order li:first").addClass("active-tab");
-    $(".tab-order li").click( function(){
+    $(".tab-order li").click(function() {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
         $(".order-table").hide().eq($(".tab-order li").index(this)).show();
     });
