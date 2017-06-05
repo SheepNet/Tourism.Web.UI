@@ -1,11 +1,12 @@
-<div class="header" ng-controller="ManageCenterCtrl">
+<div ng-controller="ManageCenterCtrl">
+<div class="header" >
     <ul class="header-nav clearfix">
         <li class="headlogo"><img src="images/logo.png"><span class="headlabel">导服中心端</span></li>
         <li class="header-nav-right">
             <ul>
                 <li class="usercenter">
                     <a>
-                        <span>管理员</span>
+                        <span ng-bind="User.name"></span>
 							<span class="person-img">
 								<img src="images/default_person.png">
 							</span>
@@ -26,7 +27,7 @@
                     <img src="images/default_person.png"/>
                 </div>
                 <div class="profile-info">
-                    你好，<span class="login-user-name">导服中心！</span>
+                    你好，<span class="login-user-name" ng-bind="User.name"></span>
                 </div>
             </a>
         </div>
@@ -71,7 +72,7 @@
         </div>
     </div>
 </div>
-
+</div>
 <script type="text/javascript">
     // 左侧导航栏滚动条自适应
     function layout() {
@@ -84,6 +85,9 @@
     // 左侧导航栏样式
     $(".sidebar-content>li").click(function(){
         $(this).addClass("c-active").removeClass("").siblings().addClass("").removeClass("c-active");
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
     });
 </script>
 
