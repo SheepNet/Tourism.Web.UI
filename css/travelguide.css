@@ -1193,7 +1193,21 @@ a:hover {
     width: calc(100% - 140px);
 }
 
-.pp-name {
+@media(max-width:480px) {
+    .person-detail {
+        text-align: center;
+    }
+    .person-left,
+    .person-infor {
+        float: none;
+        margin: 0 auto;
+    }
+    .person-infor {
+        width: 100%;
+    }
+}
+
+.ppname {
     font-size: 30px;
     color: #444;
     font-weight: 600;
