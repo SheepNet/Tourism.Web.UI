@@ -10,7 +10,7 @@
       "address": "联络地址",
       "guide_card_id": "导游资格证书号码",
       "guide_card_id_photo": "导游资格证书图片guid",
-      "guide_card_no": "导游证编号",
+      "guide_card_no": null,
       "guide_card_no_photo": "导游证图片guid"
     },
     "session_id": "kuR2S3LLSfK_hKgiXtHYXw"
