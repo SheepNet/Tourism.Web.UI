@@ -50,6 +50,11 @@ Ctrl.controller("VerifyCenterCtrl",["$scope","$http","$sce","$state","$statePara
             $scope.totalItems=data.msg_body.total_count;
             $scope.guideInfo=data.msg_body.data;
             $scope.State='detail';
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
     }
 
@@ -66,14 +71,72 @@ Ctrl.controller("VerifyCenterCtrl",["$scope","$http","$sce","$state","$statePara
 }]);
 
 //订单中心
-Ctrl.controller("OrderManageCtrl",["$scope","$http","$sce","$state","$stateParams",function ($scope, $http, $sce,$state,$stateParams) {
+Ctrl.controller("OrderManageCtrl",["$scope","$http","$sce","$state","$stateParams","centerService",function ($scope, $http, $sce,$state,$stateParams,centerService) {
     $scope.State='index';
+    $scope.maxSize = 7;
+    $scope.currentPage = 1;
+    $scope.totalItems = 13;
+    $scope.pagesize=5;
+
+    $scope.type=1;
+
     $scope.ShowDetail=function(){
         $scope.State='detail';
     }
     $scope.ShowAgrncyHistory=function(){
         $scope.State='history';
     }
+
+    $scope.typeChange = function (type) {
+        $scope.currentPage = 1;
+        $scope.type=type;
+        $scope.init();
+    }
+
+    $scope.pageChanged = function () {
+        $scope.init();
+    }
+    $scope.init=function(){
+        var promise= centerService.getOrderList($scope.type,$scope.searchTitle,$scope.order_type,$scope.currentPage,$scope.pagesize,$scope.session_id);
+        promise.then(function(data){
+            if(data.err_code==0){
+
+                //$scope.totalItems=data.msg_body.total_count;
+                $scope.orderList=data.msg_body.order;
+                $scope.orderCount=data.msg_body.count;
+                switch($scope.type)
+                {
+                    case 1:
+                        $scope.totalItems=$scope.orderCount.type_1_count;
+                        break;
+                    case 2:
+                        $scope.totalItems=$scope.orderCount.type_2_count;
+                        break;
+                    case 3:
+                        $scope.totalItems=$scope.orderCount.type_3_count;
+                        break;
+                    case 4:
+                        $scope.totalItems=$scope.orderCount.type_4_count;
+                        break;
+                    case 5:
+                        $scope.totalItems=$scope.orderCount.type_5_count;
+                        break;
+                    default:
+                        break;
+                }
+
+            }else {
+                layer.msg(data.err_msg)
+            }
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+    $scope.init();
+
 }]);
 
 //导游管理

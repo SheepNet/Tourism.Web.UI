@@ -1,0 +1,39 @@
+{
+  "err_code": 0,
+  "err_msg": "",
+  "msg_body": {
+    "order": [
+      {
+        "id": "guid",
+        "type": 1,
+        "order_num": 1,
+        "name": "订单名称- 旅游地描述",
+        "desc": "副标题 描述",
+        "photo": "旅行社照片 文件guid",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300
+      },
+      {
+        "id": "guid",
+        "type": 1,
+        "order_num": 1,
+        "name": "订单名称- 旅游地描述",
+        "desc": "副标题 描述",
+        "photo": "旅行社照片 文件guid",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300
+      }
+    ],
+    "count": {
+      "type_1_count": 8,
+      "type_2_count": 13,
+      "type_3_count": 13,
+      "type_4_count": 13,
+      "type_5_count": 16
+    }
+  }
+}

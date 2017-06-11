@@ -1,11 +1,12 @@
 <div ng-controller="GuideEditCtrl">
+    <div ng-show="completeMode">
     <ul class="tab-order clearfix">
         <li>我的信息</li>
         <li>帐号管理</li>
     </ul>
     <!--   我的信息    -->
     <div class="teams-list">
-        <div class="join-alert">您还不是我们的会员导游哦~快来<a>【加入我们】</a>吧！</div>
+        <div class="join-alert">您还不是我们的会员导游哦~快来<a ng-click="TurnToJionUs()">【加入我们】</a>吧！</div>
         <div class="person-detail clearfix">
             <div class="person-left"><img src="images/default_person.png"></div>
             <div class="person-infor">
@@ -172,6 +173,78 @@
         </div>
         <div class="text-center">
             <a class="btn-cn btn-yellow">保&nbsp;&nbsp;&nbsp;&nbsp;存</a>
+        </div>
+    </div>
+    </div>
+    <div ng-show="!completeMode">
+        <form class="information-content" name="registForm">
+            <h1 class="login-title m-b-30">完善资料</h1>
+            <div class="information-line" >
+                <label>姓名</label>
+                <!--<input type="text" name="name" ng-maxlength="20" required>-->
+                <input type="text"  name="name" required ng-model="completeMessage.name" ng-maxlength="20">
+            </div>
+            <!-- ng-show="registForm.name.$dirty && registForm.name.$invalid"-->
+            <div class="alert alert-danger help-block" ng-show="registForm.name.$dirty && registForm.name.$invalid">
+                姓名在20个字符以内
+            </div>
+            <div class="information-line">
+                <label>性别</label>
+			   <span class="infor-sex">
+			       <span><input type="radio" name="sex" ng-click="changeSex(1)"> 男</span>
+			       <span><input type="radio" name="sex" ng-click="changeSex(2)"> 女</span>
+			   </span>
+            </div>
+            <div class="information-line">
+                <label>联系方式</label>
+                <input type="text" name="address" ng-maxlength="50" required ng-model="completeMessage.address">
+            </div>
+            <div class="alert alert-danger help-block" ng-show="registForm.address.$dirty && registForm.address.$invalid">
+                联系方式在50个字符以内
+            </div>
+
+            <div class="information-line">
+                <label>导游资格证书号码</label>
+                <input class="w-t" type="text" name="guide_card_id" ng-maxlength="50" required ng-model="completeMessage.guide_card_id">
+                <a class="btn-uploadimg">上传图片</a>
+            </div>
+
+            <div class="alert alert-danger help-block" ng-show="registForm.guide_card_id.$dirty && registForm.guide_card_id.$invalid">
+                导游资格证书号码在50个字符以内
+            </div>
+
+            <div class="information-line">
+                <label>导游证编号</label>
+                <input class="w-t" type="text" name="guide_card_no" ng-maxlength="50" required ng-model="completeMessage.guide_card_no">
+                <a class="btn-uploadimg">上传图片</a>
+            </div>
+
+            <div class="alert alert-danger help-block" ng-show="registForm.guide_card_no.$dirty && registForm.guide_card_no.$invalid">
+                导游证编号在50个字符以内
+            </div>
+
+            <div class="information-upimg clearfix">
+                <div class="upimg-box fl">
+                    <img src="images/book01.png">
+                    <span class="imgbox-num">导游资格证书（1）</span>
+					<span class="shadow-btn pop-h">
+					   <a class="btn-uplook" ><i class="iconfont" ng-click="showPic()"></i></a>
+					   <a class="btn-updel"><i class="iconfont"></i></a>
+				    </span>
+                </div>
+                <div class="upimg-box fr text-right">
+                    <img src="images/book02.png">
+                    <span class="imgbox-num">导游证（1）</span>
+					<span class="shadow-btn pop-h">
+					   <a class="btn-uplook"><i class="iconfont"></i></a>
+					   <a class="btn-updel"><i class="iconfont"></i></a>
+				    </span>
+                </div>
+            </div>
+            <div class="login-btn w-btn" ng-click="submitMessage()"><a>完   成</a></div>
+        </form>
+        <div class="picArea" style="display: none">
+            <img src="images/book01.png">
         </div>
     </div>
 </div>

@@ -1,12 +1,12 @@
-<div ng-controller="OrderDetailCtrl">
+<div>
     <div class="intro-title clearfix">
         <div class="intro-logo"><img src="images/team01.png"></div>
         <div class="intro-text">
-            <h2>周庄烟雨水乡一日游</h2>
-                <h5>
-                    订单编号：<span>2017031512353696</span>
-                    创建时间：<span>2017-03-15 10:43:03</span>
-                    </h5>
+            <h2 ng-bind="orderDetail.name"></h2>
+            <h5>
+                订单编号：<span>暂无</span>
+                创建时间：<span>不清楚，冒失没有</span>
+            </h5>
         </div>
     </div>
     <div class="intro-content">
@@ -14,70 +14,75 @@
         <div class="intro-part clearfix">
             <div class="col-sm-4 intro-line">
                 <label>旅行社名称：</label>
-                <span>苏州春秋国际旅行社</span>
+                <span ng-bind="orderDetail.travel_company_name">苏州春秋国际旅行社</span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>团 队 号 码：</label>
-                <span>ZCCQ20170218</span>
+                <span ng-bind="orderDetail.order_no">ZCCQ20170218</span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>语<span class="m-l-40"></span>言：</label>
-                <span>汉语、英语、法语</span>
+                <span ng-repeat="language in orderDetail.language">
+                    <span ng-bind="language.language_name"></span>&nbsp;&nbsp;
+                </span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>参 团 人 数：</label>
-                <span>15人</span>
+                <span ><span ng-bind="orderDetail.order_person"></span>人</span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>传 真 号 码：</label>
-                <span>0512-56358826</span>
+                <span ng-bind="orderDetail.order_fax">0512-56358826</span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>联 系 电 话：</label>
-                <span>0512-56358826</span>
+                <span ng-bind="orderDetail.order_phone">0512-56358826</span>
             </div>
             <div class="col-sm-12 intro-line">
                 <label>集 合 地 点：</label>
-                <span>江苏省苏州市工业园区若水路388号</span>
+                <span ng-bind="orderDetail.order_address">江苏省苏州市工业园区若水路388号</span>
             </div>
             <div class="col-sm-12 intro-line">
                 <label>上 团 时 间：</label>
-                <span>017-02-20  08：00 ~ 2017-02-20  16：00</span>
+                <!--<span>017-02-20  08：00 ~ 2017-02-20  16：00</span>-->
+                <span ng-bind="orderDetail.begin_time"></span>~<span ng-bind="orderDetail.end_time"></span>
             </div>
             <div class="col-sm-12 intro-line">
                 <label>行 程 简 介：</label>
-                <span>双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</span>
+                <span ng-bind="orderDetail.desc"></span>
             </div>
         </div>
         <p class="intro-stitle">导游要求</p>
         <div class="intro-part clearfix">
             <div class="col-sm-4 intro-line">
                 <label>导 游 人 数：</label>
-                <span>1人</span>
+                <span ><span ng-bind="orderDetail.guide_num"></span>人</span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>人 均 酬 金：</label>
-                <span>300元</span>
+                <span ><span ng-bind="orderDetail.guide_money"></span>元</span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>性<span class="m-l-40"></span>别：</label>
-                <span>无要求</span>
+                <span ng-bind="orderDetail.guide_sex"></span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>品 牌 导 游：</label>
-                <span>无要求</span>
+                <span ng-bind="orderDetail.guide_level">无要求</span>
             </div>
             <div class="col-sm-4 intro-line">
-                <label>评 分 要 求：</label>
-                <span><img src="images/star.png"></span>
+                <label style="float: left">评 分 要 求：</label>
+                <div style="float: left" star rating-value="orderDetail.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>语 言 要 求：</label>
-                <span>汉语、英语、法语</span>
+                  <span ng-repeat="language in orderDetail.language">
+                    <span ng-bind="language.language_name"></span>&nbsp;&nbsp;
+                </span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>学 历 要 求：</label>
-                <span>本科及以上</span>
+                <span ng-bind="orderDetail.study_level">本科及以上</span>
             </div>
         </div>
     </div>

@@ -1,15 +1,78 @@
-<div class="container-bg">
-    <ul class="bz-box clearfix">
-        <li><img src="images/bz01.png"><span>下载合同</span></li>
-        <li class="m-t-30"><img src="images/bz_next.png"></li>
-        <li class="color-262626"><img src="images/bzc02.png"><span>打印合同</span></li>
-        <li class="m-t-30"><img src="images/bz_next.png"></li>
-        <li><img src="images/bz03.png"><span>填写资料</span></li>
-        <li class="m-t-30"><img src="images/bz_next.png"></li>
-        <li><img src="images/bz04.png"><span>签名确认</span></li>
-        <li class="m-t-30"><img src="images/bz_next.png"></li>
-        <li><img src="images/bz05.png"><span>拍照上传</span></li>
-    </ul>
-    <p class="bz-text">请仔细阅读《导游服务中心会员导游签约合同模板》之后进行打印</p>
-    <div class="text-center"><a class="btn-cn btn-yellow">下一步</a></div>
+<div class="container-bg" ng-controller="JoinUsCtrl">
+    <div ng-show="step==1">
+        <ul class="bz-box clearfix">
+            <li class="color-262626"><img src="images/bzc01.png"><span>下载合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz02.png"><span>打印合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz03.png"><span>填写资料</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz04.png"><span>签名确认</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz05.png"><span>拍照上传</span></li>
+        </ul>
+        <p class="bz-text">请点击【下载合同】按钮，将《导游服务中心会员导游签约合同模板》下载到本地</p>
+        <div class="text-center"><a class="btn-cn btn-yellow" ng-click="DownaAreement()">下载合同</a></div>
+    </div>
+    <div ng-show="step==2">
+        <ul class="bz-box clearfix">
+            <li><img src="images/bz01.png"><span>下载合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li class="color-262626"><img src="images/bzc02.png"><span>打印合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz03.png"><span>填写资料</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz04.png"><span>签名确认</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz05.png"><span>拍照上传</span></li>
+        </ul>
+        <p class="bz-text">请仔细阅读《导游服务中心会员导游签约合同模板》之后进行打印</p>
+        <div class="text-center"><a class="btn-cn btn-yellow" ng-click="NextStep(3)">下一步</a></div>
+    </div>
+    <div ng-show="step==3">
+        <ul class="bz-box clearfix">
+            <li><img src="images/bz01.png"><span>下载合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz02.png"><span>打印合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li class="color-262626"><img src="images/bzc03.png"><span>填写资料</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz04.png"><span>签名确认</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz05.png"><span>拍照上传</span></li>
+        </ul>
+        <p class="bz-text">请仔细阅读《导游服务中心会员导游签约合同模板》并填写</p>
+        <div class="text-center"><a class="btn-cn btn-yellow" ng-click="NextStep(4)">下一步</a></div>
+    </div>
+    <div ng-show="step==4">
+        <ul class="bz-box clearfix">
+            <li><img src="images/bz01.png"><span>下载合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz02.png"><span>打印合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz03.png"><span>填写资料</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li class="color-262626"><img src="images/bzc04.png"><span>签名确认</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz05.png"><span>拍照上传</span></li>
+        </ul>
+        <p class="bz-text">填写完成之后，进行签名确认</p>
+        <div class="text-center"><a class="btn-cn btn-yellow" ng-click="NextStep(5)">下一步</a></div>
+    </div>
+    <div ng-show="step==5">
+        <ul class="bz-box clearfix">
+            <li><img src="images/bz01.png"><span>下载合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz02.png"><span>打印合同</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz03.png"><span>填写资料</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li><img src="images/bz04.png"><span>签名确认</span></li>
+            <li class="m-t-30"><img src="images/bz_next.png"></li>
+            <li class="color-262626"><img src="images/bzc05.png"><span>拍照上传</span></li>
+        </ul>
+        <p class="bz-text">请仔细做最后确认，将完整的纸质合同进行拍照并点击【上传】按钮进行上传</p>
+        <div class="text-center"><a class="btn-cn btn-yellow" ng-click="turnToCenter()">上&nbsp;&nbsp;&nbsp;&nbsp;传</a></div>
+    </div>
+
 </div>

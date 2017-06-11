@@ -1,5 +1,5 @@
 {
-  "err_code": 0,  //err_code返回0表示接口执行成功
+  "err_code": 0,
   "err_msg": "",
   "msg_body": {}
 }

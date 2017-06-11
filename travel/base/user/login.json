@@ -3,7 +3,7 @@
   "err_msg": "",
   "msg_body": {
     "user": {
-      "type": 1,
+      "type": 2,
       "name": "admin",
       "photo": "0c5665e6-3368-43a8-b7d6-7b398b8826d7",
       "sex": 2,

@@ -4,7 +4,7 @@
   "msg_body": {
     "data": {
       "id": "guid",
-      "name": "测试",
+      "name": "导游姓名",
       "age": 28,
       "level": 1,
       "score": 5,
@@ -21,13 +21,19 @@
       "guide_card_id_photo": "导游资格证书图片guid",
       "guide_card_no": "导游证编号",
       "guide_card_no_photo": "导游证图片guid",
+
+      "guide_card_IC":"导游证IC卡号",
+
       "travel_company": "所属旅行社名称,非id",
-      "center_register_guide_id": 541,
+      "center_register_guide_id": 539,  //导游中心注册号
       "common_road": "常见路线",
       "remark": "简介",
       "check_time": "2017-05-01 10:00",
       "idnum": "身份证号码",
       "birthday": "1991-01-01",
+
+      "nation":"汉族",
+
       "idtype": "党员",
       "birthday_area": "户口所在地",
       "phone": "家庭电话",

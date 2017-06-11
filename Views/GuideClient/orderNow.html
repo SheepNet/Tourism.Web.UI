@@ -1,252 +1,101 @@
 <div ng-controller="OrderNowCtrl">
-    <ul class="tab-order clearfix">
-        <li>待出团<span>（2）</span></li>
-        <li>出团中<span>（2）</span></li>
-        <li>待结束<span>（2）</span></li>
-    </ul>
-    <!--   待出团    -->
-    <div class="teams-list">
-        <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按发单时间顺序</option>
-            </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+    <div ng-show="State=='index'">
+        <ul class="tab-order clearfix">
+            <li ng-click="typeChange(2)">待出团<span>（<span ng-bind="orderCount.type_2_count"></span>）</span></li>
+            <li ng-click="typeChange(3)">出团中<span>（<span ng-bind="orderCount.type_3_count"></span>）</span></li>
+            <li ng-click="typeChange(4)">待结束<span>（<span ng-bind="orderCount.type_4_count"></span>）</span></li>
+        </ul>
+        <!--   出团中    -->
+        <div class="teams-list">
+            <div class="choice-box clearfix">
+                <select class="select-u" ng-model="orderObj.order_type" ng-change="OrdertypeChange()">
+                    <option value="1">按发单时间顺序</option>
+                    <option value="2">按开团人数顺序</option>
+                    <option value="3">按费用顺序</option>
+                </select>
+                <div class="search-box">
+                    <span class="search-img"><img src="images/search.png"></span>
+                    <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
+                </div>
             </div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="examine-state"><img src="images/examine_through.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team01.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+            <div class="teams-box">
+                <div class="teams-part" ng-repeat="order in orderList">
+                    <div class="radius-top"><img src="images/radius_top.png"></div>
+                    <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+                    <div class="team-infor clearfix">
+                        <div class="team-img"><img src="images/team01.png"></div>
+                        <div class="team-text">
+                            <h5 ng-bind="order.name"></h5>
+                            <p class="team-detail" ng-bind="order.desc"></p>
+                            <p class="team-time"><span ng-bind="order.begin_time"></span>~<span
+                                    ng-bind="order.end_time"></span></p>
                         </div>
-                    </div>
-                    <div class="team-pop">
-                        <div class="team-pop-title clearfix">
-                            <div class="team-pop-img"><img src="images/team01.png"></div>
-                            <div class="team-pop-text">
-                                <h3>苏州康辉旅行社</h3>
-                                <h5>高素质的员工、高质量的服务、高水平的旅游</h5>
-                                <h6>成立时间：<span>2011年3月</span></h6>
-                                <h6>联系方式：<span>18555623236</span></h6>
+                        <div class="team-state">
+                            <p>2017-02-15 15:31</p>
+                            <div class="team-pay">
+                                <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>
+                                <i class="iconfont cr">&#xe613;</i><span>￥<span
+                                    ng-bind="order.guide_money"></span>/次</span>
                             </div>
                         </div>
-                        <p class="team-pop-star"></p>
-                        <p class="team-pop-orderdetail">订单完成率（3个月内）：<span>95%</span></p>
-                        <p class="team-pop-orderdetail m-b-10">
-                            订单评价统计（3个月内）：<span>好评（52）</span>/<span> 中评（1）</span> / <span>差评（1）</span>
-                        </p>
-                        <p class="team-pop-comment">导服中心评价：<span>该旅行社取消订单次数过多。</span></p>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team02.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!--   出团中    -->
-    <div class="teams-list">
-        <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按发单时间顺序</option>
-            </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team01.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                    <div class="team-pop">
-                        <div class="team-pop-title clearfix">
-                            <div class="team-pop-img"><img src="images/team01.png"></div>
-                            <div class="team-pop-text">
-                                <h3>苏州康辉旅行社</h3>
-                                <h5>高素质的员工、高质量的服务、高水平的旅游</h5>
-                                <h6>成立时间：<span>2011年3月</span></h6>
-                                <h6>联系方式：<span>18555623236</span></h6>
+                        <div class="team-pop">
+                            <div class="team-pop-title clearfix">
+                                <div class="team-pop-img"><img src="images/team01.png"></div>
+                                <div class="team-pop-text">
+                                    <h3>苏州康辉旅行社</h3>
+                                    <h5>高素质的员工、高质量的服务、高水平的旅游</h5>
+                                    <h6>成立时间：<span>2011年3月</span></h6>
+                                    <h6>联系方式：<span>18555623236</span></h6>
+                                </div>
                             </div>
-                        </div>
-                        <p class="team-pop-star"></p>
-                        <p class="team-pop-orderdetail">订单完成率（3个月内）：<span>95%</span></p>
-                        <p class="team-pop-orderdetail m-b-10">订单评价统计（3个月内）：<span>好评（52）</span>/<span> 中评（1）</span> / <span>差评（1）</span></p>
-                        <p class="team-pop-comment">导服中心评价：<span>该旅行社取消订单次数过多。</span></p>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team02.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                            <p class="team-pop-star"></p>
+                            <p class="team-pop-orderdetail">订单完成率（3个月内）：<span>95%</span></p>
+                            <p class="team-pop-orderdetail m-b-10">订单评价统计（3个月内）：<span>好评（52）</span>/<span> 中评（1）</span>
+                                /
+                                <span>差评（1）</span></p>
+                            <p class="team-pop-comment">导服中心评价：<span>该旅行社取消订单次数过多。</span></p>
                         </div>
                     </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
+                    <div class="team-btn">
+                        <a class="btn-cn btn-empty-yellow" ng-click="turnToDetail(order.id)">查看详情</a>
+                        <a class="btn-cn btn-yellow" ng-show="orderObj.type==4">结束</a>
+                    </div>
                 </div>
             </div>
-            <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <pagination class="pagination-sm pull-right"
+                        items-per-page="orderObj.page_size"
+                        ng-model="orderObj.page"
+                        total-items="totalItems"
+                        max-size="maxSize"
+                        ng-change="pageChanged()"
+                        boundary-links="false"
+                        boundary-link-numbers="true"
+                        rotate="false"
+                        force-ellipses="true"
+                        previous-text="‹"
+                        next-text="›">
+            </pagination>
         </div>
     </div>
-    <!--   待结束    -->
-    <div class="teams-list">
-        <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按发单时间顺序</option>
-            </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
-            </div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team02.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                    <a class="btn-cn btn-yellow">结&nbsp;&nbsp;&nbsp;束</a>
-                </div>
-            </div>
-        </div>
+    <div ng-show="State=='detail'">
+        <order-detail></order-detail>
+        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==2" ng-click="turnToIndex()">取消订单</a></div>
+        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==4" ng-click="turnToIndex()">结束行程</a></div>
     </div>
 </div>
 <script type="text/javascript">
     // tab切换
     $(".teams-list:first").show();
     $(".tab-order li:first").addClass("active-tab");
-    $(".tab-order li").click(function() {
+    $(".tab-order li").click(function () {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
-        $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
+        //$(".teams-list").hide().eq($(".tab-order li").index(this)).show();
     });
-
-    // 覆盖显示
-    $(".team-infor .team-img").mouseover(function() {
+    $(".teams-box").on("mouseover", ".team-infor .team-img", function () {
         $(this).parent().children(".team-pop").show();
     });
-    $(".team-infor .team-img").mouseleave(function() {
+
+    $(".teams-box").on("mouseleave", ".team-infor .team-img", function () {
         $(this).parent().children(".team-pop").hide();
     });
 </script>

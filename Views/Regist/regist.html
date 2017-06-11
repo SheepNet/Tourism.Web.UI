@@ -1,30 +1,47 @@
-<div class="login-bg">
-    <div class="login-content">
+<div class="login-bg" ng-controller="RegistController">
+    <form class="login-content" name="registForm">
         <h1 class="login-title">欢迎注册</h1>
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe60c;</i></span>
-            <input type="text" placeholder="手机号">
+            <input placeholder="手机号码" name="mobile" required ng-model="mobile"  ng-pattern="/^1[0-9]{10}$/">
         </div>
+        <div class="alert alert-danger help-block" ng-show="registForm.mobile.$dirty && registForm.mobile.$invalid">
+            请输入正确的手机号码
+        </div>
+
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe622;</i></span>
-            <input class="w-yz" type="text" placeholder="验证码">
-            <a class="btn-resive">获取验证码</a>
+            <input class="w-yz" type="text" placeholder="验证码" name="code" required ng-model="code" ng-pattern="/^\d{4}$/">
+            <a class="btn-resive" ng-class="{'color-go':tipMessage!='获取验证码'}" ng-click="SendMessage()" ng-bind="tipMessage">获取验证码</a>
             <!-- <a class="btn-resive color-go">52秒</a>	倒计时的样式 -->
         </div>
+        <div class="alert alert-danger help-block" ng-show="registForm.code.$dirty && registForm.code.$invalid">
+            验证码为4位数
+        </div>
+
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe635;</i></span>
-            <input type="password" placeholder="密码">
+            <input type="password" placeholder="密码" name="password" required ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="30" ng-model="password">
         </div>
+        <div class="alert alert-danger help-block" ng-show="registForm.password.$dirty && registForm.password.$invalid">
+            密码不得少于6位，不得多于30位
+        </div>
+
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe635;</i></span>
-            <input type="password" placeholder="确认密码">
+            <input type="password" placeholder="确认新密码" name="password_confirm" required ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="30" ng-model="password_confirm">
         </div>
+        <div class="alert alert-danger help-block" ng-show="registForm.password_confirm.$dirty && registForm.password.$dirty  && password_confirm!=password">
+            两次密码不一样
+        </div>
+
         <div class="login-password m-t-30">
-            <input type="checkbox"> 我已阅读并同意<a>《服务条约》</a>
+            <input type="checkbox" name="agreement" ng-checked="agreeState" ng-click="agree($event)"> 我已阅读并同意<a>《服务条约》</a>
         </div>
-        <div class="login-btn"><a>注  册</a></div>
+
+        <div class="login-btn" ng-click="regist()"><a>注  册</a></div>
         <!--<div class="login-link">没有帐号？<a>点击注册</a></div>-->
-    </div>
+    </form>
 </div>
 <script type="text/javascript">
     // 左侧导航栏滚动条自适应
