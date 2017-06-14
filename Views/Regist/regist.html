@@ -3,7 +3,7 @@
         <h1 class="login-title">欢迎注册</h1>
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe60c;</i></span>
-            <input placeholder="手机号码" name="mobile" required ng-model="mobile"  ng-pattern="/^1[0-9]{10}$/">
+            <input placeholder="手机号码" name="mobile" required ng-model="mobile" ng-pattern="/^1[0-9]{10}$/">
         </div>
         <div class="alert alert-danger help-block" ng-show="registForm.mobile.$dirty && registForm.mobile.$invalid">
             请输入正确的手机号码
@@ -21,7 +21,8 @@
 
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe635;</i></span>
-            <input type="password" placeholder="密码" name="password" required ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="30" ng-model="password">
+            <input type="password" placeholder="密码" name="password" required ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="30"
+                ng-model="password">
         </div>
         <div class="alert alert-danger help-block" ng-show="registForm.password.$dirty && registForm.password.$invalid">
             密码不得少于6位，不得多于30位
@@ -29,7 +30,8 @@
 
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe635;</i></span>
-            <input type="password" placeholder="确认新密码" name="password_confirm" required ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="30" ng-model="password_confirm">
+            <input type="password" placeholder="确认新密码" name="password_confirm" required ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="30"
+                ng-model="password_confirm">
         </div>
         <div class="alert alert-danger help-block" ng-show="registForm.password_confirm.$dirty && registForm.password.$dirty  && password_confirm!=password">
             两次密码不一样
@@ -52,4 +54,6 @@
     // $(window).resize(function() {
     //     layout()
     // });
+     $('.login-bg').css("min-height",$(window).height() - 120);
+
 </script>

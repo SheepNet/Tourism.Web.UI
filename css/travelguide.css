@@ -511,7 +511,6 @@ a:hover {
 }
 
 .search-box input {
-    width: 300px;
     height: 32px;
     padding: 6px 0;
     font-size: 14px;
@@ -2079,7 +2078,7 @@ a:hover {
 .login-content {
     width: 50%;
     max-width: 400px;
-    padding: 100px 0;
+    padding: 150px 0;
     margin: 0 auto;
 }
 
@@ -2577,4 +2576,12 @@ a:hover {
 
 .bz-box li img {
     width: 100%;
+}
+/*bootstrap overwrite*/
+.alert{
+    padding: 5px 30px;
+}
+.alert-danger{
+    background: none;
+    border:  none;
 }
