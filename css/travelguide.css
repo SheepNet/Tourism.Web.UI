@@ -1891,7 +1891,8 @@ a:hover {
 }
 
 .order-line input[type="text"],
-.order-line input[type="data"] {
+.order-line input[type="data"],
+.order-line input[type="number"]{
     min-width: 68%;
     height: 34px;
     line-height: normal;
