@@ -1,0 +1,106 @@
+{
+  "err_code": 0,
+  "err_msg": "",
+  "msg_body": {
+    "travel_company": {
+      "id": "guid",
+      "order_num": 520,
+      "name": "康辉旅行社",
+      "star": 5,
+      "idnum": "L-HUN-01084统一社会信用代码",
+      "phone": "0512-66668888 单位座机",
+      "legal_person": "法人姓名",
+      "legal_person_mobile": "13111122222法人手机",
+      "business_license_file": "旅行社营业执照 文件guid",
+      "license_file": "旅行社许可证 文件guid",
+      "license_no": "许可文号",
+      "license_date": "yyyy-MM-dd 许可时间",
+      "license_num": "许可证号码",
+      "en_name": "英文名称",
+      "company_type": "有限责任公司 企业形式",
+      "legal_person_idnum": "320581199112212563 法人身份证号码",
+      "legal_person_idnum_front_file": "身份证正面 文件guid",
+      "legal_person_idnum_back_file": "身份证反面 文件guid",
+      "business_sphere": "旅游业务范围,国内旅游业务、入境旅游业务、出境旅游业务",
+      "area": "公司所在辖区",
+      "address": "公司详细地址",
+      "bail_bill_file": "保证金存单 文件guid",
+      "bail_contract_file": "保证金协议书 文件guid",
+      "bail_amount": "旅行社总部保证金金额",
+      "bail_in_date": "yyyy-MM-dd 保证金存入日期",
+      "bail_bank": "保证金存入银行",
+      "bail_bank_phone": "保证金存入银行电话",
+      "bail_pay_amount": "可以支取的保证金金额 5000元",
+      "insurance_amount": "责任险保额 1000元",
+      "insurance_date": "责任险有效期 2017-07-05",
+      "insurance_company_name": "保险公司名称 平安保险",
+      "insurance_company_phone": "保险公司电话",
+      "insurance_file": "责任险保单 文件guid",
+      "guide_comment": [
+        {
+          "id": "导游评价 guid",
+          "name": "导游姓名",
+          "photo": "导游头像 guid",
+          "star": 5,
+          "level": 3,
+          "content": "评论内容文字",
+          "comment_time": "yyyy-MM-dd HH:mm"
+        },
+        {
+          "id": "导游评价 guid",
+          "name": "导游姓名",
+          "photo": "导游头像 guid",
+          "star": 5,
+          "level": 3,
+          "content": "评论内容文字",
+          "comment_time": "yyyy-MM-dd HH:mm"
+        }
+      ],
+      "guide_comment_count": {
+        "all": 5,
+        "good": 2,
+        "normal": 2,
+        "bad": 1
+      },
+      "center_comment": "导服评价： 旅行社总是无故取消订单",
+      "contact": [
+        {
+          "id": "联系人guid",
+          "order_num": "序号",
+          "name": "联系人姓名",
+          "job": "职务 总经理",
+          "mobile": "15142144414 联系电话"
+        },
+        {
+          "id": "联系人guid",
+          "order_num": "序号",
+          "name": "联系人姓名",
+          "job": "职务 总经理",
+          "mobile": "15142144414 联系电话"
+        }
+      ],
+      "parter": [
+        {
+          "id": "股东guid",
+          "order_num": "序号",
+          "parter_type": "股东类型 自然人",
+          "parter_name": "股东名称",
+          "money_type": "出资方式 货币",
+          "unit": "单位 万元人民币",
+          "normal_num": "认缴出资额 10",
+          "num": "实缴出资额 10"
+        },
+        {
+          "id": "股东guid",
+          "order_num": "序号",
+          "parter_type": "股东类型 自然人",
+          "parter_name": "股东名称",
+          "money_type": "出资方式 货币",
+          "unit": "单位 万元人民币",
+          "normal_num": "认缴出资额 10",
+          "num": "实缴出资额 10"
+        }
+      ]
+    }
+  }
+}

@@ -4,8 +4,8 @@
         <div class="intro-text">
             <h2 ng-bind="orderDetail.name"></h2>
             <h5>
-                订单编号：<span>暂无</span>
-                创建时间：<span>不清楚，冒失没有</span>
+                订单编号：<span  ng-bind="orderDetail.no">暂无</span>
+                创建时间：<span  ng-bind="orderDetail.create_time">不清楚，冒失没有</span>
             </h5>
         </div>
     </div>
@@ -64,11 +64,11 @@
             </div>
             <div class="col-sm-4 intro-line">
                 <label>性<span class="m-l-40"></span>别：</label>
-                <span ng-bind="orderDetail.guide_sex"></span>
+                <span ng-bind="orderDetail.guide_sex==0?'无要求':(orderDetail.guide_sex==1?'男':'女')"></span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label>品 牌 导 游：</label>
-                <span ng-bind="orderDetail.guide_level">无要求</span>
+                <span ng-bind="orderDetail.guide_level==0?'无要求':'金牌导游'">无要求</span>
             </div>
             <div class="col-sm-4 intro-line">
                 <label style="float: left">评 分 要 求：</label>

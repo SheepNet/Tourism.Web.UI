@@ -1,0 +1,47 @@
+{
+  "err_code": 0,
+  "err_msg": "",
+  "msg_body": {
+    "order": {
+      "id": "guid",
+      "no": "订单编号,编码规则yyyyMMdd+五位流水号",
+      "is_top":1 ,
+      "type": 1,
+      "travel_company_id": "旅行社id guid",
+      "travel_company_name": "姓名",
+      "order_no": "团号",
+      "order_person": 35,
+      "order_address": "集 合 地 点",
+      "order_fax": "传真号码",
+      "order_phone": "联系电话",
+      "name": "订单名称- 旅游地描述",
+      "desc": "副标题 描述",
+      "photo": "旅行社照片 文件guid",
+      "begin_time": "yyyy-MM-dd HH:mm",
+      "end_time": "yyyy-MM-dd HH:mm",
+      "guide_num": 3,
+      "guide_money": 300,
+      "guide_sex": 1,
+      "guide_level": 1,
+      "star": 5,
+      "language": [
+        {
+          "language_name": "汉语"
+        },
+        {
+          "language_name": "英语"
+        },
+        {
+          "language_name": "法语"
+        }
+      ],
+      "study_level": "学历要求",
+      "create_time":"yyyy-MM-dd HH:mm 创建时间",
+      "guide":[
+        {"id":"导游guid","status":1},
+        {"id":"导游guid","status":1},
+        {"id":"导游guid","status":0}
+          ]
+        }
+      }
+}

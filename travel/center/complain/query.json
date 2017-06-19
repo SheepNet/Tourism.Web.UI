@@ -1,0 +1,24 @@
+{
+  "err_code": 0,
+  "err_msg": "",
+  "msg_body": {
+    "complain": {
+      "id": "guid",
+      "complain_type": 1,
+      "complain_status": 1,
+      "content": "投诉内容",
+      "content_file": [
+        {
+          "id": "投诉照片guid"
+        },
+        {
+          "id": "投诉照片guid"
+        }
+      ],
+      "complain_id": "投诉人id",
+      "complain_name": "投诉人姓名",
+      "complain_mobile": "投诉人手机",
+      "complain_time": "yyyy-MM-dd HH:mm"
+    }
+  }
+}

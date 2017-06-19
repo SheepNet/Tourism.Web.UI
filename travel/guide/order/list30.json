@@ -1,0 +1,46 @@
+{
+  "err_code": 0,
+  "err_msg": "",
+  "msg_body": {
+    "order": [
+      {
+        "id": "guid",
+        "no": "订单编号,编码规则yyyyMMdd+五位流水号",
+        "type": 1,
+        "order_num": 1,
+        "name": "第30种类型旅游地描述1",
+        "desc": "副标题 描述",
+        "photo": "旅行社照片 文件guid",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300,
+        "status": "订单状态,值比较多，下面有枚举",
+        "create_time":"yyyy-MM-dd HH:mm"
+      },
+      {
+        "id": "guid",
+        "no": "订单编号,编码规则yyyyMMdd+五位流水号",
+        "type": 1,
+        "order_num": 1,
+        "name": "第30种类型旅游地描述2",
+        "desc": "副标题 描述",
+        "photo": "旅行社照片 文件guid",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300,
+        "status": "订单状态,值比较多，下面有枚举",
+        "create_time":"yyyy-MM-dd HH:mm"
+      }
+    ],
+    "count": {
+      "type_10_count": 8,
+      "type_20_count": 12,
+      "type_21_count": 13,
+      "type_22_count": 16,
+      "type_23_count": 12,
+      "type_30_count": 6
+    }
+  }
+}

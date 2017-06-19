@@ -162,6 +162,10 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
             url: '/orderPublishAgency',
             templateUrl: 'Views/AgencyClient/orderPublishAgency.html'
         })
+        .state('agencyClient.agencyComplaint', {
+            url: '/agencyComplaint',
+            templateUrl: 'Views/AgencyClient/agencyComplaint.html'
+        })
 });
 
 

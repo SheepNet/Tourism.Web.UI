@@ -3,14 +3,31 @@
  */
 //首页控制器
 
-Ctrl.controller("ManageCenterCtrl",["$scope","$http","$sce","$state","$stateParams","$cookieStore",function ($scope, $http, $sce,$state,$stateParams,$cookieStore) {
+Ctrl.controller("ManageCenterCtrl",["$scope","$http","$sce","$state","$stateParams","$cookieStore","$location",function ($scope, $http, $sce,$state,$stateParams,$cookieStore,$location) {
+    //获得user信息
     var userMessage=$cookieStore.get("user") ;
     $scope.session_id=$cookieStore.get("session_id") ;
     if(userMessage==null){
-        $state.go("index");
+        $location.path("index")
     }
     $scope.User=userMessage;
     $state.go("manage.infoCenter");
+
+    //定义分页最大显示，全局通用
+    $scope.maxSize = 7;
+
+    //定义打星功能的部分方法
+
+    $scope.readonly = false;
+    $scope.onHover = function(val){
+        $scope.hoverVal = val;
+    };
+    $scope.onLeave = function(){
+        $scope.hoverVal = null;
+    }
+    $scope.onChange = function(val){
+        $scope.ratingVal = val;
+    }
 
 }]);
 
@@ -21,22 +38,42 @@ Ctrl.controller("InfoCenterCtrl",["$scope","$http","$sce","$state","$stateParams
 
 //审核中心
 Ctrl.controller("VerifyCenterCtrl",["$scope","$http","$sce","$state","$stateParams","$cookieStore","centerService",function ($scope, $http, $sce,$state,$stateParams,$cookieStore,centerService) {
+    $scope.State='index';
+
     $scope.reportData = [];
-    $scope.maxSize = 7;
-    $scope.currentPage = 1;
+
+    $scope.InfoObj={
+        type:0,
+        title:"",
+        begin_date:"",
+        end_date:"",
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
+    }
+
     $scope.totalItems = 13;
-    $scope.pagesize=5;
-    //$scope.session_id=$cookieStore.get("session_id") ;
 
     $scope.verifyList=[];
+
+
+    $scope.typeChange=function(type){
+        $scope.InfoObj.type=type;
+        $scope.init();
+    }
     $scope.pageChanged = function () {
         $scope.init();
     }
     $scope.init=function(){
-        var promise= centerService.getVerifyList($scope.searchTitle,$scope.begin_date,$scope.end_date,$scope.currentPage,$scope.pagesize,$scope.session_id);
+        var promise= centerService.getVerifyList($scope.InfoObj);
         promise.then(function(data){
             $scope.totalItems=data.msg_body.total_count;
             $scope.verifyList=data.msg_body.data;
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
     }
     $scope.init();
@@ -45,9 +82,9 @@ Ctrl.controller("VerifyCenterCtrl",["$scope","$http","$sce","$state","$statePara
 
     $scope.verifyGuide=function(id){
         now_id=id;
-        var promise= centerService.query(id,$scope.session_id);
+        var promise= centerService.GetCheckDetail(id,$scope.session_id);
         promise.then(function(data){
-            $scope.totalItems=data.msg_body.total_count;
+            //$scope.totalItems=data.msg_body.total_count;
             $scope.guideInfo=data.msg_body.data;
             $scope.State='detail';
         },function(data){
@@ -60,23 +97,35 @@ Ctrl.controller("VerifyCenterCtrl",["$scope","$http","$sce","$state","$statePara
 
     //审核导游
     $scope.guideCheck=function(check_status){
-            var promise= centerService.check(now_id,check_status,$scope.session_id);
-            promise.then(function(data){
-                $scope.init();
-                $scope.State='index';
-            })
-
+        var promise= centerService.checkGuide(now_id,check_status,$scope.session_id);
+        promise.then(function(data){
+            layer.msg("操作成功", {icon: 1})
+            $scope.init();
+            $scope.State='index';
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
     }
-    $scope.State='index';
+
 }]);
 
 //订单中心
 Ctrl.controller("OrderManageCtrl",["$scope","$http","$sce","$state","$stateParams","centerService",function ($scope, $http, $sce,$state,$stateParams,centerService) {
     $scope.State='index';
-    $scope.maxSize = 7;
-    $scope.currentPage = 1;
+
+    $scope.orderObj={
+        type:1,
+        title:"",
+        order_type:"1",
+        page:1,
+        page_size:5,
+        session_id:$scope.session_id
+    }
+
     $scope.totalItems = 13;
-    $scope.pagesize=5;
 
     $scope.type=1;
 
@@ -88,8 +137,8 @@ Ctrl.controller("OrderManageCtrl",["$scope","$http","$sce","$state","$stateParam
     }
 
     $scope.typeChange = function (type) {
-        $scope.currentPage = 1;
-        $scope.type=type;
+        $scope.orderObj.page = 1;
+        $scope.orderObj.type=type;
         $scope.init();
     }
 
@@ -97,7 +146,7 @@ Ctrl.controller("OrderManageCtrl",["$scope","$http","$sce","$state","$stateParam
         $scope.init();
     }
     $scope.init=function(){
-        var promise= centerService.getOrderList($scope.type,$scope.searchTitle,$scope.order_type,$scope.currentPage,$scope.pagesize,$scope.session_id);
+        var promise= centerService.getOrderList($scope.orderObj);
         promise.then(function(data){
             if(data.err_code==0){
 
@@ -140,36 +189,236 @@ Ctrl.controller("OrderManageCtrl",["$scope","$http","$sce","$state","$stateParam
 }]);
 
 //导游管理
-Ctrl.controller("GudieManageCtrl",["$scope","$http","$sce","$state","$stateParams",function ($scope, $http, $sce,$state,$stateParams) {
+Ctrl.controller("GudieManageCtrl",["$scope","$http","$sce","$state","$stateParams","centerService",function ($scope, $http, $sce,$state,$stateParams,centerService) {
+
     $scope.State='index';
-    $scope.ShowDetail=function(){
-        $scope.State='detail';
+    $scope.InfoObj={
+        title:"",
+        begin_date:"",
+        end_date:"",
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
+    };
+    $scope.orderObj={
+        //id:$scope.guideInfo.id,
+        title:"",
+        order_type:1,
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
     }
+    var now_id="";
+
+    //查看详情
+    $scope.ShowDetail=function(id){
+        now_id=id;
+        var promise= centerService.getGuideDetail(id,$scope.session_id);
+        promise.then(function(data){
+            $scope.guideInfo=data.msg_body.data;
+            $scope.State='detail';
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    //历史记录
     $scope.ShowGudieHistory=function(){
+        $scope.orderObj={
+            id:$scope.guideInfo.id,
+            title:"",
+            order_type:1,
+            page:1,
+            page_size:10,
+            session_id:$scope.session_id
+        }
+        $scope.initOrder();
         $scope.State='history';
     }
+
+    $scope.guideList=[];
+
+
+    $scope.pageChanged = function () {
+        $scope.init();
+    }
+
+    $scope.init=function(){
+        var promise= centerService.getGuideList($scope.InfoObj);
+        promise.then(function(data){
+            $scope.totalItems=data.msg_body.total_count;
+            $scope.guideList=data.msg_body.guide;
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+    $scope.init();
+
+    $scope.pageChangedOrder=function(){
+        $scope.initOrder();
+    }
+
+    //导游历史纪录初始化列表
+    $scope.initOrder=function(){
+        var promise= centerService.getGuideHistory($scope.orderObj);
+        promise.then(function(data){
+            $scope.totalItemsOrder=data.msg_body.total_count;
+            $scope.orderList=data.msg_body.order;
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    //升级或注销导游
+   $scope.editGuideInfo=function(type){
+       var promise= centerService.editGuideInfo(now_id,type,$scope.session_id);
+       promise.then(function(data){
+           layer.msg("操作成功", {icon: 1})
+           $scope.init();
+           $scope.State='index';
+       },function(data){
+           layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+       });
+       promise.catch(function(){
+           layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+       })
+    }
+
+    $scope.turnToIndex=function(){
+        $scope.State='index';
+    }
+
+    $scope.turnToDetail=function(){
+        $scope.State='detail';
+    }
+
 }]);
 
 //旅行社管理
-Ctrl.controller("AgencyManageCtrl",["$scope","$http","$sce","$state","$stateParams",function ($scope, $http, $sce,$state,$stateParams) {
+Ctrl.controller("AgencyManageCtrl",["$scope","$http","$sce","$state","$stateParams","centerService",function ($scope, $http, $sce,$state,$stateParams,centerService) {
     $scope.State='index';
-    $scope.ShowDetail=function(){
-        $scope.State='detail';
+    //初始化打星的分数
+    $scope.agencyInfo={
+        star:1
+    };
+    $scope.agencyObj={
+        title:"",
+        begin_date:"",
+        end_date:"",
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
     }
+    $scope.agencyInfoObj={
+        id:"",
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
+    }
+
+    $scope.ShowDetail=function(id){
+        $scope.State='detail';
+        $scope.agencyInfoObj.id=id;
+        var promise= centerService.getAgencyInfo($scope.agencyInfoObj);
+        promise.then(function(data){
+            $scope.totalItems1=5;
+            $scope.agencyInfo=data.msg_body.travel_company;
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+
+    }
+
     $scope.ShowAgrncyHistory=function(){
         $scope.State='history';
     }
+
+    $scope.pageChanged = function () {
+        $scope.init();
+    }
+    $scope.init=function(){
+        var promise= centerService.getAgencyList($scope.agencyObj);
+        promise.then(function(data){
+            $scope.totalItems=data.msg_body.total_count;
+            $scope.agencyList=data.msg_body.guide;
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+    $scope.init();
 }]);
 
 //投诉中心
-Ctrl.controller("ComplaintCenterCtrl",["$scope","$http","$sce","$state","$stateParams",function ($scope, $http, $sce,$state,$stateParams) {
+Ctrl.controller("ComplaintCenterCtrl",["$scope","$http","$sce","$state","$stateParams","centerService",function ($scope, $http, $sce,$state,$stateParams,centerService){
+
+    //查询对象
+    $scope.complainObj={
+        title:"",
+        complain_type:1,
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
+    }
+
+    //默认显示首页
     $scope.State='index';
-    $scope.ShowDetail=function(){
-        $scope.State='detail';
+
+    //显示细节方法
+    $scope.ShowDetail=function(id){
+        var promise=centerService.getComplainDetail(id,$scope.session_id);
+        promise.then(function(data){
+            $scope.complainInfo=data.msg_body.complain;
+            $scope.State='detail';
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
     }
-    $scope.ShowAgrncyHistory=function(){
-        $scope.State='history';
+
+    //排序方式切换方法
+    $scope.complainTypeChange=function (){
+        $scope.init();
     }
+
+    //换页方法
+    $scope.pageChanged = function () {
+        $scope.init();
+    }
+
+    //初始化表格数据
+    $scope.init=function(){
+        var promise=centerService.getComplainList($scope.complainObj);
+        promise.then(function(data){
+            $scope.totalItems=data.msg_body.total_count;
+            $scope.complainList=data.msg_body.complain;
+        },function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function(data){
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    $scope.init();
+
+
 }]);
 
 //短信设置

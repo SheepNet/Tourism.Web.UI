@@ -1,379 +1,729 @@
 <div ng-controller="OrderNowAgencyCtrl">
-    <ul class="tab-order clearfix">
-        <li>待确认<span>（2）</span></li>
-        <li>待出团<span>（2）</span></li>
-        <li>出团中<span>（2）</span></li>
-        <li>待结束<span>（2）</span></li>
-    </ul>
-    <!--   待确认    -->
-    <div class="teams-list">
-        <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按发单时间顺序</option>
-            </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+
+    <div ng-show="State=='index'">
+        <ul class="tab-order clearfix">
+            <li ng-click="typeChange(20)">待确认<span>（<span ng-bind="orderCount.type_20_count"></span>）</span></li>
+            <li ng-click="typeChange(21)">待出团<span>（<span ng-bind="orderCount.type_21_count"></span>）</span></li>
+            <li ng-click="typeChange(22)">出团中<span>（<span ng-bind="orderCount.type_22_count"></span>）</span></li>
+            <li ng-click="typeChange(23)">待结束<span>（<span ng-bind="orderCount.type_23_count"></span>）</span></li>
+        </ul>
+        <!--   待确认    -->
+        <div class="teams-list">
+            <div class="choice-box clearfix">
+                <select class="select-u" ng-model="orderObj.order_type" ng-change="OrdertypeChange()">
+                    <option value="1">按发单时间顺序</option>
+                    <option value="2">按开团人数顺序</option>
+                    <option value="3">按费用顺序</option>
+                </select>
+                <div class="search-box">
+                    <span class="search-img"><img src="images/search.png"></span>
+                    <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
+                </div>
+                <div class="fr m-t-5"><a class="btn-import" ng-click="publicOrder()"><i class="iconfont">&#xe70e;</i>发布新订单</a>
+                </div>
             </div>
-            <div class="fr m-t-5"><a class="btn-import" ng-click="publicOrder()"><i class="iconfont">&#xe70e;</i>发布新订单</a></div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="state-urgent"><img src="images/state_urgent.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img color-07"><img src="images/state07.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游
-                            <a class="guideimg">
-                                <i class="iconfont">&#xe603;</i>
-                                <div class="guide-pop">
-                                    <h3>导游要求</h3>
-                                    <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-man">&#xe606;</i></span></p>
-                                    <p>品牌导游：<span><img src="images/honer.png"></span></p>
-                                    <p class="b-0">评分要求：<span><img src="images/star.png"></span></p>
-                                </div>
-                            </a>
-                        </h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+            <div class="teams-box">
+                <div class="teams-part" ng-repeat="order in orderList">
+                    <div class="radius-top"><img src="images/radius_top.png"></div>
+                    <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+                    <!--紧急状态，盖章图片-->
+                    <div class="state-urgent" ng-show="order.is_top==1 && orderObj.type==20"><img
+                            src="images/state_urgent.png"></div>
+                    <div class="team-infor clearfix">
+                        <!--左边的图片，根据状态动态生成-->
+                        <div class="team-img color-07" ng-show="orderObj.type==20"><img src="images/state07.png"></div>
+                        <div class="travelagency-img" ng-show="orderObj.type!=20"><span><img src="images/people03.png"></span></div>
+
+                        <div class="team-text">
+                            <h5><span ng-bind="order.name"></span>
+                                <a class="guideimg">
+                                    <i class="iconfont">&#xe603;</i>
+                                    <div class="guide-pop">
+                                        <h3>导游要求</h3>
+                                        <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-man">
+                                            &#xe606;</i></span></p>
+                                        <p>品牌导游：<span><img src="images/honer.png"></span></p>
+                                        <p class="b-0">
+                                        <p style="display: inline">评分要求:</p>
+                                        <div style="display: inline" star rating-value="order.guide_num" max="5"
+                                             on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+                                        </p>
+                                    </div>
+                                </a>
+                            </h5>
+                            <p class="team-detail" ng-bind="order.desc">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
+                            <!--这边做特殊处理-->
+                            <p class="team-time">{{order.begin_time}}~{{order.end_time}}</p>
+                            <!--<p class="team-time"><span ng-bind="order.begin_time"></span>~<span ng-bind="order.end_time"></span></p>-->
+                        </div>
+                        <div class="team-state">
+                            <p ng-bind="order.create_time">2017-02-15 15:31</p>
+                            <div class="team-pay">
+                                <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>
+                                <i class="iconfont cr">&#xe613;</i><span>￥<span
+                                    ng-bind="order.guide_money"></span>/次</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img color-08"><img src="images/state08.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游
-                            <a class="guideimg">
-                                <i class="iconfont">&#xe603;</i>
-                                <div class="guide-pop">
-                                    <h3>导游要求</h3>
-                                    <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>
-                                    <p>品牌导游：<span><img src="images/honer.png"></span></p>
-                                    <p class="b-0">评分要求：<span><img src="images/star.png"></span></p>
-                                </div>
-                            </a>
-                        </h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
+                    <div class="team-btn">
+                        <a class="btn-cn btn-empty-yellow" ng-click="ShowDetail(order.id)">查看详情</a>
+                        <a class="btn-cn btn-yellow" ng-show="orderObj.type==23">结束</a>
                     </div>
                 </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
+                <!--<div class="teams-part">-->
+                    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+                    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+                    <!--<div class="team-infor clearfix">-->
+                        <!--&lt;!&ndash;左边的图片，根据状态动态生成&ndash;&gt;-->
+                        <!--<div class="team-img color-08"><img src="images/state08.png"></div>-->
+                        <!--<div class="team-text">-->
+                            <!--<h5>周庄烟雨水乡一日游-->
+                                <!--<a class="guideimg">-->
+                                    <!--<i class="iconfont">&#xe603;</i>-->
+                                    <!--<div class="guide-pop">-->
+                                        <!--<h3>导游要求</h3>-->
+                                        <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">-->
+                                            <!--&#xe606;</i></span></p>-->
+                                        <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
+                                        <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
+                                    <!--</div>-->
+                                <!--</a>-->
+                            <!--</h5>-->
+                            <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
+                            <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
+                        <!--</div>-->
+                        <!--<div class="team-state">-->
+                            <!--<p>2017-02-15 15:31</p>-->
+                            <!--<div class="team-pay">-->
+                                <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
+                                <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="team-btn">-->
+                        <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
-            <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <pagination class="pagination-sm pull-right"
+                        items-per-page="orderObj.page_size"
+                        ng-model="orderObj.page"
+                        total-items="totalItems"
+                        max-size="maxSize"
+                        ng-change="pageChanged()"
+                        boundary-links="false"
+                        boundary-link-numbers="true"
+                        rotate="false"
+                        force-ellipses="true"
+                        previous-text="‹"
+                        next-text="›">
+            </pagination>
         </div>
     </div>
+    <div ng-show="State=='detail'">
+        <order-detail></order-detail>
+        <div class="dashed-border"></div>
+        <p class="intro-stitle">接团导游</p>
+        <div class="guidebox" ng-repeat="(key,guide) in guideList">
+            <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)" ng-show="orderObj.type==20"><input
+                    type="checkbox"></div>
+            <div class="guide-infor clearfix">
+                <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}"><img
+                        src="images/default_person.png"></div>
+                <div class="person-infor">
+                    <div class="p-m1">
+                        <span class="pp-name" ng-bind="guide.name"></span><i class="iconfont"
+                                                                             ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">
+                        &#xe607;</i><span
+                            class="pp-age"><span ng-bind="guide.age"></span>岁</span><span class="acrossline">|</span>
+                        <span class="pp-gimg">品牌导游<img src="images/honer.png" ng-show="guide.level==1"><span
+                                ng-show="guide.level!=1">否</span></span><span
+                            class="acrossline">|</span>
+                        <span class="pp-scroe">平均评分<div style="display:inline;" star rating-value="guide.star" max="5"
+                                                        on-hover="onHover" on-leave="onLeave"
+                                                        readonly="true"></div><span
+                                class="acrossline">|</span>带团年限：<span><span ng-bind="guide.year"></span>年</span>
+                    </div>
+                    <div class="p-m2">
+                        <span><i class="iconfont icon-guide">&#xe603;</i>自由导游</span>
+                        <span class="acrossline">|</span>导服中心评价：<span ng-bind="guide.center_comment"></span>
+                    </div>
+                    <div class="p-m3" ng-bind="guide.avatar"></div>
+                    <div class="openline">
+                        <a class="img-more"><img src="images/more.png"></a>
+                        <span class="doubleline"></span>
+                    </div>
+                    <div class="guideintro-part clearfix" ng-style="{display:key==0?'block':'none'}">
+                        <div class="col-sm-6 intro-line">
+                            <label>语<span class="m-l-84"></span>种：</label>
+                            <span ng-repeat="lan in guide.language"><span ng-bind="lan.type"></span>&nbsp;&nbsp;</span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>手<span class="m-l-10"></span>机<span class="m-l-10"></span>号<span
+                                    class="m-l-10"></span>码：</label>
+                            <span ng-bind="guide.mobile"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>带<span class="m-l-19"></span>团<span class="m-l-19"></span>次<span
+                                    class="m-l-19"></span>数：</label>
+                            <span><span ng-bind="guide.order_count"></span>次</span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>导 游 证 编 号：</label>
+                            <span ng-bind="guide.guide_card_no"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>导游资格证书号码：</label>
+                            <span ng-bind="guide.guide_card_id"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>导游证 IC卡号：</label>
+                            <span ng-bind="guide.guide_card_IC"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>民<span class="m-l-84"></span>族：</label>
+                            <span ng-bind="guide.nation"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>政&nbsp;&nbsp;治&nbsp;&nbsp;&nbsp;面&nbsp;&nbsp;貌：</label>
+                            <span ng-bind="guide.idtype"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>户&nbsp;&nbsp;&nbsp;口&nbsp;&nbsp;&nbsp;所&nbsp;&nbsp;&nbsp;在&nbsp;&nbsp;地：</label>
+                            <span ng-bind="guide.birthday_area"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>邮<span class="m-l-57"></span>箱：</label>
+                            <span ng-bind="guide.mail"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>毕<span class="m-l-19"></span>业<span class="m-l-19"></span>学<span
+                                    class="m-l-19"></span>校：</label>
+                            <span ng-bind="guide.school"></span>
+                        </div>
+                        <div class="col-sm-6 intro-line">
+                            <label>专<span class="m-l-57"></span>业：</label>
+                            <span ng-bind="guide.special"></span>
+                        </div>
+                        <div class="col-sm-12 intro-line">
+                            <label>兴 趣 爱 好 / 特 长：</label>
+                            <span ng-bind="guide.interset"></span>
+                        </div>
+                        <div class="col-sm-12 intro-line">
+                            <label>荣&nbsp;&nbsp;&nbsp;誉&nbsp;&nbsp;&nbsp;和&nbsp;&nbsp;&nbsp;奖&nbsp;&nbsp;励：</label>
+                            <span ng-bind="guide.reward"></span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="openline m-l-15">
+                            <a class="img-up"><img src="images/up.png"></a>
+                            <span class="doubleline"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center" ng-show="orderObj.type==20">
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="ConfirmAlert()">确认出团</a>
+
+        </div>
+        <div class="text-center" ng-show="orderObj.type==21">
+            <a class="btn-cn btn-gray btn-acceptorder" ng-click="CloseOrderAlert()">关闭订单</a>
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==21" ng-click="TopOrderAlert()">置顶订单</a>
+        </div>
+        <div class="text-center" ng-show="orderObj.type==23">
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="EndOrderAlert()">结束行程</a>
+        </div>
+
+    </div>
+
+    <!--弹窗界面-->
+
+    <!--待确认界面，点击确认弹窗-->
+    <div class="pop-container comfirm-order-alert" style="display: none">
+        <div class="pop-header clearfix">
+            <h4>提示</h4>
+            <a class="m-close" ng-click="closeAlert()"><img src="images/close.png"></a>
+        </div>
+        <div class="pop-txt">
+            <img src="images/pop_notice.png">
+            <p>请与导游线下沟通后再进行此操作<br/>确认后取消会影响贵社的信用值哦~
+            </p>
+        </div>
+        <div class="pop-btn">
+            <a class="btn-gray"  ng-click="closeAlert()">取&nbsp;&nbsp;消</a>
+            <a class="btn-yellow" ng-click="ConfirmOrder()">确认关闭</a>
+        </div>
+    </div>
+
+    <!--待出团界面，点击关闭订单弹窗-->
+    <div class="pop-container close-order-alert" style="display: none">
+        <div class="pop-header clearfix">
+            <h4>关闭订单</h4>
+            <a class="m-close" ng-click="closeAlert()"><img src="images/close.png"></a>
+        </div>
+        <div class="pop-main">
+            <div class="pop-txt pop-txt1">
+                <img src="images/pop_notice.png">
+                <p>关闭订单会影响您的信誉哦~<br/>是否确认关闭此订单？
+                </p>
+            </div>
+            <div class="pop-line">
+                <label>关闭订单</label>
+                <textarea rows="4" placeholder="请填写关闭订单的理由" ng-model="closeContent"></textarea>
+            </div>
+        </div>
+        <div class="pop-btn">
+            <a class="btn-gray" ng-click="closeAlert()">去确认</a>
+            <a class="btn-yellow"  ng-click="CloseOrder()">已确认</a>
+        </div>
+    </div>
+
+    <!--待出团界面，点击置顶订单弹窗-->
+    <div class="pop-container  top-order-alert w-650"  style="display: none">
+        <form name="TopForm">
+            <div class="pop-header clearfix">
+                <h4>置顶订单</h4>
+                <a class="m-close" ng-click="closeAlert()"><img src="images/close.png"></a>
+            </div>
+            <div class="pop-zd clearfix">
+                <div class="col-md-6 order-zd">
+                    <label>截止时间</label>
+                    <div class="layui-inline">
+                        <input type="text" style="float: left;" class="layui-input" time-change placeholder="招募截至时间"
+                               ng-model="TopObj.enter_end_time"
+                               onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})" required>
+                    </div>
+                </div>
+                <div class="col-md-6 order-zd">
+                    <label>应标人数</label>
+                    <input type="text" name="guide_max_num" ng-model="TopObj.guide_max_num" required> 人
+                </div>
+                <div class="col-md-6 order-zd">
+                    <label>添加酬金</label>
+                    <input  type="number" type="text" ng-model="TopObj.guide_money" placeholder="最多10000元" required> 元
+                    <div class="alert alert-danger help-block" ng-show="TopObj.guide_money>10000">
+                        人均酬金不超过10000元
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <p class="pop-zdtitle">导游要求</p>
+                </div>
+                <div class="col-md-6 order-zd">
+                    <label>导游人数</label>
+                    <input type="number" ng-model="TopObj.guide_num" placeholder="最多100人" required> 人
+                    <div class="alert alert-danger help-block" ng-show="TopObj.guide_num>100">
+                        导游人数不能超过100人
+                    </div>
+                </div>
+                <div class="col-md-6 order-zd">
+                    <label>性别要求</label>
+				<span class="sex-require">
+					<span><input type="radio" name="sex"  ng-click="changeSex(0)" checked> 无要求</span>
+					<span><input type="radio" name="sex"  ng-click="changeSex(1)"> 男</span>
+					<span><input type="radio" name="sex"  ng-click="changeSex(2)"> 女</span>
+				</span>
+                </div>
+                <div class="col-md-12 order-zd">
+                    <label>品牌导游</label>
+				<span class="sex-require">
+					<span><input type="radio" name="guide"  ng-click="changeRequire(0)" checked> 无要求</span>
+					<span><input type="radio" name="guide"  ng-click="changeRequire(0)"> 是</span>
+				</span>
+                </div>
+                <div class="col-md-6 order-zd">
+                    <label style="float: left">评分要求</label>
+                    <div style="float: left" star rating-value="TopObj.star" max="5" on-hover="onHover" on-leave="onLeave"
+                         readonly="false"></div>
+				</span>
+                </div>
+                <div class="col-md-6 order-zd">
+                    <label>学历要求</label>
+                    <select ng-model="InfoObj.study_level">
+                        <option ng-repeat="studen_level in study_levelList" value="studen_level.key" ng-selected="studen_level.key==0">{{studen_level.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-12 order-zd">
+                    <label>语言要求</label>
+	                <span class="language">
+                <span ng-repeat="lang in TopObj.language track by $index">
+                    <span ng-bind="lang.language_name"></span>
+                    <img ng-click="removelanguage($index)" src="images/language_close.png">
+                </span>
+            <a class="add-language"><i class="iconfont">&#xe61d;</i>
+                <ul class="language-choice">
+                    <li ng-repeat="(key,langSel) in languageSelList" ng-class="{'language-checked':key==0}"
+                        ng-bind="langSel" ng-click="addLanguage(langSel)"></li>
+                </ul>
+            </a>
+            </span>
+                </div>
+            </div>
+            <div class="pop-btn">
+                <a class="btn-gray" ng-click="closeAlert()">去确认</a>
+                <a class="btn-yellow" ng-click="TopOrder()">发&nbsp;&nbsp;布</a>
+            </div>
+        </form>
+    </div>
+
+    <!--待出团界面，点击置顶订单弹窗第二步-->
+    <div class="pop-container  top-order-alert-next"  style="display: none">
+        <div class="pop-header clearfix">
+            <h4>提示</h4>
+            <a class="m-close" ng-click="closeAlertNext()"><img src="images/close.png"></a>
+        </div>
+        <div class="pop-txt">
+            <img src="images/pop_notice.png">
+            <p>您已修改订单要求<br/>是否确认发布置顶此订单？
+            </p>
+        </div>
+        <div class="pop-btn">
+            <a class="btn-gray"  ng-click="closeAlertNext()">取&nbsp;&nbsp;消</a>
+            <a class="btn-yellow"  ng-click="TopOrderNext()">发&nbsp;&nbsp;布</a>
+        </div>
+    </div>
+
+    <!--待结束界面，点击结束行程弹窗-->
+    <div class="pop-container end-order-alert" style="display: none">
+        <div class="pop-header clearfix">
+            <h4>评价</h4>
+            <a class="m-close" ng-click="closeAlert()"><img src="images/close.png"></a>
+        </div>
+        <div class="pop-main">
+            <p class="pop-title">请您为本次合作的导游评价吧！</p>
+            <div style="overflow-y: auto;height: 350px">
+            <div ng-repeat="guide in guideEndList">
+                <div class="pop-line">
+                    <img src="images/default_person.png">
+                    <span class="pp-name" style="font-weight: 700;padding-left: 20px" ng-bind="guide.name">王晓曦</span>
+                </div>
+                <div class="pop-line">
+                    <label>服务评星</label>
+                    <div style="display: inline" star rating-value="guide.star" max="5" on-hover="onHover" on-leave="onLeave"
+                         readonly="false"></div>
+                </div>
+                <div class="pop-line">
+                    <label>服务评价</label>
+                    <textarea rows="6" placeholder="真实客观的描述有利于我们提高服务质量" ng-model="guide.content"></textarea>
+                </div>
+            </div>
+            </div>
+
+        </div>
+        <div class="pop-btn">
+            <a class="btn-gray" ng-click="closeAlert()">取&nbsp;&nbsp;消</a>
+            <a class="btn-yellow"  ng-click="EndOrder()" EndOrder>确&nbsp;&nbsp;定</a>
+        </div>
+    </div>
+
     <!--   待出团    -->
-    <div class="teams-list">
-        <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按发单时间顺序</option>
-            </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
-            </div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="state-urgent"><img src="images/state_cancel.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="travelagency-img"><span><img src="images/people03.png"></span></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游
-                            <a class="guideimg">
-                                <i class="iconfont">&#xe603;</i>
-                                <div class="guide-pop">
-                                    <h3>导游要求</h3>
-                                    <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>
-                                    <p>品牌导游：<span><img src="images/honer.png"></span></p>
-                                    <p class="b-0">评分要求：<span><img src="images/star.png"></span></p>
-                                </div>
-                            </a>
-                        </h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="travelagency-img">
-                        <span class="two01"><img src="images/people01.png"></span>
-                        <span class="two02"><img src="images/people02.png"></span>
-                    </div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游
-                            <a class="guideimg">
-                                <i class="iconfont">&#xe603;</i>
-                                <div class="guide-pop">
-                                    <h3>导游要求</h3>
-                                    <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>
-                                    <p>品牌导游：<span><img src="images/honer.png"></span></p>
-                                    <p class="b-0">评分要求：<span><img src="images/star.png"></span></p>
-                                </div>
-                            </a>
-                        </h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!--   出团中    -->
-    <div class="teams-list">
-        <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按发单时间顺序</option>
-            </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="travelagency-img"><span><img src="images/people03.png"></span></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游
-                            <a class="guideimg">
-                                <i class="iconfont">&#xe603;</i>
-                                <div class="guide-pop">
-                                    <h3>导游要求</h3>
-                                    <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>
-                                    <p>品牌导游：<span><img src="images/honer.png"></span></p>
-                                    <p class="b-0">评分要求：<span><img src="images/star.png"></span></p>
-                                </div>
-                            </a>
-                        </h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="travelagency-img">
-                        <span class="two01"><img src="images/people01.png"></span>
-                        <span class="two02"><img src="images/people02.png"></span>
-                    </div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游
-                            <a class="guideimg">
-                                <i class="iconfont">&#xe603;</i>
-                                <div class="guide-pop">
-                                    <h3>导游要求</h3>
-                                    <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>
-                                    <p>品牌导游：<span><img src="images/honer.png"></span></p>
-                                    <p class="b-0">评分要求：<span><img src="images/star.png"></span></p>
-                                </div>
-                            </a>
-                        </h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                </div>
-            </div>
-            <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!--   待结束    -->
-    <div class="teams-list">
-        <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按发单时间顺序</option>
-            </select>
-            <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
-            </div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="travelagency-img"><span><img src="images/people03.png"></span></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游
-                            <a class="guideimg">
-                                <i class="iconfont">&#xe603;</i>
-                                <div class="guide-pop">
-                                    <h3>导游要求</h3>
-                                    <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>
-                                    <p>品牌导游：<span><img src="images/honer.png"></span></p>
-                                    <p class="b-0">评分要求：<span><img src="images/star.png"></span></p>
-                                </div>
-                            </a>
-                        </h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-btn">
-                    <a class="btn-cn btn-empty-yellow">查看详情</a>
-                    <a class="btn-cn btn-yellow">结&nbsp;&nbsp;&nbsp;束</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--<div class="teams-list">-->
+    <!--<div class="choice-box clearfix">-->
+    <!--<select class="select-u">-->
+    <!--<option>按发单时间顺序</option>-->
+    <!--</select>-->
+    <!--<div class="search-box">-->
+    <!--<span class="search-img"><img src="images/search.png"></span>-->
+    <!--<input type="text" class="" placeholder="Search">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="teams-box">-->
+    <!--<div class="teams-part">-->
+    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+
+    <!--<div class="state-urgent"><img src="images/state_cancel.png"></div>-->
+    <!--<div class="team-infor clearfix">-->
+    <!--<div class="travelagency-img"><span><img src="images/people03.png"></span></div>-->
+    <!--<div class="team-text">-->
+    <!--<h5>周庄烟雨水乡一日游-->
+    <!--<a class="guideimg">-->
+    <!--<i class="iconfont">&#xe603;</i>-->
+    <!--<div class="guide-pop">-->
+    <!--<h3>导游要求</h3>-->
+    <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>-->
+    <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
+    <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</h5>-->
+    <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
+    <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
+    <!--</div>-->
+    <!--<div class="team-state">-->
+    <!--<p>2017-02-15 15:31</p>-->
+    <!--<div class="team-pay">-->
+    <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
+    <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="team-btn">-->
+    <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="teams-part">-->
+    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+    <!--<div class="team-infor clearfix">-->
+    <!--<div class="travelagency-img">-->
+    <!--<span class="two01"><img src="images/people01.png"></span>-->
+    <!--<span class="two02"><img src="images/people02.png"></span>-->
+    <!--</div>-->
+    <!--<div class="team-text">-->
+    <!--<h5>周庄烟雨水乡一日游-->
+    <!--<a class="guideimg">-->
+    <!--<i class="iconfont">&#xe603;</i>-->
+    <!--<div class="guide-pop">-->
+    <!--<h3>导游要求</h3>-->
+    <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>-->
+    <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
+    <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</h5>-->
+    <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
+    <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
+    <!--</div>-->
+    <!--<div class="team-state">-->
+    <!--<p>2017-02-15 15:31</p>-->
+    <!--<div class="team-pay">-->
+    <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
+    <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="team-btn">-->
+    <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="text-center">-->
+    <!--<nav aria-label="Page navigation">-->
+    <!--<ul class="pagination">-->
+    <!--<li>-->
+    <!--<a href="#" aria-label="Previous">-->
+    <!--<span aria-hidden="true">&laquo</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li><a href="#">1</a></li>-->
+    <!--<li><a href="#">2</a></li>-->
+    <!--<li><a href="#">3</a></li>-->
+    <!--<li><a href="#">4</a></li>-->
+    <!--<li><a href="#">5</a></li>-->
+    <!--<li>-->
+    <!--<a href="#" aria-label="Next">-->
+    <!--<span aria-hidden="true">&raquo</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</nav>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;   出团中    &ndash;&gt;-->
+    <!--<div class="teams-list">-->
+    <!--<div class="choice-box clearfix">-->
+    <!--<select class="select-u">-->
+    <!--<option>按发单时间顺序</option>-->
+    <!--</select>-->
+    <!--<div class="search-box">-->
+    <!--<span class="search-img"><img src="images/search.png"></span>-->
+    <!--<input type="text" placeholder="Search">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="teams-box">-->
+    <!--<div class="teams-part">-->
+    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+    <!--<div class="team-infor clearfix">-->
+    <!--<div class="travelagency-img"><span><img src="images/people03.png"></span></div>-->
+    <!--<div class="team-text">-->
+    <!--<h5>周庄烟雨水乡一日游-->
+    <!--<a class="guideimg">-->
+    <!--<i class="iconfont">&#xe603;</i>-->
+    <!--<div class="guide-pop">-->
+    <!--<h3>导游要求</h3>-->
+    <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>-->
+    <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
+    <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</h5>-->
+    <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
+    <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
+    <!--</div>-->
+    <!--<div class="team-state">-->
+    <!--<p>2017-02-15 15:31</p>-->
+    <!--<div class="team-pay">-->
+    <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
+    <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="team-btn">-->
+    <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="teams-part">-->
+    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+    <!--<div class="team-infor clearfix">-->
+    <!--<div class="travelagency-img">-->
+    <!--<span class="two01"><img src="images/people01.png"></span>-->
+    <!--<span class="two02"><img src="images/people02.png"></span>-->
+    <!--</div>-->
+    <!--<div class="team-text">-->
+    <!--<h5>周庄烟雨水乡一日游-->
+    <!--<a class="guideimg">-->
+    <!--<i class="iconfont">&#xe603;</i>-->
+    <!--<div class="guide-pop">-->
+    <!--<h3>导游要求</h3>-->
+    <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>-->
+    <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
+    <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</h5>-->
+    <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
+    <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
+    <!--</div>-->
+    <!--<div class="team-state">-->
+    <!--<p>2017-02-15 15:31</p>-->
+    <!--<div class="team-pay">-->
+    <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
+    <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="team-btn">-->
+    <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="text-center">-->
+    <!--<nav aria-label="Page navigation">-->
+    <!--<ul class="pagination">-->
+    <!--<li>-->
+    <!--<a href="#" aria-label="Previous">-->
+    <!--<span aria-hidden="true">&laquo</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li><a href="#">1</a></li>-->
+    <!--<li><a href="#">2</a></li>-->
+    <!--<li><a href="#">3</a></li>-->
+    <!--<li><a href="#">4</a></li>-->
+    <!--<li><a href="#">5</a></li>-->
+    <!--<li>-->
+    <!--<a href="#" aria-label="Next">-->
+    <!--<span aria-hidden="true">&raquo</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</nav>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;   待结束    &ndash;&gt;-->
+    <!--<div class="teams-list">-->
+    <!--<div class="choice-box clearfix">-->
+    <!--<select class="select-u">-->
+    <!--<option>按发单时间顺序</option>-->
+    <!--</select>-->
+    <!--<div class="search-box">-->
+    <!--<span class="search-img"><img src="images/search.png"></span>-->
+    <!--<input type="text" class="" placeholder="Search">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="teams-box">-->
+    <!--<div class="teams-part">-->
+    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+    <!--<div class="team-infor clearfix">-->
+    <!--<div class="travelagency-img"><span><img src="images/people03.png"></span></div>-->
+    <!--<div class="team-text">-->
+    <!--<h5>周庄烟雨水乡一日游-->
+    <!--<a class="guideimg">-->
+    <!--<i class="iconfont">&#xe603;</i>-->
+    <!--<div class="guide-pop">-->
+    <!--<h3>导游要求</h3>-->
+    <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">&#xe606;</i></span></p>-->
+    <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
+    <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</h5>-->
+    <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
+    <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
+    <!--</div>-->
+    <!--<div class="team-state">-->
+    <!--<p>2017-02-15 15:31</p>-->
+    <!--<div class="team-pay">-->
+    <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
+    <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="team-btn">-->
+    <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
+    <!--<a class="btn-cn btn-yellow">结&nbsp;&nbsp;&nbsp;束</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
 </div>
+
+
 
 <script type="text/javascript">
     // tab切换
     $(".teams-list:first").show();
     $(".tab-order li:first").addClass("active-tab");
-    $(".tab-order li").click(function() {
+    $(".tab-order li").click(function () {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
-        $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
+//        $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
     });
 
     // 覆盖显示
-    $(".team-infor .guideimg").mouseover(function() {
+    $(".teams-list").on("mouseover", ".team-infor .guideimg", function () {
         $(this).children(".guide-pop").show();
     });
-    $(".team-infor .guideimg").mouseleave(function() {
+
+    $(".teams-list").on("mouseleave", ".team-infor .guideimg", function () {
         $(this).children(".guide-pop").hide();
     });
+
+    $(".team-infor .guideimg").mouseover(function () {
+        $(this).children(".guide-pop").show();
+    });
+    $(".team-infor .guideimg").mouseleave(function () {
+        $(this).children(".guide-pop").hide();
+    });
+
+
+    $(".container-bg").on("click", ".img-more", function () {
+        $(this).parents(".person-infor").children(".guideintro-part").show(100);
+    })
+
+    $(".container-bg").on("click", ".img-up", function () {
+        $(".guideintro-part").parents(".person-infor").children(".guideintro-part").hide(100);
+    })
+
+    $(".add-language").click(function () {
+        $(".language-choice").show();
+    });
+    $(".add-language").mouseleave(function () {
+        $(".language-choice").hide();
+    });
+    $(".language-choice li").click(function () {
+        $(this).hasClass("language-checked") ? $(this).removeClass("language-checked") : $(this).addClass("language-checked");
+    });
+
+    //
+    //    $(".container-bg").on("click",".guide-check",function(){
+    //        if ($(this).hasClass("on-check") == true) {
+    //            $(this).removeClass("on-check");
+    //            $(this).parents(".guidebox").find(".person-left").css("border", " 1px solid #ccc");
+    //        } else {
+    //            $(this).addClass("on-check");
+    //            $(this).parents(".guidebox").find(".person-left").css("border", " 1px solid #ffbc52");
+    //        }    })
+
 </script>

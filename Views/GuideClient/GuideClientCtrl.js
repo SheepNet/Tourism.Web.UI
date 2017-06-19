@@ -2,11 +2,11 @@
  * Created by YOUNG on 2017/5/30.
  */
 //主界面控制器
-Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", function ($scope, $http, $sce, $state, $stateParams, $cookieStore) {
+Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore","$location", function ($scope, $http, $sce, $state, $stateParams, $cookieStore,$location) {
     var userMessage = $cookieStore.get("user");
     $scope.session_id = $cookieStore.get("session_id");
     if (userMessage == null) {
-        $state.go("index");
+        $location.path("index")
     }
     $scope.User = userMessage;
     $state.go("guideClient.guideInfoCenter");
@@ -31,6 +31,16 @@ Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$state
 //消息中心控制器
 Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService", function ($scope, $http, $sce, $state, $stateParams, centerService) {
     $scope.reportData = [];
+
+    $scope.InfoObj={
+        title:"",
+        begin_date:"",
+        end_date:"",
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
+    }
+
     $scope.currentPage = 1;
     $scope.totalItems = 13;
     $scope.pagesize = 7;
@@ -43,7 +53,7 @@ Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         $scope.init();
     }
     $scope.init = function () {
-        var promise = centerService.getList($scope.searchTitle, $scope.begin_date, $scope.end_date, $scope.currentPage, $scope.pagesize, $scope.session_id);
+        var promise = centerService.getList($scope.InfoObj);
         promise.then(function (data) {
             $scope.totalItems = data.msg_body.total_count;
             $scope.infoList = data.msg_body.notify;
@@ -70,6 +80,7 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
     }else {
         $scope.completeMode = true;
     }
+
     //编辑信息部分
     $scope.completeMessage={}
     $scope.sex = 0;
@@ -151,7 +162,7 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
     $scope.orderList=[];
 
     $scope.orderObj={
-        type:1,
+        type:10,
         title:"",
         order_type:"1",
         page:1,
@@ -172,7 +183,7 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         promise.then(function (data) {
             if (data.err_code == 0) {
                 $scope.orderList=data.msg_body.order;
-                $scope.totalItems = data.msg_body.count.type_1_count;
+                $scope.totalItems = data.msg_body.count.type_10_count;
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -218,7 +229,7 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
     };
 
     $scope.orderObj={
-        type:2,
+        type:20,
         title:"",
         order_type:"1",
         page:1,
@@ -248,20 +259,17 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
                 $scope.orderCount=data.msg_body.count;
                 switch($scope.orderObj.type)
                 {
-                    case 1:
-                        $scope.totalItems=$scope.orderCount.type_1_count;
+                    case 20:
+                        $scope.totalItems=$scope.orderCount.type_20_count;
                         break;
-                    case 2:
-                        $scope.totalItems=$scope.orderCount.type_2_count;
+                    case 21:
+                        $scope.totalItems=$scope.orderCount.type_21_count;
                         break;
-                    case 3:
-                        $scope.totalItems=$scope.orderCount.type_3_count;
+                    case 22:
+                        $scope.totalItems=$scope.orderCount.type_22_count;
                         break;
-                    case 4:
-                        $scope.totalItems=$scope.orderCount.type_4_count;
-                        break;
-                    case 5:
-                        $scope.totalItems=$scope.orderCount.type_5_count;
+                    case 23:
+                        $scope.totalItems=$scope.orderCount.type_23_count;
                         break;
                     default:
                         break;
@@ -276,6 +284,8 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
             layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
     }
+
+    $scope.init();
 
     $scope.turnToDetail=function(id){
         var promise=gudieService.getorderDetail(id,$scope.session_id);
@@ -294,21 +304,113 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         })
     }
 
-    $scope.init();
+    $scope.turnToIndex=function(){
+        $scope.State="index";
+    }
+
 }]);
 
 //结束订单控制器
-Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", function ($scope, $http, $sce, $state, $stateParams) {
+Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService", function ($scope, $http, $sce, $state, $stateParams,gudieService) {
+
+    $scope.State="index";
+
+    $scope.orderObj={
+        type:30,
+        title:"",
+        order_type:"1",
+        page:1,
+        page_size:5,
+        session_id:$scope.session_id
+    }
+
+    $scope.pageChanged = function () {
+        $scope.init();
+    }
+
+    $scope.OrdertypeChange=function(){
+        $scope.init();
+    }
+
+    $scope.init=function(){
+        var promise=gudieService.getorderList($scope.orderObj);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                $scope.orderList=data.msg_body.order;
+                $scope.totalItems=data.msg_body.count.type_30_count;
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    $scope.init();
+
+    $scope.turnToDetail=function(id){
+        var promise=gudieService.getorderDetail(id,$scope.session_id);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                $scope.orderDetail=data.msg_body.order;
+                $scope.State="detail";
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
 
 }]);
 
 //投诉中心控制器
-Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", function ($scope, $http, $sce, $state, $stateParams) {
+Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService", function ($scope, $http, $sce, $state, $stateParams,gudieService) {
+
+    $scope.obj=
+    {
+        "complain_type": 1,
+        "content": "",
+        "content_file": [
+        ],
+        "complain_mobile": "投诉人手机",
+        "session_id":$scope.session_id
+    }
+
+    $scope.AddComplain=function(){
+        if($scope.obj.content.length>500){
+            layer.msg("投诉或建议在500字以内", {icon: 0});
+            return true;
+        }
+
+        var promise=gudieService.addComplian($scope.obj);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                layer.msg("提交成功", {icon: 1})
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+
+    }
 
 }]);
 
 //投诉中心控制器
 Ctrl.controller("JoinUsCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", function ($scope, $http, $sce, $state, $stateParams) {
+
     $scope.step=1;
 
     $scope.DownaAreement=function(){

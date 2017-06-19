@@ -10,7 +10,7 @@
             </select>
             <div class="search-box">
                 <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
             </div>
             <div class="fr m-t-5"><a class="btn-import"><i class="iconfont">&#xe633;</i>导入导游</a></div>
         </div>
@@ -29,312 +29,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>张明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4.5</td>
-                        <td>会员等级</td>
-                        <td>是</td>
-                        <td ng-click="ShowDetail()"><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>13</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>14</td>
-                        <td>张明明</td>
-                        <td>男</td>
-                        <td>18345698523</td>
-                        <td>4</td>
-                        <td>会员等级</td>
-                        <td>否</td>
-                        <td><a><i class="iconfont">&#xe692;</i></a></td>
+                    <tr ng-repeat="(key,model) in guideList">
+                        <td ng-bind="key+1">1</td>
+                        <td ng-bind="model.name">张明</td>
+                        <td ng-bind="model.sex==1?'男':'女'">男</td>
+                        <td ng-bind="model.mobile">15101412144</td>
+                        <td ng-bind="model.check_time">2017-02-18 18:00</td>
+                        <td ><span ng-bind="model.year"></span>年</td>
+                        <td ng-bind="model.guide_card_no"></td>
+                        <td ng-click="ShowDetail(model.id)"><a><i class="iconfont">&#xe645;</i></a></td>
                     </tr>
                 </tbody>
             </table>
-            <div class="m-t-10">分页</div>
         </div>
+        <pagination class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems"
+                    max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true"
+                    rotate="false" force-ellipses="true" previous-text="‹"
+                    next-text="›">
+        </pagination>
+
     </div>
     <div ng-show="State=='detail'">
-        <div class="person-detail clearfix">
-            <div class="person-left"><img src="images/default_person.png"></div>
-            <div class="person-infor">
-                <div class="p-m1">
-                    <span class="pp-name">王晓曦</span><i class="iconfont icon-woman">&#xe607;</i><span class="pp-age">28岁</span><span class="acrossline">|</span>
-                    <span class="pp-gimg">品牌导游<img src="images/honer.png"></span><span class="acrossline">|</span>
-                    <span class="pp-scroe">平均评分<img src="images/star.png"></span><span class="acrossline">|</span>带团年限：<span>5年</span>
-                </div>
-                <div class="p-m2">
-                    <span><i class="iconfont icon-guide">&#xe603;</i>自由导游</span>
-                    <span class="acrossline">|</span>导服中心评价：此导游总是临时取消订单。
-                </div>
-                <div class="p-m3">常带江浙沪一带短期团队，为人和善，有耐心，风趣幽默。常带江浙沪一带短期团队，为人和善，有耐心，风趣幽默。<a class="icon-edit"><i class="iconfont"></i></a></div>
-            </div>
-        </div>
-        <p class="intro-stitle">基础资料</p>
-        <div class="intro-part clearfix">
-            <div class="col-sm-4 intro-line">
-                <label>姓<span class="m-l-84"></span>名：</label>
-                <span>王晓峰</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>性<span class="m-l-70"></span>别：</label>
-                <span>女</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>语<span class="m-l-57"></span>言：</label>
-                <span>汉语、英语、法语</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>带<span class="m-l-19"></span>团<span class="m-l-19"></span>年<span class="m-l-19"></span>限：</label>
-                <span>5年</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>带&nbsp;&nbsp;&nbsp;&nbsp;团&nbsp;&nbsp;&nbsp;次&nbsp;&nbsp;&nbsp;数：</label>
-                <span>15次</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>手&nbsp;&nbsp;机&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;码：</label>
-                <span>18862165874</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>导游资格证书号码：</label>
-                <span>D213215F1212554536</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>导&nbsp;游&nbsp;&nbsp;证&nbsp;&nbsp;编&nbsp;&nbsp;号：</label>
-                <span>D-3320-0075461</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>导游证IC卡号：</label>
-                <span>D-3320-0075461</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>所&nbsp;&nbsp;属&nbsp;&nbsp;&nbsp;旅&nbsp;&nbsp;&nbsp;行&nbsp;&nbsp;社：</label>
-                <span>自由导游</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>导服中心注册号：</label>
-                <span>539</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>历史带团记录：</label>
-                <span><a class="look-hisrecord" ng-click="ShowGudieHistory()">查看</a></span>
-            </div>
-            <div class="col-sm-12 intro-line">
-                <label>常<span class="m-l-19"></span>带<span class="m-l-19"></span>路<span class="m-l-19"></span>线：</label>
-                <span>江浙沪一带</span>
-            </div>
-            <div class="col-sm-12 intro-line">
-                <label>简<span class="m-l-84"></span>介：</label>
-                <span>常带江浙沪一带短期团队，为人和善，有耐心，风趣幽默。</span>
-            </div>
-        </div>
-        <p class="intro-stitle">图像资料</p>
-        <ul class="imgbox clearfix">
-            <li><img src="images/book01.png">
-                <span class="imgbox-num">导游资格证书（1）</span>
-                <span class="shadow-btn pop-h1">
-							   <a class="btn-uplook"><i class="iconfont"></i></a>
-							   <a class="btn-updel"><i class="iconfont"></i></a>
-							</span>
-            </li>
-            <li><img src="images/book02.png">
-                <span class="imgbox-num">导游证（1）</span>
-                <span class="shadow-btn pop-h1">
-							   <a class="btn-uplook"><i class="iconfont"></i></a>
-							   <a class="btn-updel"><i class="iconfont"></i></a>
-							</span>
-            </li>
-            <li><img src="images/book03.png">
-                <span class="imgbox-num">合同（16）</span>
-                <span class="shadow-btn pop-h1">
-							   <a class="btn-uplook"><i class="iconfont"></i></a>
-							   <a class="btn-updel"><i class="iconfont"></i></a>
-							</span>
-            </li>
-        </ul>
-        <p class="intro-stitle">详细资料</p>
-        <div class="intro-part clearfix">
-            <div class="col-sm-4 intro-line">
-                <label>身&nbsp;&nbsp;&nbsp;份&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;码：</label>
-                <span>320581199101011234</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>出 生 日 期：</label>
-                <span>1991年01月01日</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>民<span class="m-l-40"></span>族：</label>
-                <span>汉族</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>政<span class="m-l-20"></span>治<span class="m-l-20"></span>面<span class="m-l-20"></span>貌：</label>
-                <span>党员</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>户口所在地：</label>
-                <span>江苏</span>
-            </div>
-            <div class="col-sm-12 intro-line">
-                <label>现<span class="m-l-37"></span>住<span class="m-l-37"></span>址：</label>
-                <span>江苏省苏州市工业园区车坊镇淞泽家园一区12栋501</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>家<span class="m-l-20"></span>庭<span class="m-l-20"></span>电<span class="m-l-20"></span>话：</label>
-                <span>18862165874</span>
-            </div>
-            <div class="col-sm-8 intro-line">
-                <label>邮<span class="m-l-40"></span>箱：</label>
-                <span>421154541254@qq.com</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>毕<span class="m-l-20"></span>业<span class="m-l-20"></span>学<span class="m-l-20"></span>校：</label>
-                <span>苏州大学</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>专<span class="m-l-40"></span>业：</label>
-                <span>旅游文化</span>
-            </div>
-            <div class="col-sm-4 intro-line">
-                <label>学<span class="m-l-40"></span>历：</label>
-                <span>本科</span>
-            </div>
-            <div class="col-sm-12 intro-line">
-                <label>学&nbsp;习&nbsp;&nbsp;工&nbsp;作&nbsp;&nbsp;经&nbsp;&nbsp;历：</label>
-                <span>2012年9月在阆中海天旅行社做过兼职导游</span>
-            </div>
-            <div class="col-sm-12 intro-line">
-                <label>兴 趣 爱 好 / 特 长：</label>
-                <span>唱歌、旅游、运动、看书</span>
-            </div>
-            <div class="col-sm-12 intro-line">
-                <label>荣&nbsp;&nbsp;&nbsp;誉&nbsp;&nbsp;&nbsp;和&nbsp;&nbsp;&nbsp;奖&nbsp;&nbsp;励：</label>
-                <span>导游证、普通话证、计算机一级证、电子商务师证、英语能力级</span>
-            </div>
-        </div>
+        <guide_info></guide_info>
         <div class="text-center">
-            <a class="btn-cn btn-gray">注&nbsp;&nbsp;&nbsp;&nbsp;销</a>
-            <a class="btn-cn btn-yellow">升为品牌导游</a>
+            <a class="btn-cn btn-gray" ng-click="editGuideInfo(5)">注&nbsp;&nbsp;&nbsp;&nbsp;销</a>
+            <a class="btn-cn btn-yellow"  ng-click="editGuideInfo(4)">升为品牌导游</a>
         </div>
     </div>
     <div ng-show="State=='history'">
@@ -343,79 +62,55 @@
                 <option>按星级顺序</option>
                 <option>按时间倒序</option>
             </select>
+            <select class="select-u" ng-model="orderObj.order_type" ng-change="initOrder()">
+                <option value="1">按星级顺序</option>
+                <option value="2">按时间倒序</option>
+            </select>
             <div class="search-box">
                 <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
             </div>
+            <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-import"><i class="iconfont">&#xe633;</i>返回</a></div>
         </div>
         <div class="teams-box">
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team01.png"></div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-comment">
-                    <p><img src="images/star.png"></p>
-                    <p class="team-comment-text">认真负责，有责任心。</p>
-                </div>
-            </div>
-            <div class="teams-part">
+            <div class="teams-part" ng-repeat="order in orderList">
                 <div class="radius-top"><img src="images/radius_top.png"></div>
                 <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
                 <div class="team-infor clearfix">
                     <div class="team-img"><img src="images/team02.png"></div>
                     <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
+                        <h5 ng-bind="order.name"></h5>
+                        <p class="team-detail" ng-bind="order.desc"></p>
+                        <!--这边做特殊处理-->
+                        <p class="team-time">{{order.begin_time}}~{{order.end_time}}</p>
                     </div>
                     <div class="team-state">
-                        <p>2017-02-15 15:31</p>
+                        <p ng-bind="order.guide_comment.comment_time">2017-02-15 15:31</p>
                         <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                            <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>
+                            <i class="iconfont cr">&#xe613;</i><span>￥<span
+                                ng-bind="order.guide_money"></span>/次</span>
                         </div>
                     </div>
                 </div>
                 <div class="team-comment">
-                    <p><img src="images/star.png"></p>
-                    <p class="team-comment-text">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>
+                    <p><div style="display: inline" star rating-value="order.guide_comment.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></p>
+                    <p class="team-comment-text" ng-bind="order.guide_comment.content">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>
                 </div>
             </div>
-            <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
         </div>
+        <pagination class="pagination-sm pull-right"
+                    items-per-page="orderObj.page_size"
+                    ng-model="orderObj.page"
+                    total-items="totalItems"
+                    max-size="maxSize"
+                    ng-change="pageChangedOrder()"
+                    boundary-links="false"
+                    boundary-link-numbers="true"
+                    rotate="false"
+                    force-ellipses="true"
+                    previous-text="‹"
+                    next-text="›">
+        </pagination>
     </div>
 </div>

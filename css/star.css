@@ -17,3 +17,24 @@ ul.rating {
 .rating .filled {
     color: #ffee33;
 }
+
+
+/*半星部分代码*/
+
+/*.rating .halfstar {*/
+    /*color: #a9a9a9;*/
+    /*position: relative;*/
+    /*!*top:3px;*!*/
+    /*overflow: hidden;*/
+    /*whitewhite-space: pre;!* 处理空格 *!*/
+/*}*/
+/*.rating .halfstar:before {*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*color: #ffee33;*/
+    /*display: block;*/
+    /*width: 50%;!*如果想变色一半文字，就设置50%*!*/
+    /*content: attr(data-content);!* 伪元素的动态获取内容 *!*/
+    /*overflow: hidden;*/
+/*}*/

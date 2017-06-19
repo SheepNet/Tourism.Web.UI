@@ -5,13 +5,13 @@
             <div class="p-m1">
                 <span class="pp-name" ng-bind="guideInfo.name"></span><i class="iconfont icon-woman">&#xe607;</i><span
                     class="pp-age"><span ng-bind="guideInfo.age"></span>岁</span><span class="acrossline">|</span>
-                <span class="pp-gimg">品牌导游<img src="images/honer.png"></span><span class="acrossline">|</span>
-                <span class="pp-scroe">平均评分<img src="images/star.png"></span><span class="acrossline">|</span>带团年限：<span
+                <span class="pp-gimg">品牌导游:<img src="images/honer.png" ng-show="guideInfo.level==1"><span ng-show="guideInfo.level!=1">否</span></span><span class="acrossline">|</span>
+                <span class="pp-scroe">平均评分<div style="display: inline" star rating-value="guideInfo.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></div></span><span class="acrossline">|</span>带团年限：<span
                    ><span ng-bind="guideInfo.year"></span>年</span>
             </div>
             <div class="p-m2">
                 <span><i class="iconfont icon-guide">&#xe603;</i>自由导游</span>
-                <span class="acrossline">|</span><span ng-bind="guideInfo.center_comment"></span>
+                <span class="acrossline">|导服中心评价：</span><span ng-bind="guideInfo.center_comment"></span>
             </div>
             <div class="p-m3"><span ng-bind="guideInfo.avatar"></span><a class="icon-edit"><i class="iconfont"></i></a>
             </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="col-sm-4 intro-line">
             <label>历史带团记录：</label>
-            <span><a class="look-hisrecord">查看</a></span>
+            <span><a class="look-hisrecord" ng-click="ShowGudieHistory()">查看</a></span>
         </div>
         <div class="col-sm-12 intro-line">
             <label>常<span class="m-l-19"></span>带<span class="m-l-19"></span>路<span class="m-l-19"></span>线：</label>

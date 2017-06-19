@@ -17,7 +17,7 @@
             </select>
                 <div class="search-box">
                     <span class="search-img"><img src="images/search.png"></span>
-                    <input type="text" class="" placeholder="Search">
+                    <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
                 </div>
             </div>
             <div class="dis-table">
@@ -56,8 +56,8 @@
             </div>
         </div>
         <pagination class="pagination-sm pull-right"
-                    items-per-page="pagesize"
-                    ng-model="currentPage"
+                    items-per-page="orderObj.page_size"
+                    ng-model="orderObj.page"
                     total-items="totalItems"
                     max-size="maxSize"
                     ng-change="pageChanged()"

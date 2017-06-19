@@ -1,23 +1,25 @@
 <div ng-controller="VerifyCenterCtrl">
     <div ng-show="State=='index'">
         <ul class="tab-order clearfix">
-            <li>待审核（<span ng-bind="totalItems"></span>）</li>
-            <li>已审核<span>（2）</span></li>
+            <li ng-click="typeChange(0)">待审核（<span ng-bind="totalItems"></span>）</li>
+            <li ng-click="typeChange(1)">已审核<span>（2）</span></li>
         </ul>
         <!--   待审核    -->
         <div class="order-table">
             <div class="choice-box clearfix">
                 <div class="search-box">
                     <span class="search-img"><img src="images/search.png"></span>
-                    <input type="text" class="" placeholder="Search">
+                    <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
                 </div>
                 <div class="layui-inline" style="margin-left: 10px">
-                    <input class="layui-input startTime" placeholder="开始时间" ng-model="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})">
+                    <input class="layui-input" time-change placeholder="开始时间" ng-model="InfoObj.begin_date"
+                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD',choose:checkDate})" required>
                 </div>
                 <div class="layui-inline endTime" style="margin-left: 10px">
-                    <input class="layui-input" placeholder="结束时间" ng-model="endTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})">
+                    <input class="layui-input" time-change placeholder="结束时间" ng-model="InfoObj.end_date"
+                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD',choose:checkDate})" required>
                 </div>
-                <div class="fr m-t-5"><a class="btn-import" ng-click="searchInfo()">搜索</a></div>
+                <div class="fr m-t-5"><a class="btn-import" ng-click="init()">搜索</a></div>
             </div>
             <div class="dis-table">
                 <table class="table-list">
@@ -44,22 +46,14 @@
                         <td ng-bind="model.check_time">2017-02-18 18:00</td>
                         <td ><span ng-bind="model.year"></span>年</td>
                         <td ng-bind="model.guide_card_no"></td>
-                        <td><a class="btn-import" ng-click="verifyGuide(model.id)">审核</a></td>
+                        <td ng-click="ShowDetail()"><a  ng-click="verifyGuide(model.id)"><i class="iconfont">&#xe645;</i></a></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <pagination class="pagination-sm pull-right"
-                        items-per-page="pagesize"
-                        ng-model="currentPage"
-                        total-items="totalItems"
-                        max-size="maxSize"
-                        ng-change="pageChanged()"
-                        boundary-links="false"
-                        boundary-link-numbers="true"
-                        rotate="false"
-                        force-ellipses="true"
-                        previous-text="‹"
+            <pagination class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems"
+                        max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true"
+                        rotate="false" force-ellipses="true" previous-text="‹"
                         next-text="›">
             </pagination>
         </div>

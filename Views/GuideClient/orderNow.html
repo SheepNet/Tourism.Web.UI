@@ -1,9 +1,10 @@
 <div ng-controller="OrderNowCtrl">
     <div ng-show="State=='index'">
         <ul class="tab-order clearfix">
-            <li ng-click="typeChange(2)">待出团<span>（<span ng-bind="orderCount.type_2_count"></span>）</span></li>
-            <li ng-click="typeChange(3)">出团中<span>（<span ng-bind="orderCount.type_3_count"></span>）</span></li>
-            <li ng-click="typeChange(4)">待结束<span>（<span ng-bind="orderCount.type_4_count"></span>）</span></li>
+            <li ng-click="typeChange(20)">待确认<span>（<span ng-bind="orderCount.type_20_count"></span>）</span></li>
+            <li ng-click="typeChange(21)">待出团<span>（<span ng-bind="orderCount.type_21_count"></span>）</span></li>
+            <li ng-click="typeChange(22)">出团中<span>（<span ng-bind="orderCount.type_22_count"></span>）</span></li>
+            <li ng-click="typeChange(23)">待结束<span>（<span ng-bind="orderCount.type_23_count"></span>）</span></li>
         </ul>
         <!--   出团中    -->
         <div class="teams-list">
@@ -27,11 +28,11 @@
                         <div class="team-text">
                             <h5 ng-bind="order.name"></h5>
                             <p class="team-detail" ng-bind="order.desc"></p>
-                            <p class="team-time"><span ng-bind="order.begin_time"></span>~<span
-                                    ng-bind="order.end_time"></span></p>
+                            <!--这边做特殊处理-->
+                            <p class="team-time">{{order.begin_time}}~{{order.end_time}}</p>
                         </div>
                         <div class="team-state">
-                            <p>2017-02-15 15:31</p>
+                            <p ng-bind="order.create_time">2017-02-15 15:31</p>
                             <div class="team-pay">
                                 <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>
                                 <i class="iconfont cr">&#xe613;</i><span>￥<span
@@ -58,7 +59,7 @@
                     </div>
                     <div class="team-btn">
                         <a class="btn-cn btn-empty-yellow" ng-click="turnToDetail(order.id)">查看详情</a>
-                        <a class="btn-cn btn-yellow" ng-show="orderObj.type==4">结束</a>
+                        <a class="btn-cn btn-yellow" ng-show="orderObj.type==23">结束</a>
                     </div>
                 </div>
             </div>
@@ -79,8 +80,8 @@
     </div>
     <div ng-show="State=='detail'">
         <order-detail></order-detail>
-        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==2" ng-click="turnToIndex()">取消订单</a></div>
-        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==4" ng-click="turnToIndex()">结束行程</a></div>
+        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==20" ng-click="turnToIndex()">取消订单</a></div>
+        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==23" ng-click="turnToIndex()">结束行程</a></div>
     </div>
 </div>
 <script type="text/javascript">

@@ -1,14 +1,13 @@
 <div ng-controller="ComplaintCenterCtrl">
      <div ng-show="State=='index'">
     <div class="choice-box clearfix">
-        <select class="select-u">
-            <option>全部</option>
-            <option>按时间逆序</option>
-            <option>按投诉类型</option>
+        <select class="select-u" ng-model="complainObj.complain_type" ng-change="complainTypeChange()" >
+            <option value="1">按时间逆序</option>
+            <option value="2">按投诉类型</option>
         </select>
         <div class="search-box">
             <span class="search-img"><img src="images/search.png"></span>
-            <input type="text" placeholder="Search">
+            <input type="text" placeholder="Search" ng-model="complainObj.title">
         </div>
     </div>
     <div class="dis-table">
@@ -21,39 +20,45 @@
                 <th>投诉类型</th>
                 <th>内容</th>
                 <th>时间</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>刘丽</td>
-                <td>18345698523</td>
-                <td>导游服务</td>
-                <td>不负责任，态度差</td>
-                <td>2017.02.28 16:02</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>刘丽</td>
-                <td>18345698523</td>
-                <td>导游服务</td>
-                <td>不负责任，态度差</td>
-                <td>2017.02.28 16:02</td>
+            <tr ng-repeat="(key,model) in complainList">
+                <td ng-bind="model.order_num">1</td>
+                <td ng-bind="model.complain_name">刘丽</td>
+                <td ng-bind="model.complain_mobile">18345698523</td>
+                <td ng-bind="model.complain_type">导游服务</td>
+                <td ng-bind="model.content" title="model.content">不负责任，态度差</td>
+                <td ng-bind="model.complain_time">2017.02.28 16:02</td>
+                <td ng-click="ShowDetail(model.id)"><a><i class="iconfont">&#xe692;</i></a></td>
             </tr>
             </tbody>
         </table>
-        <div class="m-t-10">分页</div>
+        <pagination class="pagination-sm pull-right"
+                    items-per-page="complainObj.page_size"
+                    ng-model="complainObj.page"
+                    total-items="totalItems"
+                    max-size="maxSize"
+                    ng-change="pageChanged()"
+                    boundary-links="false"
+                    boundary-link-numbers="true"
+                    rotate="false"
+                    force-ellipses="true"
+                    previous-text="‹"
+                    next-text="›">
+        </pagination>
     </div>
 </div>
      <div ng-show="State=='detail'">
             <p class="intro-stitle">投诉建议</p>
             <div class="m-l-13">
                 <p class="complaint-title">旅行社服务</p>
-                <div class="complaint-content">
-                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>
-                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>
-                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目涂乱刻等原因。</p>
-                    <p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目涂乱刻等原因。</p>
+                <div class="complaint-content" ng-bind="complainInfo.content">
+                    <!--<p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>-->
+                    <!--<p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>-->
+                    <!--<p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目涂乱刻等原因。</p>-->
+                    <!--<p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目涂乱刻等原因。</p>-->
                 </div>
                 <ul class="uploadimg clearfix">
                     <li><img src="images/img01.png">
@@ -75,9 +80,13 @@
             </div>
             <p class="intro-stitle">投诉人</p>
             <div class="m-l-13">
-                <span class="complaint-img"><img src="images/default_person.png">吴曦</span>
-                <span class="complaint-phone"> 联系方式：<b>13541452144</b></span>
+                <span class="complaint-img"><img src="images/default_person.png" ng-bind="complainInfo.complain_name">吴曦</span>
+                <span class="complaint-phone"> 联系方式：<b ng-bind="complainInfo.complain_mobile">>13541452144</b></span>
             </div>
+         <div class="text-center">
+             <a class="btn-cn btn-gray" ng-click="complainCheck(0)">不通过</a>
+             <a class="btn-cn btn-yellow" ng-click="complainCheck(1)">通&nbsp;&nbsp;&nbsp;&nbsp;过</a>
+         </div>
         </div>
 </div>
 

@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+﻿﻿@charset "utf-8";
 
 /* CSS Document */
 
@@ -2383,7 +2383,7 @@ a:hover {
     margin: 0;
 }
 
-.order-zd input[type="text"],
+.order-zd input[type="text"],.order-zd input[type="number"],
 .order-zd input[type="data"],
 .order-zd select {
     min-width: 63%;

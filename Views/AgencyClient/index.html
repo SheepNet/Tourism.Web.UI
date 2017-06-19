@@ -6,7 +6,7 @@
                 <ul>
                     <li class="usercenter">
                         <a>
-                            <span>管理员</span>
+                            <span ng-bind="User.name"></span>
 							<span class="person-img" ui-sref=".agencyEdit">
 								<img src="images/default_person.png">
 							</span>
@@ -27,7 +27,7 @@
                         <img src="images/default_person.png"/>
                     </div>
                     <div class="profile-info">
-                        你好，<span class="login-user-name">苏州旅游局！</span>
+                        你好，<span class="login-user-name" ng-bind="User.name"></span>
                     </div>
                 </a>
             </div>
@@ -41,6 +41,9 @@
                         <li><a ui-sref=".orderNowAgency">进行中</a></li>
                         <li><a ui-sref=".orderEndAgency">已完成</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a ui-sref=".agencyComplaint"><i class="iconfont" >&#xe605;</i>投诉中心</a>
                 </li>
             </ul>
         </div>
@@ -88,5 +91,14 @@
     $(".sidebar-content>li>ul>li").click(function () {
         $(this).addClass("a-active").removeClass("").siblings().addClass("").removeClass("a-active");
     });
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+    });
+
+    function checkDate(){
+        $(".layui-input").blur();
+    }
 </script>
 

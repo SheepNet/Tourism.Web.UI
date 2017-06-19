@@ -14,10 +14,11 @@ Ctrl.directive("orderDetail", function () {
     }
 });
 
+//打星指令
 Ctrl.directive('star', function () {
     return {
         template: '<ul class="rating" ng-mouseleave="leave()">' +
-        '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)">' +
+        '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)" data-content="\u2605">' +
         '\u2605' +
         '</li>' +
         '</ul>',
@@ -29,6 +30,9 @@ Ctrl.directive('star', function () {
             onLeave: '='
         },
         controller: function($scope){
+            if($scope.ratingValue==null){
+                $scope.ratingValue=1;
+            }
             $scope.ratingValue = $scope.ratingValue || 0;
             $scope.max = $scope.max || 5;
             $scope.click = function(val){
@@ -48,10 +52,30 @@ Ctrl.directive('star', function () {
             //elem.css("text-align", "center");
             var updateStars = function () {
                 scope.stars = [];
-                for (var i = 0; i < scope.max; i++) {
-                    scope.stars.push({
-                        filled: i < scope.ratingValue
-                    });
+                if(scope.ratingValue%1==0){
+                    for (var i = 0; i < scope.max; i++) {
+                        scope.stars.push({
+                            filled: i < scope.ratingValue
+                        });
+                    }
+                }else {
+                    //半星处理，这里样式有点问题
+                    var num=parseInt(scope.ratingValue);
+                    for (var i = 0; i < scope.max; i++) {
+                        if(i<num){
+                            scope.stars.push({
+                                filled: true
+                            });
+                        }else if(i==num){
+                            scope.stars.push({
+                                halfstar: true
+                            });
+                        }else {
+                            scope.stars.push({
+                                filled: false
+                            });
+                        }
+                    }
                 }
             };
             updateStars();
@@ -69,3 +93,23 @@ Ctrl.directive('star', function () {
         }
     };
 });
+
+Ctrl.directive('timeChange', function () {
+    return {
+        restrict:"A",
+        replace:false,
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ngModelController) { //这里的scope,elm,attrs,ngModelController都是可以改变变量名的
+            ngModelController.$render=function(){
+                elm.val(ngModelController.$viewValue);
+            }
+
+            elm.on('blur keyup change focus', function() {
+                scope.$apply(function(){
+                    ngModelController.$setViewValue(elm.val())
+                });
+            });
+
+        }
+    }
+})
