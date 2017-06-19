@@ -35,17 +35,16 @@
                         <td ng-bind="model.sex==1?'男':'女'">男</td>
                         <td ng-bind="model.mobile">15101412144</td>
                         <td ng-bind="model.check_time">2017-02-18 18:00</td>
-                        <td ><span ng-bind="model.year"></span>年</td>
+                        <td><span ng-bind="model.year"></span>年</td>
                         <td ng-bind="model.guide_card_no"></td>
                         <td ng-click="ShowDetail(model.id)"><a><i class="iconfont">&#xe645;</i></a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <pagination class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems"
-                    max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true"
-                    rotate="false" force-ellipses="true" previous-text="‹"
-                    next-text="›">
+        <pagination class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems" max-size="maxSize"
+            ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true" rotate="false" force-ellipses="true"
+            previous-text="‹" next-text="›">
         </pagination>
 
     </div>
@@ -53,7 +52,7 @@
         <guide_info></guide_info>
         <div class="text-center">
             <a class="btn-cn btn-gray" ng-click="editGuideInfo(5)">注&nbsp;&nbsp;&nbsp;&nbsp;销</a>
-            <a class="btn-cn btn-yellow"  ng-click="editGuideInfo(4)">升为品牌导游</a>
+            <a class="btn-cn btn-yellow" ng-click="editGuideInfo(4)">升为品牌导游</a>
         </div>
     </div>
     <div ng-show="State=='history'">
@@ -94,23 +93,17 @@
                     </div>
                 </div>
                 <div class="team-comment">
-                    <p><div style="display: inline" star rating-value="order.guide_comment.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></p>
+                    <p>
+                        <div style="display: inline" star rating-value="order.guide_comment.star" max="5" on-hover="onHover"
+                            on-leave="onLeave" readonly="true">
+                    </p>
                     <p class="team-comment-text" ng-bind="order.guide_comment.content">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>
+                    </div>
                 </div>
             </div>
+            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItems"
+                max-size="maxSize" ng-change="pageChangedOrder()" boundary-links="false" boundary-link-numbers="true" rotate="false"
+                force-ellipses="true" previous-text="‹" next-text="›">
+            </pagination>
         </div>
-        <pagination class="pagination-sm pull-right"
-                    items-per-page="orderObj.page_size"
-                    ng-model="orderObj.page"
-                    total-items="totalItems"
-                    max-size="maxSize"
-                    ng-change="pageChangedOrder()"
-                    boundary-links="false"
-                    boundary-link-numbers="true"
-                    rotate="false"
-                    force-ellipses="true"
-                    previous-text="‹"
-                    next-text="›">
-        </pagination>
     </div>
-</div>

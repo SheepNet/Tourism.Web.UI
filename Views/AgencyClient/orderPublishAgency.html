@@ -16,7 +16,7 @@
 
             <div class="col-md-6 order-line">
                 <label>订单名称</label>
-                <input type="text"  name="name" ng-model="InfoObj.name"  ng-maxlength="50" required>
+                <input type="text" name="name" ng-model="InfoObj.name" ng-maxlength="50" required>
                 <div class="alert alert-danger help-block" ng-show="orderForm.name.$dirty && orderForm.name.$invalid">
                     订单名称在50个字以内
                 </div>
@@ -24,21 +24,21 @@
             <div class="col-md-6 order-line">
                 <label>旅游时间</label>
                 <div class="layui-inline">
-                    <input class="layui-input startTime" time-change placeholder="开始时间" ng-model="InfoObj.begin_time"
-                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})" required>
+                    <input class="layui-input startTime" time-change placeholder="开始时间" ng-model="InfoObj.begin_time" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
+                        required>
                 </div>
                 <div class="layui-inline">
                     至
                 </div>
                 <div class="layui-inline endTime">
-                    <input class="layui-input" time-change placeholder="结束时间" ng-model="InfoObj.end_time"
-                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})" required>
+                    <input class="layui-input" time-change placeholder="结束时间" ng-model="InfoObj.end_time" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
+                        required>
                 </div>
                 <!--<span class="order-line-time"><input type="text"> 至 <input type="text"></span>-->
             </div>
             <div class="col-md-12 order-line">
                 <label>行程简介</label>
-                <textarea rows="5" name="desc" ng-model="InfoObj.desc"  ng-maxlength="300" required></textarea>
+                <textarea rows="5" name="desc" ng-model="InfoObj.desc" ng-maxlength="300" required></textarea>
                 <div class="alert alert-danger help-block" ng-show="orderForm.desc.$dirty && orderForm.desc.$invalid">
                     行程简介在300个字以内
                 </div>
@@ -52,11 +52,11 @@
             </div>
             <div class="col-md-6 order-line">
                 <label>游客人数</label>
-                <input type="number" ng-model="InfoObj.order_person" required > 人
+                <input type="number" ng-model="InfoObj.order_person" required> 人
             </div>
             <div class="col-md-12 order-line">
                 <label>特殊备注</label>
-                <textarea rows="4" name="remark" ng-model="InfoObj.remark"  ng-maxlength="300" required></textarea>
+                <textarea rows="4" name="remark" ng-model="InfoObj.remark" ng-maxlength="300" required></textarea>
                 <div class="alert alert-danger help-block" ng-show="orderForm.remark.$dirty && orderForm.remark.$invalid">
                     特殊备注在300个字以内
                 </div>
@@ -64,14 +64,13 @@
             <div class="col-md-6 order-line">
                 <label style="float: left">截止时间</label>
                 <div class="layui-inline endTime">
-                    <input style="float: left;" class="layui-input" time-change placeholder="招募截至时间"
-                           ng-model="InfoObj.enter_end_time"
-                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})" required>
+                    <input style="float: left;" class="layui-input" time-change placeholder="招募截至时间" ng-model="InfoObj.enter_end_time" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
+                        required>
                 </div>
             </div>
             <div class="col-md-6 order-line">
                 <label>人均酬金</label>
-                <input  type="number" type="text" ng-model="InfoObj.guide_money" placeholder="最多10000元" required> 元
+                <input type="number" type="text" ng-model="InfoObj.guide_money" placeholder="最多10000元" required> 元
                 <div class="alert alert-danger help-block" ng-show="InfoObj.guide_money>10000">
                     人均酬金不超过10000元
                 </div>
@@ -88,27 +87,26 @@
             </div>
             <div class="col-md-6 order-line">
                 <label>应标人数</label>
-                <input type="number"placeholder="最多应标人数" ng-model="InfoObj.guide_max_num" required>人
+                <input type="number" placeholder="最多应标人数" ng-model="InfoObj.guide_max_num" required>人
             </div>
             <div class="col-md-6 order-line">
                 <label>性别要求</label>
-            <span class="sex-require">
+                <span class="sex-require">
                 <span><input type="radio" name="sex" checked ng-click="changeSex(0)"> 无要求</span>
-            <span><input type="radio" name="sex" ng-click="changeSex(1)"> 男</span>
-            <span><input type="radio" name="sex" ng-click="changeSex(2)"> 女</span>
-            </span>
+                <span><input type="radio" name="sex" ng-click="changeSex(1)"> 男</span>
+                <span><input type="radio" name="sex" ng-click="changeSex(2)"> 女</span>
+                </span>
             </div>
             <div class="col-md-6 order-line">
                 <label>品牌导游</label>
-            <span class="sex-require">
+                <span class="sex-require">
                 <span><input type="radio" name="guide"  checked  ng-click="changeRequire(0)"> 无要求</span>
-            <span><input type="radio" name="guide"  ng-click="changeRequire(1)"> 是</span>
-            </span>
+                <span><input type="radio" name="guide"  ng-click="changeRequire(1)"> 是</span>
+                </span>
             </div>
             <div class="col-md-6 order-line">
                 <label style="float: left">评分要求：</label>
-                <div style="float: left" star rating-value="InfoObj.star" max="5" on-hover="onHover" on-leave="onLeave"
-                     readonly="false"></div>
+                <div style="float: left" star rating-value="InfoObj.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
             </div>
             <div class="col-md-6 order-line">
                 <label>学历要求</label>
@@ -118,18 +116,18 @@
             </div>
             <div class="col-md-6 order-line">
                 <label>语言要求</label>
-            <span class="language">
+                <span class="language">
                 <span ng-repeat="lang in InfoObj.language track by $index">
                     <span ng-bind="lang.language_name"></span>
-                    <img ng-click="removelanguage($index)" src="images/language_close.png">
+                <img ng-click="removelanguage($index)" src="images/language_close.png">
                 </span>
-            <a class="add-language"><i class="iconfont">&#xe61d;</i>
+                <a class="add-language"><i class="iconfont">&#xe61d;</i>
                 <ul class="language-choice">
                     <li ng-repeat="(key,langSel) in languageSelList" ng-class="{'language-checked':key==0}"
                         ng-bind="langSel" ng-click="addLanguage(langSel)"></li>
                 </ul>
             </a>
-            </span>
+                </span>
             </div>
         </div>
         <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-click="publishOrder()">发布订单</a></div>
@@ -146,4 +144,5 @@
     $(".language-choice li").click(function () {
         $(this).hasClass("language-checked") ? $(this).removeClass("language-checked") : $(this).addClass("language-checked");
     });
+
 </script>

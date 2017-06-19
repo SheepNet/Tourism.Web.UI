@@ -2,10 +2,14 @@
 
     <div ng-show="State=='index'">
         <ul class="tab-order clearfix">
-            <li ng-click="typeChange(20)">待确认<span>（<span ng-bind="orderCount.type_20_count"></span>）</span></li>
-            <li ng-click="typeChange(21)">待出团<span>（<span ng-bind="orderCount.type_21_count"></span>）</span></li>
-            <li ng-click="typeChange(22)">出团中<span>（<span ng-bind="orderCount.type_22_count"></span>）</span></li>
-            <li ng-click="typeChange(23)">待结束<span>（<span ng-bind="orderCount.type_23_count"></span>）</span></li>
+            <li ng-click="typeChange(20)">待确认<span>（<span ng-bind="orderCount.type_20_count"></span>）</span>
+            </li>
+            <li ng-click="typeChange(21)">待出团<span>（<span ng-bind="orderCount.type_21_count"></span>）</span>
+            </li>
+            <li ng-click="typeChange(22)">出团中<span>（<span ng-bind="orderCount.type_22_count"></span>）</span>
+            </li>
+            <li ng-click="typeChange(23)">待结束<span>（<span ng-bind="orderCount.type_23_count"></span>）</span>
+            </li>
         </ul>
         <!--   待确认    -->
         <div class="teams-list">
@@ -27,8 +31,7 @@
                     <div class="radius-top"><img src="images/radius_top.png"></div>
                     <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
                     <!--紧急状态，盖章图片-->
-                    <div class="state-urgent" ng-show="order.is_top==1 && orderObj.type==20"><img
-                            src="images/state_urgent.png"></div>
+                    <div class="state-urgent" ng-show="order.is_top==1 && orderObj.type==20"><img src="images/state_urgent.png"></div>
                     <div class="team-infor clearfix">
                         <!--左边的图片，根据状态动态生成-->
                         <div class="team-img color-07" ng-show="orderObj.type==20"><img src="images/state07.png"></div>
@@ -71,52 +74,43 @@
                     </div>
                 </div>
                 <!--<div class="teams-part">-->
-                    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
-                    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
-                    <!--<div class="team-infor clearfix">-->
-                        <!--&lt;!&ndash;左边的图片，根据状态动态生成&ndash;&gt;-->
-                        <!--<div class="team-img color-08"><img src="images/state08.png"></div>-->
-                        <!--<div class="team-text">-->
-                            <!--<h5>周庄烟雨水乡一日游-->
-                                <!--<a class="guideimg">-->
-                                    <!--<i class="iconfont">&#xe603;</i>-->
-                                    <!--<div class="guide-pop">-->
-                                        <!--<h3>导游要求</h3>-->
-                                        <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">-->
-                                            <!--&#xe606;</i></span></p>-->
-                                        <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
-                                        <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
-                                    <!--</div>-->
-                                <!--</a>-->
-                            <!--</h5>-->
-                            <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
-                            <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
-                        <!--</div>-->
-                        <!--<div class="team-state">-->
-                            <!--<p>2017-02-15 15:31</p>-->
-                            <!--<div class="team-pay">-->
-                                <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
-                                <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="team-btn">-->
-                        <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
-                    <!--</div>-->
+                <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+                <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+                <!--<div class="team-infor clearfix">-->
+                <!--&lt;!&ndash;左边的图片，根据状态动态生成&ndash;&gt;-->
+                <!--<div class="team-img color-08"><img src="images/state08.png"></div>-->
+                <!--<div class="team-text">-->
+                <!--<h5>周庄烟雨水乡一日游-->
+                <!--<a class="guideimg">-->
+                <!--<i class="iconfont">&#xe603;</i>-->
+                <!--<div class="guide-pop">-->
+                <!--<h3>导游要求</h3>-->
+                <!--<p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span><i class="iconfont icon-woman">-->
+                <!--&#xe606;</i></span></p>-->
+                <!--<p>品牌导游：<span><img src="images/honer.png"></span></p>-->
+                <!--<p class="b-0">评分要求：<span><img src="images/star.png"></span></p>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</h5>-->
+                <!--<p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>-->
+                <!--<p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>-->
+                <!--</div>-->
+                <!--<div class="team-state">-->
+                <!--<p>2017-02-15 15:31</p>-->
+                <!--<div class="team-pay">-->
+                <!--<i class="iconfont cb">&#xe61c;</i><span>1人</span>-->
+                <!--<i class="iconfont cr">&#xe613;</i><span>￥300/次</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="team-btn">-->
+                <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
+                <!--</div>-->
                 <!--</div>-->
             </div>
-            <pagination class="pagination-sm pull-right"
-                        items-per-page="orderObj.page_size"
-                        ng-model="orderObj.page"
-                        total-items="totalItems"
-                        max-size="maxSize"
-                        ng-change="pageChanged()"
-                        boundary-links="false"
-                        boundary-link-numbers="true"
-                        rotate="false"
-                        force-ellipses="true"
-                        previous-text="‹"
-                        next-text="›">
+            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItems"
+                max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true" rotate="false"
+                force-ellipses="true" previous-text="‹" next-text="›">
             </pagination>
         </div>
     </div>
@@ -125,20 +119,15 @@
         <div class="dashed-border"></div>
         <p class="intro-stitle">接团导游</p>
         <div class="guidebox" ng-repeat="(key,guide) in guideList">
-            <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)" ng-show="orderObj.type==20"><input
-                    type="checkbox"></div>
+            <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)" ng-show="orderObj.type==20"><input type="checkbox"></div>
             <div class="guide-infor clearfix">
-                <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}"><img
-                        src="images/default_person.png"></div>
+                <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}"><img src="images/default_person.png"></div>
                 <div class="person-infor">
                     <div class="p-m1">
-                        <span class="pp-name" ng-bind="guide.name"></span><i class="iconfont"
-                                                                             ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">
-                        &#xe607;</i><span
-                            class="pp-age"><span ng-bind="guide.age"></span>岁</span><span class="acrossline">|</span>
+                        <span class="pp-name" ng-bind="guide.name"></span><i class="iconfont" ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">
+                        &#xe607;</i><span class="pp-age"><span ng-bind="guide.age"></span>岁</span><span class="acrossline">|</span>
                         <span class="pp-gimg">品牌导游<img src="images/honer.png" ng-show="guide.level==1"><span
-                                ng-show="guide.level!=1">否</span></span><span
-                            class="acrossline">|</span>
+                                ng-show="guide.level!=1">否</span></span><span class="acrossline">|</span>
                         <span class="pp-scroe">平均评分<div style="display:inline;" star rating-value="guide.star" max="5"
                                                         on-hover="onHover" on-leave="onLeave"
                                                         readonly="true"></div><span
@@ -250,7 +239,7 @@
             </p>
         </div>
         <div class="pop-btn">
-            <a class="btn-gray"  ng-click="closeAlert()">取&nbsp;&nbsp;消</a>
+            <a class="btn-gray" ng-click="closeAlert()">取&nbsp;&nbsp;消</a>
             <a class="btn-yellow" ng-click="ConfirmOrder()">确认关闭</a>
         </div>
     </div>
@@ -274,12 +263,12 @@
         </div>
         <div class="pop-btn">
             <a class="btn-gray" ng-click="closeAlert()">去确认</a>
-            <a class="btn-yellow"  ng-click="CloseOrder()">已确认</a>
+            <a class="btn-yellow" ng-click="CloseOrder()">已确认</a>
         </div>
     </div>
 
     <!--待出团界面，点击置顶订单弹窗-->
-    <div class="pop-container  top-order-alert w-650"  style="display: none">
+    <div class="pop-container  top-order-alert w-650" style="display: none">
         <form name="TopForm">
             <div class="pop-header clearfix">
                 <h4>置顶订单</h4>
@@ -289,9 +278,9 @@
                 <div class="col-md-6 order-zd">
                     <label>截止时间</label>
                     <div class="layui-inline">
-                        <input type="text" style="float: left;" class="layui-input" time-change placeholder="招募截至时间"
-                               ng-model="TopObj.enter_end_time"
-                               onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})" required>
+                        <input type="text" style="float: left;" class="layui-input" time-change placeholder="招募截至时间" ng-model="TopObj.enter_end_time"
+                            onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
+                            required>
                     </div>
                 </div>
                 <div class="col-md-6 order-zd">
@@ -300,7 +289,7 @@
                 </div>
                 <div class="col-md-6 order-zd">
                     <label>添加酬金</label>
-                    <input  type="number" type="text" ng-model="TopObj.guide_money" placeholder="最多10000元" required> 元
+                    <input type="number" type="text" ng-model="TopObj.guide_money" placeholder="最多10000元" required> 元
                     <div class="alert alert-danger help-block" ng-show="TopObj.guide_money>10000">
                         人均酬金不超过10000元
                     </div>
@@ -317,24 +306,23 @@
                 </div>
                 <div class="col-md-6 order-zd">
                     <label>性别要求</label>
-				<span class="sex-require">
+                    <span class="sex-require">
 					<span><input type="radio" name="sex"  ng-click="changeSex(0)" checked> 无要求</span>
-					<span><input type="radio" name="sex"  ng-click="changeSex(1)"> 男</span>
-					<span><input type="radio" name="sex"  ng-click="changeSex(2)"> 女</span>
-				</span>
+                    <span><input type="radio" name="sex"  ng-click="changeSex(1)"> 男</span>
+                    <span><input type="radio" name="sex"  ng-click="changeSex(2)"> 女</span>
+                    </span>
                 </div>
                 <div class="col-md-12 order-zd">
                     <label>品牌导游</label>
-				<span class="sex-require">
+                    <span class="sex-require">
 					<span><input type="radio" name="guide"  ng-click="changeRequire(0)" checked> 无要求</span>
-					<span><input type="radio" name="guide"  ng-click="changeRequire(0)"> 是</span>
-				</span>
+                    <span><input type="radio" name="guide"  ng-click="changeRequire(0)"> 是</span>
+                    </span>
                 </div>
                 <div class="col-md-6 order-zd">
                     <label style="float: left">评分要求</label>
-                    <div style="float: left" star rating-value="TopObj.star" max="5" on-hover="onHover" on-leave="onLeave"
-                         readonly="false"></div>
-				</span>
+                    <div style="float: left" star rating-value="TopObj.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
+                    </span>
                 </div>
                 <div class="col-md-6 order-zd">
                     <label>学历要求</label>
@@ -344,18 +332,18 @@
                 </div>
                 <div class="col-md-12 order-zd">
                     <label>语言要求</label>
-	                <span class="language">
+                    <span class="language">
                 <span ng-repeat="lang in TopObj.language track by $index">
                     <span ng-bind="lang.language_name"></span>
                     <img ng-click="removelanguage($index)" src="images/language_close.png">
-                </span>
-            <a class="add-language"><i class="iconfont">&#xe61d;</i>
+                    </span>
+                    <a class="add-language"><i class="iconfont">&#xe61d;</i>
                 <ul class="language-choice">
                     <li ng-repeat="(key,langSel) in languageSelList" ng-class="{'language-checked':key==0}"
                         ng-bind="langSel" ng-click="addLanguage(langSel)"></li>
                 </ul>
             </a>
-            </span>
+                    </span>
                 </div>
             </div>
             <div class="pop-btn">
@@ -366,7 +354,7 @@
     </div>
 
     <!--待出团界面，点击置顶订单弹窗第二步-->
-    <div class="pop-container  top-order-alert-next"  style="display: none">
+    <div class="pop-container  top-order-alert-next" style="display: none">
         <div class="pop-header clearfix">
             <h4>提示</h4>
             <a class="m-close" ng-click="closeAlertNext()"><img src="images/close.png"></a>
@@ -377,8 +365,8 @@
             </p>
         </div>
         <div class="pop-btn">
-            <a class="btn-gray"  ng-click="closeAlertNext()">取&nbsp;&nbsp;消</a>
-            <a class="btn-yellow"  ng-click="TopOrderNext()">发&nbsp;&nbsp;布</a>
+            <a class="btn-gray" ng-click="closeAlertNext()">取&nbsp;&nbsp;消</a>
+            <a class="btn-yellow" ng-click="TopOrderNext()">发&nbsp;&nbsp;布</a>
         </div>
     </div>
 
@@ -391,27 +379,26 @@
         <div class="pop-main">
             <p class="pop-title">请您为本次合作的导游评价吧！</p>
             <div style="overflow-y: auto;height: 350px">
-            <div ng-repeat="guide in guideEndList">
-                <div class="pop-line">
-                    <img src="images/default_person.png">
-                    <span class="pp-name" style="font-weight: 700;padding-left: 20px" ng-bind="guide.name">王晓曦</span>
+                <div ng-repeat="guide in guideEndList">
+                    <div class="pop-line">
+                        <img src="images/default_person.png">
+                        <span class="pp-name" style="font-weight: 700;padding-left: 20px" ng-bind="guide.name">王晓曦</span>
+                    </div>
+                    <div class="pop-line">
+                        <label>服务评星</label>
+                        <div style="display: inline" star rating-value="guide.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
+                    </div>
+                    <div class="pop-line">
+                        <label>服务评价</label>
+                        <textarea rows="6" placeholder="真实客观的描述有利于我们提高服务质量" ng-model="guide.content"></textarea>
+                    </div>
                 </div>
-                <div class="pop-line">
-                    <label>服务评星</label>
-                    <div style="display: inline" star rating-value="guide.star" max="5" on-hover="onHover" on-leave="onLeave"
-                         readonly="false"></div>
-                </div>
-                <div class="pop-line">
-                    <label>服务评价</label>
-                    <textarea rows="6" placeholder="真实客观的描述有利于我们提高服务质量" ng-model="guide.content"></textarea>
-                </div>
-            </div>
             </div>
 
         </div>
         <div class="pop-btn">
             <a class="btn-gray" ng-click="closeAlert()">取&nbsp;&nbsp;消</a>
-            <a class="btn-yellow"  ng-click="EndOrder()" EndOrder>确&nbsp;&nbsp;定</a>
+            <a class="btn-yellow" ng-click="EndOrder()" EndOrder>确&nbsp;&nbsp;定</a>
         </div>
     </div>
 
@@ -678,7 +665,7 @@
     $(".tab-order li:first").addClass("active-tab");
     $(".tab-order li").click(function () {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
-//        $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
+        //        $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
     });
 
     // 覆盖显示
