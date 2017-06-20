@@ -15,8 +15,7 @@
             <div class="teams-part" ng-repeat="order in orderList">
                 <div class="radius-top"><img src="images/radius_top.png"></div>
                 <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="active-state"><img ng-show="order.status==31" src="images/active_success.png"><img
-                        ng-show="order.status!=31" src="images/active_fail.png"></div>
+                <div class="active-state"><img ng-show="order.status==31" src="images/active_success.png"><img ng-show="order.status!=31" src="images/active_fail.png"></div>
                 <!--<div class="active-state"><img src="images/active_success.png"></div>-->
                 <div class="team-infor clearfix">
                     <div class="travelagency-img"><span><img src="images/people03.png"></span></div>
@@ -65,18 +64,9 @@
             <!--<a class="btn-cn btn-empty-yellow">查看详情</a>-->
             <!--</div>-->
             <!--</div>-->
-            <pagination class="pagination-sm pull-right"
-                        items-per-page="orderObj.page_size"
-                        ng-model="orderObj.page"
-                        total-items="totalItems"
-                        max-size="maxSize"
-                        ng-change="pageChanged()"
-                        boundary-links="false"
-                        boundary-link-numbers="true"
-                        rotate="false"
-                        force-ellipses="true"
-                        previous-text="‹"
-                        next-text="›">
+            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItems"
+                max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true" rotate="false"
+                force-ellipses="true" previous-text="‹" next-text="›">
             </pagination>
         </div>
     </div>
@@ -85,21 +75,15 @@
         <div class="dashed-border"></div>
         <p class="intro-stitle">接团导游</p>
         <div class="guidebox" ng-repeat="(key,guide) in guideList">
-            <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)"
-                 ng-show="orderObj.type==20"><input
-                    type="checkbox"></div>
+            <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)" ng-show="orderObj.type==20"><input type="checkbox"></div>
             <div class="guide-infor clearfix">
-                <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}"><img
-                        src="images/default_person.png"></div>
+                <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}"><img src="images/default_person.png"></div>
                 <div class="person-infor">
                     <div class="p-m1">
-                        <span class="pp-name" ng-bind="guide.name"></span><i class="iconfont"
-                                                                             ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">
-                        &#xe607;</i><span
-                            class="pp-age"><span ng-bind="guide.age"></span>岁</span><span class="acrossline">|</span>
+                        <span class="pp-name" ng-bind="guide.name"></span><i class="iconfont" ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">
+                        &#xe607;</i><span class="pp-age"><span ng-bind="guide.age"></span>岁</span><span class="acrossline">|</span>
                         <span class="pp-gimg">品牌导游<img src="images/honer.png" ng-show="guide.level==1"><span
-                                ng-show="guide.level!=1">否</span></span><span
-                            class="acrossline">|</span>
+                                ng-show="guide.level!=1">否</span></span><span class="acrossline">|</span>
                         <span class="pp-scroe">平均评分<div style="display:inline;" star rating-value="guide.star" max="5"
                                                         on-hover="onHover" on-leave="onLeave"
                                                         readonly="true"></div><span

@@ -328,8 +328,9 @@
     // tab切换
     $(".teams-list:first").show();
     $(".tab-order li:first").addClass("active-tab");
-    $(".tab-order li").click(function() {
+    $(".tab-order li").click(function () {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
         $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
     });
+
 </script>
