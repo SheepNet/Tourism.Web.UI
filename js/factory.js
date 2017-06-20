@@ -225,6 +225,34 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             });
             return promise;
         },
+        //获得旅行社订单记录
+        getAgencyHistory:function(obj){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.get(Url+'travel/center/travel_company/order/list'+obj.page+'.json',{params:obj}).success(function (data) {
+                deferred.resolve(data);
+            }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
+        //停用旅行社
+        delAgency:function(id,session_id){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(
+                    Url+'travel/center/travel_company/del.json',
+                {
+                    id:id,
+                    session_id:session_id
+                })
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
         //获得投诉列表信息
         getComplainList:function(obj){
             var deferred = $q.defer();
@@ -243,6 +271,24 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             $http.get(Url+'	travel/center/complain/query.json',{params:{id:id,session_id:session_id}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
+        //处理投诉信息
+        editComplain:function(id,type,session_id){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(
+                    Url+'travel/center/complain/edit.json',
+                {
+                    id:id,
+                    type:type,
+                    session_id:session_id
+                })
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
                 deferred.reject(error);
             });
             return promise;

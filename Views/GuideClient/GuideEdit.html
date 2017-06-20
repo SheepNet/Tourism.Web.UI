@@ -207,6 +207,8 @@
                 <label>导游资格证书号码</label>
                 <input class="w-t" type="text" name="guide_card_id" ng-maxlength="50" required ng-model="completeMessage.guide_card_id">
                 <a class="btn-uploadimg">上传图片</a>
+                <input id="thumbnail" class="upload-file-input" name="upload" type="file" accept="image/png, image/jpeg, image/gif"
+                       onchange="angular.element(this).scope().file_changed(this)" />
             </div>
 
             <div class="alert alert-danger help-block" ng-show="registForm.guide_card_id.$dirty && registForm.guide_card_id.$invalid">
@@ -283,5 +285,6 @@
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
         $(".teams-list").hide().eq($(".tab-order li").index(this)).show();
     });
+
 </script>
 

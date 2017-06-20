@@ -39,7 +39,7 @@
                     <td ng-bind="agency.legal_person_mobile">18345698523</td>
                     <td>
                         <a><i class="iconfont" ng-click="ShowDetail(agency.id)">&#xe645;</i></a>
-                        <a><i class="iconfont">&#xe6cf;</i></a>
+                        <a><i class="iconfont" title="停用" ng-click="DelAgency(agency.id)">&#xe6cf;</i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -359,7 +359,7 @@
             <div class="col-sm-4">
                 <div class="intro-line">
                     <label>历史开团记录：</label>
-                    <span><a class="look-hisrecord" ng-click="ShowAgrncyHistory()">查看</a></span>
+                    <span><a class="look-hisrecord" ng-click="ShowAgencyHistory()">查看</a></span>
                 </div>
             </div>
             <div class="col-sm-12 m-t-20">
@@ -443,120 +443,62 @@
             </div>
         </div>
         <div class="text-center m-t-30 m-b-30">
-            <a class="btn-cn btn-yellow">停&nbsp;&nbsp;&nbsp;&nbsp;用</a>
+            <a class="btn-cn btn-yellow"  ng-click="DelAgency(agencyInfo.id)">停&nbsp;&nbsp;&nbsp;&nbsp;用</a>
         </div>
     </div>
 
     <div ng-show="State=='history'">
         <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按星级顺序</option>
-                <option>按时间倒序</option>
+            <select class="select-u" ng-model="orderObj.order_type" ng-change="initOrder()">
+                <option value="1">按星级顺序</option>
+                <option value="2">按时间倒序</option>
             </select>
             <div class="search-box">
                 <span class="search-img"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
             </div>
+            <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-import"><i class="iconfont">&#xe633;</i>返回</a></div>
         </div>
         <div class="teams-box">
-            <div class="teams-part">
+            <div class="teams-part" ng-repeat="order in orderList">
                 <div class="radius-top"><img src="images/radius_top.png"></div>
                 <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
                 <div class="team-infor clearfix">
-                    <div class="travelagency-img"><span><img src="images/people03.png"></span></div>
+                    <div class="team-img"><img src="images/team02.png"></div>
                     <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
+                        <h5 ng-bind="order.name"></h5>
+                        <p class="team-detail" ng-bind="order.desc"></p>
+                        <!--这边做特殊处理-->
+                        <p class="team-time">{{order.begin_time}}~{{order.end_time}}</p>
                     </div>
                     <div class="team-state">
-                        <p>2017-02-15 15:31</p>
+                        <p ng-bind="order.guide_comment.comment_time">2017-02-15 15:31</p>
                         <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
+                            <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>
+                            <i class="iconfont cr">&#xe613;</i><span>￥<span
+                                ng-bind="order.guide_money"></span>/次</span>
                         </div>
                     </div>
                 </div>
                 <div class="team-comment">
-                    <p><img src="images/star.png"></p>
-                    <p class="team-comment-text">旅行社总是无故取消订单。</p>
+                    <p><div style="display: inline" star rating-value="order.guide_comment.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></p>
+                    <p class="team-comment-text" ng-bind="order.guide_comment.content">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>
                 </div>
-            </div>
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="travelagency-img">
-                        <span class="two01"><img src="images/people01.png"></span>
-                        <span class="two02"><img src="images/people02.png"></span>
-                    </div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-comment">
-                    <p><img src="images/star.png"></p>
-                    <p class="team-comment-text">旅行社总是无故取消订单。</p>
-                </div>
-            </div>
-            <div class="teams-part">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="travelagency-img">
-                        <span class="three01"><img src="images/people01.png"></span>
-                        <span class="three02"><img src="images/people02.png"></span>
-                        <span class="three03"><img src="images/people03.png"></span>
-                    </div>
-                    <div class="team-text">
-                        <h5>周庄烟雨水乡一日游</h5>
-                        <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                        <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-                    </div>
-                    <div class="team-state">
-                        <p>2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-comment">
-                    <p><img src="images/star.png"></p>
-                    <p class="team-comment-text">旅行社总是无故取消订单。</p>
-                </div>
-            </div>
-            <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
+        <pagination class="pagination-sm pull-right"
+                    items-per-page="orderObj.page_size"
+                    ng-model="orderObj.page"
+                    total-items="totalItems"
+                    max-size="maxSize"
+                    ng-change="pageChangedOrder()"
+                    boundary-links="false"
+                    boundary-link-numbers="true"
+                    rotate="false"
+                    force-ellipses="true"
+                    previous-text="‹"
+                    next-text="›">
+        </pagination>
     </div>
 </div>
 

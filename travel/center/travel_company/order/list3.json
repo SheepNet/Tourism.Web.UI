@@ -1,0 +1,130 @@
+{
+  "err_code": 0,
+  "err_msg": "",
+  "msg_body": {
+    "order": [
+      {
+        "id": "guid",
+        "order_num": 1,
+        "type": 1,
+        "order_no": "团号",
+        "order_person": 35,
+        "travel_company_id": "旅行社id guid",
+        "name": "状态3",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300,
+        "guide": [
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          },
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          }
+        ]
+      },
+      {
+        "id": "guid",
+        "order_num": 1,
+        "type": 1,
+        "order_no": "团号",
+        "order_person": 35,
+        "travel_company_id": "旅行社id guid",
+        "name": "状态3",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300,
+        "guide": [
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          },
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          }
+        ]
+      },
+      {
+        "id": "guid",
+        "order_num": 1,
+        "type": 1,
+        "order_no": "团号",
+        "order_person": 35,
+        "travel_company_id": "旅行社id guid",
+        "name": "状态3",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300,
+        "guide": [
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          },
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          }
+        ]
+      },
+      {
+        "id": "guid",
+        "order_num": 1,
+        "type": 1,
+        "order_no": "团号",
+        "order_person": 35,
+        "travel_company_id": "旅行社id guid",
+        "name": "状态3",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300,
+        "guide": [
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          },
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          }
+        ]
+      },
+      {
+        "id": "guid",
+        "order_num": 1,
+        "type": 1,
+        "order_no": "团号",
+        "order_person": 35,
+        "travel_company_id": "旅行社id guid",
+        "name": "状态3",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "guide_num": 3,
+        "guide_money": 300,
+        "guide": [
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          },
+          {
+            "id": "导游guid",
+            "name": "导游姓名"
+          }
+        ]
+      }
+    ],
+    "count": {
+      "type_1_count": 6,
+      "type_2_count": 8,
+      "type_3_count": 12,
+      "type_4_count": 5,
+      "type_5_count": 22
+    }
+  }
+}

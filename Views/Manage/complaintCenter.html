@@ -81,11 +81,11 @@
             <p class="intro-stitle">投诉人</p>
             <div class="m-l-13">
                 <span class="complaint-img"><img src="images/default_person.png" ng-bind="complainInfo.complain_name">吴曦</span>
-                <span class="complaint-phone"> 联系方式：<b ng-bind="complainInfo.complain_mobile">>13541452144</b></span>
+                <span class="complaint-phone"> 联系方式：<b ng-bind="complainInfo.complain_mobile">13541452144</b></span>
             </div>
          <div class="text-center">
-             <a class="btn-cn btn-gray" ng-click="complainCheck(0)">不通过</a>
-             <a class="btn-cn btn-yellow" ng-click="complainCheck(1)">通&nbsp;&nbsp;&nbsp;&nbsp;过</a>
+             <a class="btn-cn btn-gray" ng-click="editComplain(complainInfo.id,1)">不通过</a>
+             <a class="btn-cn btn-yellow" ng-click="editComplain(complainInfo.id,2)">通&nbsp;&nbsp;&nbsp;&nbsp;过</a>
          </div>
         </div>
 </div>

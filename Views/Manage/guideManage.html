@@ -57,10 +57,6 @@
     </div>
     <div ng-show="State=='history'">
         <div class="choice-box clearfix">
-            <select class="select-u">
-                <option>按星级顺序</option>
-                <option>按时间倒序</option>
-            </select>
             <select class="select-u" ng-model="orderObj.order_type" ng-change="initOrder()">
                 <option value="1">按星级顺序</option>
                 <option value="2">按时间倒序</option>

@@ -1,0 +1,51 @@
+
+{
+  "err_code": 0,
+  "err_msg": "",
+  "msg_body": {
+    "order": [
+      {
+        "id": "guid",
+        "order_num": 1,
+        "name": "康辉旅行社",
+        "photo": "旅行社照片 文件guid",
+        "desc": "副标题，描述",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "star": 5,
+        "guide_num": 3,
+        "guide_money": 300,
+        "guide_comment": {
+          "id": "导游评价 guid",
+          "name": "导游姓名",
+          "photo": "导游头像 guid",
+          "star": 5,
+          "level": 3,
+          "content": "评论内容文字",
+          "comment_time": "yyyy-MM-dd HH:mm"
+        }
+      },
+      {
+        "id": "guid",
+        "order_num": 2,
+        "name": "康辉旅行社",
+        "photo": "旅行社照片 文件guid",
+        "desc": "副标题，描述",
+        "begin_time": "yyyy-MM-dd HH:mm",
+        "end_time": "yyyy-MM-dd HH:mm",
+        "star": 5,
+        "guide_num": 3,
+        "guide_money": 300,
+        "guide_comment": {
+          "id": "导游评价 guid",
+          "name": "导游姓名",
+          "photo": "导游头像 guid",
+          "star": 5,
+          "level": 3,
+          "content": "评论内容文字",
+          "comment_time": "yyyy-MM-dd HH:mm"
+        }
+      }
+    ]
+  }
+}

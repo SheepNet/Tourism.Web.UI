@@ -141,6 +141,26 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
         $state.go("guideClient.joinUs")
     }
 
+    $scope.file_changed = function(element) {
+        var uuid = $ui.fileupload({
+            fileSelector: '.upload-file-input',
+            type: FILETYPE.IMAGE,
+            moudle: 'BASE'
+        }).uuid;
+        $scope.$apply(function(){
+           console.log(1);
+        })
+    };
+
+    $scope.imageChange=function(){
+        var uuid = $ui.fileupload({
+            fileSelector: '.upload-file-input',
+            type: FILETYPE.IMAGE,
+            moudle: 'BASE'
+        }).uuid;
+        alert(uuid);
+    }
+
 }]);
 
 //订单详情控制器
