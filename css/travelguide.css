@@ -2587,3 +2587,13 @@ a:hover {
     background: none;
     border:  none;
 }
+.information-line{
+    position: relative;
+}
+#thumbnail{
+    position: absolute;
+    top: 8px;
+    left: 520px;
+    padding: 2px 0;
+    opacity: 0;
+}
