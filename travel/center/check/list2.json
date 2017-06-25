@@ -3,7 +3,7 @@
   "err_code": 0,
   "err_msg": "",
   "msg_body": {
-    "data": [
+    "check": [
       {
         "id": "guid",
         "name": "666666",

@@ -6,6 +6,7 @@
 Ctrl.controller("ManageCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", "$location", function ($scope, $http, $sce, $state, $stateParams, $cookieStore, $location) {
     //获得user信息
     var userMessage = $cookieStore.get("user");
+    $scope.ResUrl=rurl+"/resource/";
     $scope.session_id = $cookieStore.get("session_id");
     if (userMessage == null) {
         $location.path("index")
@@ -52,7 +53,7 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         session_id: $scope.session_id
     }
 
-    $scope.totalItems = 13;
+    $scope.totalItems = 7;
 
     $scope.verifyList = [];
 
@@ -68,8 +69,15 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise = centerService.getVerifyList($scope.InfoObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                $scope.totalItems = data.msg_body.total_count;
-                $scope.verifyList = data.msg_body.data;
+                $scope.type_0_count=data.msg_body.type_0_count;
+                $scope.type_1_count=data.msg_body.type_1_count;
+                if($scope.InfoObj.type==0){
+                    $scope.totalItems = $scope.type_0_count;
+                }else {
+                    $scope.totalItems = $scope.type_1_count;
+                }
+                $scope.verifyList = data.msg_body.check;
+                //$scope.verifyList = data.msg_body.data;
             }
             else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -90,7 +98,9 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise = centerService.GetCheckDetail(id, $scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                $scope.guideInfo = data.msg_body.data;
+
+                $scope.guideInfo = data.msg_body.check;
+                //$scope.guideInfo = data.msg_body.data;
                 $scope.State = 'detail';
             } else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -120,6 +130,17 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         promise.catch(function () {
             layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
+    }
+
+    //图片展示
+    $scope.showPic = function (url) {
+        $scope.showPicUrl= $scope.ResUrl+url;
+        layer.open({
+            type: 1,
+            shade: 0.3,
+            title: false,
+            content: $('.picArea')
+        });
     }
 
 }]);

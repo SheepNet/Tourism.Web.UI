@@ -2,37 +2,33 @@
     <p class="intro-stitle">投诉建议</p>
     <div style="margin-bottom: 20px;height: 40px">
         <p style="float: left;font-weight: 700;padding-top: 5px">投诉类型</p>
-        <select style="float: left;margin-left: 10px" class="select-u" ng-model="obj.complain_type">
-        <option value="1">旅行社服务</option>
-        <option value="2">导游服务</option>
-        <option value="3">景区环境</option>
-        <option value="4">费用</option>
-        <option value="5">其它</option>
-    </select>
+        <select style="float: left;margin-left: 10px" class="" ng-model="complainObj.complain_type">
+            <option value="1">旅行社服务</option>
+            <option value="2">导游服务</option>
+            <option value="3">景区环境</option>
+            <option value="4">费用</option>
+            <option value="5">其它</option>
+        </select>
     </div>
-    <textarea class="suggestbox" placeholder="请输入您的投诉或建议，我们将竭诚为您服务（500字以内）" ng-model="obj.content"></textarea>
-    <div class="uploadbox"><a class="btn-upload">上传图片</a>（限三张）</div>
-    <ul class="uploadimg clearfix">
-        <li><img src="images/img01.png">
-            <span class="shadow-btn">
-				<a class="btn-uplook"><i class="iconfont">&#xe626;</i></a>
-				<a class="btn-updel"><i class="iconfont">&#xe692;</i></a>
-			</span>
-        </li>
-        <li><img src="images/img01.png">
-            <span class="shadow-btn">
-				<a class="btn-uplook"><i class="iconfont">&#xe626;</i></a>
-				<a class="btn-updel"><i class="iconfont">&#xe692;</i></a>
-			</span>
-        </li>
-        <li><img src="images/img01.png">
-            <span class="shadow-btn">
-				<a class="btn-uplook"><i class="iconfont">&#xe626;</i></a>
-				<a class="btn-updel"><i class="iconfont">&#xe692;</i></a>
-			</span>
+    <textarea class="suggestbox" placeholder="请输入您的投诉或建议，我们将竭诚为您服务（500字以内）" ng-model="complainObj.content"></textarea>
+    <div class="uploadbox">
+        <a class="btn-upload">上传图片</a>（限三张）
+        <input id="contentFile" class="upload-file-input" name="upload" type="file" accept="image/png, image/jpeg, image/gif"
+               onchange="angular.element(this).scope().file_changed(this)" />
+    </div>
+    <ul class="uploadimg clearfix" ng-show="complainObj.content_file.length>0">
+
+        <li ng-repeat="complain in complainObj.content_file">
+            <img ng-src="{{ResUrl+complain.id}}">
+            <!--<li><img src="images/img01.png">-->
+						   <span class="shadow-btn">
+							   <a class="btn-uplook"><i class="iconfont" ng-click="showPic(complain.id)">
+                                   &#xe626;</i></a>
+							   <a class="btn-updel"><i class="iconfont" ng-click="delPic(complain.id)">&#xe692;</i></a>
+						   </span>
         </li>
     </ul>
     <p class="intro-stitle">联系方式</p>
-    <input class="phoneinput" type="text" placeholder="请留下您的联系电话，我们会尽快与您联系" ng-model="obj.complain_mobile">
+    <input class="phoneinput" type="text" placeholder="请留下您的联系电话，我们会尽快与您联系" ng-model="complainObj.complain_mobile">
     <div class="text-center m-t-30"><a class="btn-cn btn-yellow" ng-click="AddComplain()">提&nbsp;&nbsp;&nbsp;&nbsp;交</a></div>
 </div>

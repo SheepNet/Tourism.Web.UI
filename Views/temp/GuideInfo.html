@@ -80,18 +80,20 @@
     </div>
     <p class="intro-stitle">图像资料</p>
     <ul class="imgbox clearfix">
-        <li><img src="images/book01.png">
+        <li  ng-show="guideInfo.guide_card_id_photo!=null && guideInfo.guide_card_id_photo.length>0">
+            <img ng-src="{{ResUrl+guideInfo.guide_card_id_photo}}">
             <span class="imgbox-num">导游资格证书（1）</span>
 							<span class="shadow-btn pop-h1">
-							   <a class="btn-uplook"><i class="iconfont"></i></a>
-							   <a class="btn-updel"><i class="iconfont"></i></a>
+							   <a class="btn-uplook" ng-click="showPic(guideInfo.guide_card_id_photo)"><i class="iconfont"></i></a>
+							   <!--<a class="btn-updel"><i class="iconfont"></i></a>-->
 							</span>
         </li>
-        <li><img src="images/book02.png">
+        <li  ng-show="guideInfo.guide_card_no_photo!=null && guideInfo.guide_card_no_photo.length>0">
+            <img  ng-src="{{ResUrl+guideInfo.guide_card_no_photo}}">
             <span class="imgbox-num">导游证（1）</span>
 							<span class="shadow-btn pop-h1">
-							   <a class="btn-uplook"><i class="iconfont"></i></a>
-							   <a class="btn-updel"><i class="iconfont"></i></a>
+							   <a class="btn-uplook" ng-click="showPic(guideInfo.guide_card_no_photo)"><i class="iconfont"></i></a>
+							   <!--<a class="btn-updel"><i class="iconfont"></i></a>-->
 							</span>
         </li>
         <li><img src="images/book03.png">
@@ -106,7 +108,7 @@
     <div class="intro-part clearfix">
         <div class="col-sm-4 intro-line">
             <label>身&nbsp;&nbsp;&nbsp;份&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;号&nbsp;&nbsp;码：</label>
-            <span>320581199101011234</span>
+            <span ng-bind="guideInfo.idnum">320581199101011234</span>
         </div>
         <div class="col-sm-4 intro-line">
             <label>出 生 日 期：</label>
@@ -160,5 +162,8 @@
             <label>荣&nbsp;&nbsp;&nbsp;誉&nbsp;&nbsp;&nbsp;和&nbsp;&nbsp;&nbsp;奖&nbsp;&nbsp;励：</label>
             <span ng-bind="guideInfo.reward"></span>
         </div>
+    </div>
+    <div class="picArea" style="display: none">
+        <img  ng-src="{{showPicUrl}}">
     </div>
 </div>

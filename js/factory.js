@@ -4,7 +4,7 @@ Ctrl.factory("loginService",["$http", "$q","Md5",function ($http,$q,Md5) {
         login:function (user_id,password) {
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/base/user/login.json',{params:{user_id:user_id,password: Md5.hex_md5(password)}}).success(function (data) {
+            $http.get(Url+'travel/base/user/login',{params:{user_id:user_id,password: Md5.hex_md5(password)}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -15,8 +15,7 @@ Ctrl.factory("loginService",["$http", "$q","Md5",function ($http,$q,Md5) {
         send_sms:function(mobile){
             var deferred = $q.defer();
             var promise = deferred.promise;
-
-            $http.post(Url+'travel/base/send_sms.json',{mobile:mobile}).success(function (data) {
+            $http.post(Url+'travel/base/send_sms',{mobile:mobile}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -27,7 +26,7 @@ Ctrl.factory("loginService",["$http", "$q","Md5",function ($http,$q,Md5) {
         setup_password:function(mobile,code,password){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/base/user/setup_password.json',{params:{mobile:mobile,code:code,password: Md5.hex_md5(password)}}).success(function (data) {
+            $http.post(Url+'travel/base/user/setup_password',{mobile:mobile,code:code,password: Md5.hex_md5(password)}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -38,7 +37,7 @@ Ctrl.factory("loginService",["$http", "$q","Md5",function ($http,$q,Md5) {
         register:function(mobile,code,password){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/base/user/setup_password.json',{params:{mobile:mobile,code:code,password: Md5.hex_md5(password)}}).success(function (data) {
+            $http.post(Url+'travel/base/user/register',{mobile:mobile,code:code,password: Md5.hex_md5(password)}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -80,18 +79,18 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getVerifyList:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/check/list'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'travel/center/check/list',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
             });
             return promise;
         },
-        //提交审核信息
+        //获得审核信息
         GetCheckDetail:function(id,session_id){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/check/query.json',{params:{id:id,session_id:session_id}}).success(function (data) {
+            $http.get(Url+'travel/center/check/query',{params:{id:id,session_id:session_id}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -103,7 +102,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
             $http.post(
-                Url+'travel/center/check/check.json',
+                Url+'travel/center/check/check',
                 {
                     id:id,
                     check_status:check_status,
@@ -180,22 +179,11 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             return promise;
         },
         //完善信息
-        completeMessage:function(name,sex,address,guide_card_id,guide_card_id_photo,guide_card_no,guide_card_no_photo,session_id){
+        completeMessage:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-
             $http.post(
-                Url+'travel/base/user/edit.json',
-                {
-                    name:name,
-                    sex:sex,
-                    address:address,
-                    guide_card_id:guide_card_id,
-                    guide_card_id_photo:guide_card_id_photo,
-                    guide_card_no:guide_card_no,
-                    guide_card_no_photo:guide_card_no_photo,
-                    session_id:session_id
-                })
+                Url+'travel/base/user/edit',obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {
@@ -203,6 +191,29 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             });
             return promise;
         },
+        //completeMessage:function(name,sex,address,guide_card_id,guide_card_id_photo,guide_card_no,guide_card_no_photo,session_id){
+        //    var deferred = $q.defer();
+        //    var promise = deferred.promise;
+        //
+        //    $http.post(
+        //        Url+'travel/base/user/edit.json',
+        //        {
+        //            name:name,
+        //            sex:sex,
+        //            address:address,
+        //            guide_card_id:guide_card_id,
+        //            guide_card_id_photo:guide_card_id_photo,
+        //            guide_card_no:guide_card_no,
+        //            guide_card_no_photo:guide_card_no_photo,
+        //            session_id:session_id
+        //        })
+        //        .success(function (data) {
+        //            deferred.resolve(data);
+        //        }).error(function (error) {
+        //        deferred.reject(error);
+        //    });
+        //    return promise;
+        //},
         //获得旅行社列表接口
         getAgencyList:function(obj){
             var deferred = $q.defer();
@@ -298,6 +309,18 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
 
 Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
     return{
+        //获得导游详情
+        getGudieInfo:function(session_id){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.get(Url+'travel/guide/guide/query',{params:{session_id:session_id}}).success(function (data) {
+                deferred.resolve(data);
+            }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+            //http://chinaz.live/travel/guide/guide/query?
+        },
         //获得订单详情
         getorderList:function(orderObj){
             var deferred = $q.defer();
@@ -340,11 +363,23 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
             });
             return promise;
         },
+        //提交订单改
+        editOrder:function(obj){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(Url+'travel/guide/order/edit.json', obj)
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
         //提交投诉
         addComplian:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.post(Url+'travel/center/guide/check.json', obj)
+            $http.post(Url+'travel/center/complain/add.json', obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {

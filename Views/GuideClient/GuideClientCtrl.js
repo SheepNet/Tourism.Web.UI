@@ -4,6 +4,7 @@
 //主界面控制器
 Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore","$location", function ($scope, $http, $sce, $state, $stateParams, $cookieStore,$location) {
     var userMessage = $cookieStore.get("user");
+    $scope.ResUrl=rurl+"/resource/";
     $scope.session_id = $cookieStore.get("session_id");
     if (userMessage == null) {
         $location.path("index")
@@ -26,6 +27,8 @@ Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$state
     $scope.onChange = function(val){
         $scope.ratingVal = val;
     }
+
+
 }]);
 
 //消息中心控制器
@@ -73,27 +76,62 @@ Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
 }]);
 
 //个人中心控制器
-Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","$cookieStore","centerService", function ($scope, $http, $sce, $state, $stateParams,$cookieStore,centerService) {
+Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","$cookieStore","$location","centerService","gudieService", function ($scope, $http, $sce, $state, $stateParams,$cookieStore,$location,centerService,gudieService) {
+
+    //初始化导游信息
+    $scope.initGuideInfo=function(){
+        var promise = gudieService.getGudieInfo($scope.session_id);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                $scope.guideInfo=data.msg_body.guide;
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
     var userMessage = $cookieStore.get("user");
+    if (userMessage == null) {
+        $location.path("index")
+    }
     if(userMessage.guide_card_no==null){
         $scope.completeMode = false;
     }else {
+        $scope.initGuideInfo();
         $scope.completeMode = true;
     }
 
+    $scope.InfoObj={
+        level:userMessage.level,
+        guide_card_no:userMessage.guide_card_no
+    }
+
+
     //编辑信息部分
-    $scope.completeMessage={}
-    $scope.sex = 0;
+    $scope.completeMessage={
+        name:"",
+        sex:0,
+        address:"",
+        guide_card_id:"",
+        guide_card_id_photo:"",
+        guide_card_no:"",
+        guide_card_no_photo:"",
+        session_id: $scope.session_id
+    };
 
     //性别变化
     $scope.changeSex = function (sex) {
-        $scope.sex = sex;
+        $scope.completeMessage.sex = sex;
     }
 
     //完善信息提交按钮
     $scope.submitMessage = function () {
-        console.log($scope.registForm);
-        if ($scope.sex == 0) {
+        if ($scope.completeMessage.sex == 0) {
             layer.msg("请选择性别", {icon: 0});
             return true;
         }
@@ -102,19 +140,21 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
             layer.msg("请根据要求输入信息", {icon: 0});
             return true;
         }
-        var promise = centerService.completeMessage(
-            $scope.completeMessage.name,
-            $scope.sex,
-            $scope.completeMessage.address,
-            $scope.completeMessage.guide_card_id,
-            $scope.guide_card_id_photo,
-            $scope.completeMessage.guide_card_no,
-            $scope.guide_card_no_photo,
-            $scope.session_id
-        );
+        //var promise = centerService.completeMessage(
+        //    $scope.completeMessage.name,
+        //    $scope.sex,
+        //    $scope.completeMessage.address,
+        //    $scope.completeMessage.guide_card_id,
+        //    $scope.guide_card_id_photo,
+        //    $scope.completeMessage.guide_card_no,
+        //    $scope.guide_card_no_photo,
+        //    $scope.session_id
+        //);
+        var promise = centerService.completeMessage($scope.completeMessage);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                layer.msg("完成编辑", {icon: 1,time:1000})
+                layer.msg("完成编辑", {icon: 1,time:1000});
+                $scope.initGuideInfo();
                 $scope.completeMode = true;
             } else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -128,7 +168,8 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
 
     }
     //图片展示
-    $scope.showPic = function () {
+    $scope.showPic = function (url) {
+        $scope.showPicUrl= $scope.ResUrl+url;
         layer.open({
             type: 1,
             shade: 0.3,
@@ -137,29 +178,41 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
         });
     }
 
+    //删除图片
+    $scope.delPic=function(type){
+        if(type=="guide_card_id_photo"){
+            $scope.completeMessage.guide_card_id_photo="";
+        }
+        if(type=="guide_card_no_photo"){
+            $scope.completeMessage.guide_card_no_photo="";
+        }
+    }
+
+    //转向加入我们
     $scope.TurnToJionUs=function(){
         $state.go("guideClient.joinUs")
     }
 
+    //上传文件
     $scope.file_changed = function(element) {
+        var ele_id=angular.element(element).attr("id")
         var uuid = $ui.fileupload({
-            fileSelector: '.upload-file-input',
+            fileSelector: '#'+ele_id,
             type: FILETYPE.IMAGE,
             moudle: 'BASE'
         }).uuid;
+
         $scope.$apply(function(){
-           console.log(1);
+            if(ele_id=="guide_card_id_photo"){
+                $scope.completeMessage.guide_card_id_photo=uuid;
+            }
+            if(ele_id=="guide_card_no_photo"){
+                $scope.completeMessage.guide_card_no_photo=uuid;
+            }
         })
     };
 
-    $scope.imageChange=function(){
-        var uuid = $ui.fileupload({
-            fileSelector: '.upload-file-input',
-            type: FILETYPE.IMAGE,
-            moudle: 'BASE'
-        }).uuid;
-        alert(uuid);
-    }
+
 
 }]);
 
@@ -187,6 +240,15 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         order_type:"1",
         page:1,
         page_size:5,
+        session_id:$scope.session_id
+    };
+
+    //预定义提交对象
+    $scope.submitObj={
+        id:"",
+        type:"",
+        content:"",
+        star:0,
         session_id:$scope.session_id
     }
 
@@ -238,6 +300,39 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.State="index";
     }
 
+    $scope.RecieveOrder=function(id){
+        $scope.submitObj={
+            id:"",
+            type:"a10",
+            content:"",
+            session_id:$scope.session_id
+        }
+        layer.confirm('确定接单吗？', function (i) {
+            var promise = gudieService.editOrder($scope.submitObj);
+            promise.then(function (data) {
+                if (data.err_code == 0) {
+                    layer.closeAll();
+                    layer.msg("接单成功", {icon: 1, time: 1000});
+                    $scope.State = 'index';
+                    $scope.init();
+                } else {
+                    layer.msg(data.err_msg, {icon: 0});
+                }
+            }, function (data) {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            });
+            promise.catch(function () {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            })
+        });
+
+    }
+
+    //关闭弹窗
+    $scope.closeAlert=function(){
+        layer.closeAll();
+    }
+
 }]);
 
 //正在进行订单控制器
@@ -247,6 +342,16 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
     $scope.orderDetail={
         star:1
     };
+
+
+    //预定义提交对象
+    $scope.submitObj={
+        id:"",
+        type:"",
+        content:"",
+        star:3,
+        session_id:$scope.session_id
+    }
 
     $scope.orderObj={
         type:20,
@@ -328,6 +433,96 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         $scope.State="index";
     }
 
+    $scope.CancelOrderAlert =function(id){
+        //预定义提交对象
+        $scope.submitObj={
+            id:id,
+            type:"a29",
+            content:"",
+            session_id:$scope.session_id
+        }
+
+        layer.open({
+            type: 1,
+            title:false,
+            closeBtn: 0,
+            anim: 2,
+            area:["450px","420px"],
+            shadeClose: true,
+            content: $(".cancel-order-alert")
+        });
+    }
+
+    $scope.CancelOrder =function(id){
+        var promise = gudieService.editOrder($scope.submitObj);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                layer.closeAll();
+                layer.msg("操作成功", {icon: 1, time: 1000});
+                $scope.State = 'index';
+                $scope.init();
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function () {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    $scope.EndOrderAlert=function(id){
+        //预定义提交对象
+        $scope.submitObj={
+            id:id,
+            type:"a30",
+            content:"",
+            star:3,
+            session_id:$scope.session_id
+        }
+
+        layer.open({
+            type: 1,
+            title:false,
+            closeBtn: 0,
+            anim: 2,
+            area:["450px","340px"],
+            shadeClose: true,
+            content: $(".end-order-alert")
+        });
+
+    }
+
+    $scope.EndOrder=function(){
+        if($scope.submitObj.star<3 && $scope.submitObj.content.length==0){
+            layer.msg("您的评价低于3星，请叙述理由", {icon: 0})
+        }else {
+            var promise = gudieService.editOrder($scope.submitObj);
+            promise.then(function (data) {
+                if (data.err_code == 0) {
+                    layer.closeAll();
+                    layer.msg("操作成功", {icon: 1, time: 1000});
+                    $scope.State = 'index';
+                    $scope.init();
+                } else {
+                    layer.msg(data.err_msg, {icon: 0});
+                }
+            }, function (data) {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            });
+            promise.catch(function () {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            })
+        }
+    }
+
+    //关闭弹窗
+    $scope.closeAlert=function(){
+        layer.closeAll();
+    };
+
+
 }]);
 
 //结束订单控制器
@@ -394,7 +589,7 @@ Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
 //投诉中心控制器
 Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService", function ($scope, $http, $sce, $state, $stateParams,gudieService) {
 
-    $scope.obj=
+    $scope.complainObj=
     {
         "complain_type": 1,
         "content": "",
@@ -405,12 +600,12 @@ Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$st
     }
 
     $scope.AddComplain=function(){
-        if($scope.obj.content.length>500){
+        if($scope.complainObj.content.length>500){
             layer.msg("投诉或建议在500字以内", {icon: 0});
             return true;
         }
 
-        var promise=gudieService.addComplian($scope.obj);
+        var promise=gudieService.addComplian($scope.complainObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
                 layer.msg("提交成功", {icon: 1})
@@ -425,6 +620,39 @@ Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$st
         })
 
     }
+
+    //图片上传
+    $scope.file_changed = function(element) {
+        if($scope.complainObj.content_file.length)
+        var ele_id=angular.element(element).attr("id")
+        var uuid = $ui.fileupload({
+            fileSelector: '#'+ele_id,
+            type: FILETYPE.IMAGE,
+            moudle: 'BASE'
+        }).uuid;
+
+        $scope.$apply(function(){
+            $scope.complainObj.content_file.push({
+                id:uuid
+            })
+        })
+    };
+
+    //删除图片
+    $scope.delPic=function(id){
+       if($scope.complainObj.content_file.length>0){
+           var index=-1;
+           angular.forEach($scope.complainObj.content_file,function(item,key){
+               if(item.id==id){
+                    index=key;
+               }
+           });
+           if(index1!=-1){
+               $scope.complainObj.content_file.splice(index,1)
+           }
+       }
+    }
+
 
 }]);
 

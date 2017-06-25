@@ -3,7 +3,7 @@
         <h1 class="login-title">欢迎登陆</h1>
         <div class="login-line">
             <span><i class="iconfont login-icon">&#xe60c;</i></span>
-            <input placeholder="手机号码" name="user_id" required ng-model="user_id" ng-pattern="/^1[0-9]{10}$/">
+            <input placeholder="手机号码" name="user_id" required ng-model="user_id">
         </div>
         <div class="alert alert-danger help-block" ng-show="loginForm.user_id.$dirty && loginForm.user_id.$invalid">
             请输入正确的手机号码

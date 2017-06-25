@@ -69,7 +69,10 @@
     </div>
     <div ng-show="State=='detail'">
         <order-detail></order-detail>
-        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-click="turnToIndex()">接&nbsp;&nbsp;&nbsp;单</a></div>
+        <div class="text-center">
+            <a class="btn-cn gray btn-acceptorder" ng-click="turnToIndex()">返回</a>
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="RecieveOrder(orderDetail.id)">接&nbsp;&nbsp;&nbsp;单</a>
+        </div>
     </div>
 </div>
 

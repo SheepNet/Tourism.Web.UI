@@ -1,6 +1,7 @@
-//var Url = 'http://chinaz.live/';
-var Url = '';
+var Url = 'http://chinaz.live/';
+//var Url = '';
 var Key = localStorage.UserKey;
+var ResUrl=''
 
 var myApp = angular.module('myApp', ['ui.router', 'ngGrid', 'ngCookies', 'Ctrl', 'ui.bootstrap', 'ngSanitize','Encrypt']);
 
@@ -13,7 +14,7 @@ myApp.factory('httpInterceptor', function ($injector, $location) {
     var httpInterceptor = {
         'request': function (config) {
             if (Key != '') {
-                config.headers['Key'] = Key;
+               // config.headers['Key'] = Key;
                 //console.log(config.url);
             } else {
                 $location.path('/index');
