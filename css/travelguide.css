@@ -2590,7 +2590,7 @@ a:hover {
 .information-line{
     position: relative;
 }
-#thumbnail{
+.information-line .upload-file-input{
     position: absolute;
     top: 8px;
     left: 520px;
