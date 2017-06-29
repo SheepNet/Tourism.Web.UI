@@ -7,7 +7,7 @@
                 <option value="3">按费用顺序</option>
             </select>
             <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
+                <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
                 <input type="text" class="" placeholder="Search">
             </div>
         </div>
@@ -71,104 +71,8 @@
         </div>
     </div>
     <div ng-show="State=='detail'">
+        <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <order-detail></order-detail>
-        <div class="dashed-border"></div>
-        <p class="intro-stitle">接团导游</p>
-        <div class="guidebox" ng-repeat="(key,guide) in guideList">
-            <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)" ng-show="orderObj.type==20"><input type="checkbox"></div>
-            <div class="guide-infor clearfix">
-                <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}"><img src="images/default_person.png"></div>
-                <div class="person-infor">
-                    <div class="p-m1">
-                        <span class="pp-name" ng-bind="guide.name"></span><i class="iconfont" ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">
-                        &#xe607;</i><span class="pp-age"><span ng-bind="guide.age"></span>岁</span><span class="acrossline">|</span>
-                        <span class="pp-gimg">品牌导游<img src="images/honer.png" ng-show="guide.level==1"><span
-                                ng-show="guide.level!=1">否</span></span><span class="acrossline">|</span>
-                        <span class="pp-scroe">平均评分<div style="display:inline;" star rating-value="guide.star" max="5"
-                                                        on-hover="onHover" on-leave="onLeave"
-                                                        readonly="true"></div><span
-                                class="acrossline">|</span>带团年限：<span><span ng-bind="guide.year"></span>年</span>
-                    </div>
-                    <div class="p-m2">
-                        <span><i class="iconfont icon-guide">&#xe603;</i>自由导游</span>
-                        <span class="acrossline">|</span>导服中心评价：<span ng-bind="guide.center_comment"></span>
-                    </div>
-                    <div class="p-m3" ng-bind="guide.avatar"></div>
-                    <div class="openline">
-                        <a class="img-more"><img src="images/more.png"></a>
-                        <span class="doubleline"></span>
-                    </div>
-                    <div class="guideintro-part clearfix" ng-style="{display:key==0?'block':'none'}">
-                        <div class="col-sm-6 intro-line">
-                            <label>语<span class="m-l-84"></span>种：</label>
-                            <span ng-repeat="lan in guide.language"><span ng-bind="lan.type"></span>&nbsp;&nbsp;</span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>手<span class="m-l-10"></span>机<span class="m-l-10"></span>号<span
-                                    class="m-l-10"></span>码：</label>
-                            <span ng-bind="guide.mobile"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>带<span class="m-l-19"></span>团<span class="m-l-19"></span>次<span
-                                    class="m-l-19"></span>数：</label>
-                            <span><span ng-bind="guide.order_count"></span>次</span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>导 游 证 编 号：</label>
-                            <span ng-bind="guide.guide_card_no"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>导游资格证书号码：</label>
-                            <span ng-bind="guide.guide_card_id"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>导游证 IC卡号：</label>
-                            <span ng-bind="guide.guide_card_IC"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>民<span class="m-l-84"></span>族：</label>
-                            <span ng-bind="guide.nation"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>政&nbsp;&nbsp;治&nbsp;&nbsp;&nbsp;面&nbsp;&nbsp;貌：</label>
-                            <span ng-bind="guide.idtype"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>户&nbsp;&nbsp;&nbsp;口&nbsp;&nbsp;&nbsp;所&nbsp;&nbsp;&nbsp;在&nbsp;&nbsp;地：</label>
-                            <span ng-bind="guide.birthday_area"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>邮<span class="m-l-57"></span>箱：</label>
-                            <span ng-bind="guide.mail"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>毕<span class="m-l-19"></span>业<span class="m-l-19"></span>学<span
-                                    class="m-l-19"></span>校：</label>
-                            <span ng-bind="guide.school"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>专<span class="m-l-57"></span>业：</label>
-                            <span ng-bind="guide.special"></span>
-                        </div>
-                        <div class="col-sm-12 intro-line">
-                            <label>兴 趣 爱 好 / 特 长：</label>
-                            <span ng-bind="guide.interset"></span>
-                        </div>
-                        <div class="col-sm-12 intro-line">
-                            <label>荣&nbsp;&nbsp;&nbsp;誉&nbsp;&nbsp;&nbsp;和&nbsp;&nbsp;&nbsp;奖&nbsp;&nbsp;励：</label>
-                            <span ng-bind="guide.reward"></span>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="openline m-l-15">
-                            <a class="img-up"><img src="images/up.png"></a>
-                            <span class="doubleline"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-center">
-            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="turnToIndex()">返回</a>
-        </div>
+        <order-guide></order-guide>
     </div>
 </div>

@@ -20,7 +20,7 @@
                     <option value="3">按费用顺序</option>
                 </select>
                 <div class="search-box">
-                    <span class="search-img"><img src="images/search.png"></span>
+                    <span class="search-img"  ng-click="initText()"><img src="images/search.png"></span>
                     <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
                 </div>
                 <div class="fr m-t-5"><a class="btn-import" ng-click="publicOrder()"><i class="iconfont">&#xe70e;</i>发布新订单</a>
@@ -31,11 +31,13 @@
                     <div class="radius-top"><img src="images/radius_top.png"></div>
                     <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
                     <!--紧急状态，盖章图片-->
-                    <div class="state-urgent" ng-show="order.is_top==1 && orderObj.type==20"><img src="images/state_urgent.png"></div>
+                    <div class="state-urgent" ng-show="order.is_top==1 && orderObj.type==20"><img
+                            src="images/state_urgent.png"></div>
                     <div class="team-infor clearfix">
                         <!--左边的图片，根据状态动态生成-->
                         <div class="team-img color-07" ng-show="orderObj.type==20"><img src="images/state07.png"></div>
-                        <div class="travelagency-img" ng-show="orderObj.type!=20"><span><img src="images/people03.png"></span></div>
+                        <div class="travelagency-img" ng-show="orderObj.type!=20"><span><img src="images/people03.png"></span>
+                        </div>
 
                         <div class="team-text">
                             <h5><span ng-bind="order.name"></span>
@@ -108,121 +110,28 @@
                 <!--</div>-->
                 <!--</div>-->
             </div>
-            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItems"
-                max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true" rotate="false"
-                force-ellipses="true" previous-text="‹" next-text="›">
+            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page"
+                        total-items="totalItems"
+                        max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true"
+                        rotate="false"
+                        force-ellipses="true" previous-text="‹" next-text="›">
             </pagination>
         </div>
     </div>
     <div ng-show="State=='detail'">
+        <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <order-detail></order-detail>
-        <div class="dashed-border"></div>
-        <p class="intro-stitle">接团导游</p>
-        <div class="guidebox" ng-repeat="(key,guide) in guideList">
-            <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)" ng-show="orderObj.type==20"><input type="checkbox"></div>
-            <div class="guide-infor clearfix">
-                <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}"><img src="images/default_person.png"></div>
-                <div class="person-infor">
-                    <div class="p-m1">
-                        <span class="pp-name" ng-bind="guide.name"></span><i class="iconfont" ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">
-                        &#xe607;</i><span class="pp-age"><span ng-bind="guide.age"></span>岁</span><span class="acrossline">|</span>
-                        <span class="pp-gimg">品牌导游<img src="images/honer.png" ng-show="guide.level==1"><span
-                                ng-show="guide.level!=1">否</span></span><span class="acrossline">|</span>
-                        <span class="pp-scroe">平均评分<div style="display:inline;" star rating-value="guide.star" max="5"
-                                                        on-hover="onHover" on-leave="onLeave"
-                                                        readonly="true"></div><span
-                                class="acrossline">|</span>带团年限：<span><span ng-bind="guide.year"></span>年</span>
-                    </div>
-                    <div class="p-m2">
-                        <span><i class="iconfont icon-guide">&#xe603;</i>自由导游</span>
-                        <span class="acrossline">|</span>导服中心评价：<span ng-bind="guide.center_comment"></span>
-                    </div>
-                    <div class="p-m3" ng-bind="guide.avatar"></div>
-                    <div class="openline">
-                        <a class="img-more"><img src="images/more.png"></a>
-                        <span class="doubleline"></span>
-                    </div>
-                    <div class="guideintro-part clearfix" ng-style="{display:key==0?'block':'none'}">
-                        <div class="col-sm-6 intro-line">
-                            <label>语<span class="m-l-84"></span>种：</label>
-                            <span ng-repeat="lan in guide.language"><span ng-bind="lan.type"></span>&nbsp;&nbsp;</span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>手<span class="m-l-10"></span>机<span class="m-l-10"></span>号<span
-                                    class="m-l-10"></span>码：</label>
-                            <span ng-bind="guide.mobile"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>带<span class="m-l-19"></span>团<span class="m-l-19"></span>次<span
-                                    class="m-l-19"></span>数：</label>
-                            <span><span ng-bind="guide.order_count"></span>次</span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>导 游 证 编 号：</label>
-                            <span ng-bind="guide.guide_card_no"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>导游资格证书号码：</label>
-                            <span ng-bind="guide.guide_card_id"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>导游证 IC卡号：</label>
-                            <span ng-bind="guide.guide_card_IC"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>民<span class="m-l-84"></span>族：</label>
-                            <span ng-bind="guide.nation"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>政&nbsp;&nbsp;治&nbsp;&nbsp;&nbsp;面&nbsp;&nbsp;貌：</label>
-                            <span ng-bind="guide.idtype"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>户&nbsp;&nbsp;&nbsp;口&nbsp;&nbsp;&nbsp;所&nbsp;&nbsp;&nbsp;在&nbsp;&nbsp;地：</label>
-                            <span ng-bind="guide.birthday_area"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>邮<span class="m-l-57"></span>箱：</label>
-                            <span ng-bind="guide.mail"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>毕<span class="m-l-19"></span>业<span class="m-l-19"></span>学<span
-                                    class="m-l-19"></span>校：</label>
-                            <span ng-bind="guide.school"></span>
-                        </div>
-                        <div class="col-sm-6 intro-line">
-                            <label>专<span class="m-l-57"></span>业：</label>
-                            <span ng-bind="guide.special"></span>
-                        </div>
-                        <div class="col-sm-12 intro-line">
-                            <label>兴 趣 爱 好 / 特 长：</label>
-                            <span ng-bind="guide.interset"></span>
-                        </div>
-                        <div class="col-sm-12 intro-line">
-                            <label>荣&nbsp;&nbsp;&nbsp;誉&nbsp;&nbsp;&nbsp;和&nbsp;&nbsp;&nbsp;奖&nbsp;&nbsp;励：</label>
-                            <span ng-bind="guide.reward"></span>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="openline m-l-15">
-                            <a class="img-up"><img src="images/up.png"></a>
-                            <span class="doubleline"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <order-guide></order-guide>
         <div class="text-center" ng-show="orderObj.type==20">
             <a class="btn-cn btn-yellow btn-acceptorder" ng-click="ConfirmAlert()">确认出团</a>
-
         </div>
         <div class="text-center" ng-show="orderObj.type==21">
             <a class="btn-cn btn-gray btn-acceptorder" ng-click="CloseOrderAlert()">关闭订单</a>
-            <a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==21" ng-click="TopOrderAlert()">置顶订单</a>
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="TopOrderAlert()">置顶订单</a>
         </div>
         <div class="text-center" ng-show="orderObj.type==23">
             <a class="btn-cn btn-yellow btn-acceptorder" ng-click="EndOrderAlert()">结束行程</a>
         </div>
-
     </div>
 
     <!--弹窗界面-->
@@ -240,7 +149,7 @@
         </div>
         <div class="pop-btn">
             <a class="btn-gray" ng-click="closeAlert()">取&nbsp;&nbsp;消</a>
-            <a class="btn-yellow" ng-click="ConfirmOrder()">确认关闭</a>
+            <a class="btn-yellow" ng-click="ConfirmOrder()">确认出团</a>
         </div>
     </div>
 
@@ -278,9 +187,10 @@
                 <div class="col-md-6 order-zd">
                     <label>截止时间</label>
                     <div class="layui-inline">
-                        <input type="text" style="float: left;" class="layui-input" time-change placeholder="招募截至时间" ng-model="TopObj.enter_end_time"
-                            onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
-                            required>
+                        <input type="text" style="float: left;" class="layui-input" time-change placeholder="招募截至时间"
+                               ng-model="TopObj.enter_end_time"
+                               onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
+                               required>
                     </div>
                 </div>
                 <div class="col-md-6 order-zd">
@@ -307,27 +217,30 @@
                 <div class="col-md-6 order-zd">
                     <label>性别要求</label>
                     <span class="sex-require">
-					<span><input type="radio" name="sex"  ng-click="changeSex(0)" checked> 无要求</span>
-                    <span><input type="radio" name="sex"  ng-click="changeSex(1)"> 男</span>
-                    <span><input type="radio" name="sex"  ng-click="changeSex(2)"> 女</span>
+					<span><input type="radio" name="sex" ng-click="changeSex(0)" checked> 无要求</span>
+                    <span><input type="radio" name="sex" ng-click="changeSex(1)"> 男</span>
+                    <span><input type="radio" name="sex" ng-click="changeSex(2)"> 女</span>
                     </span>
                 </div>
                 <div class="col-md-12 order-zd">
                     <label>品牌导游</label>
                     <span class="sex-require">
-					<span><input type="radio" name="guide"  ng-click="changeRequire(0)" checked> 无要求</span>
-                    <span><input type="radio" name="guide"  ng-click="changeRequire(0)"> 是</span>
+					<span><input type="radio" name="guide" ng-click="changeRequire(0)" checked> 无要求</span>
+                    <span><input type="radio" name="guide" ng-click="changeRequire(0)"> 是</span>
                     </span>
                 </div>
                 <div class="col-md-6 order-zd">
                     <label style="float: left">评分要求</label>
-                    <div style="float: left" star rating-value="TopObj.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
+                    <div style="float: left" star rating-value="TopObj.star" max="5" on-hover="onHover"
+                         on-leave="onLeave" readonly="false"></div>
                     </span>
                 </div>
                 <div class="col-md-6 order-zd">
                     <label>学历要求</label>
                     <select ng-model="InfoObj.study_level">
-                        <option ng-repeat="studen_level in study_levelList" value="studen_level.key" ng-selected="studen_level.key==0">{{studen_level.name}}</option>
+                        <option ng-repeat="student_level in study_levelList" value="{{student_level.key}}"
+                                ng-selected="student_level.key==0">{{student_level.name}}
+                        </option>
                     </select>
                 </div>
                 <div class="col-md-12 order-zd">
@@ -338,11 +251,11 @@
                     <img ng-click="removelanguage($index)" src="images/language_close.png">
                     </span>
                     <a class="add-language"><i class="iconfont">&#xe61d;</i>
-                <ul class="language-choice">
-                    <li ng-repeat="(key,langSel) in languageSelList" ng-class="{'language-checked':key==0}"
-                        ng-bind="langSel" ng-click="addLanguage(langSel)"></li>
-                </ul>
-            </a>
+                        <ul class="language-choice">
+                            <li ng-repeat="(key,langSel) in languageSelList" ng-class="{'language-checked':key==0}"
+                                ng-bind="langSel" ng-click="addLanguage(langSel)"></li>
+                        </ul>
+                    </a>
                     </span>
                 </div>
             </div>
@@ -382,11 +295,13 @@
                 <div ng-repeat="guide in guideEndList">
                     <div class="pop-line">
                         <img src="images/default_person.png">
-                        <span class="pp-name" style="font-weight: 700;padding-left: 20px" ng-bind="guide.name">王晓曦</span>
+                        <span class="pp-name" style="font-weight: 700;padding-left: 20px"
+                              ng-bind="guide.name">王晓曦</span>
                     </div>
                     <div class="pop-line">
                         <label>服务评星</label>
-                        <div style="display: inline" star rating-value="guide.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
+                        <div style="display: inline" star rating-value="guide.star" max="5" on-hover="onHover"
+                             on-leave="onLeave" readonly="false"></div>
                     </div>
                     <div class="pop-line">
                         <label>服务评价</label>
@@ -656,7 +571,6 @@
     <!--</div>-->
     <!--</div>-->
 </div>
-
 
 
 <script type="text/javascript">

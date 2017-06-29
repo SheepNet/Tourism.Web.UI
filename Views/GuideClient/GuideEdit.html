@@ -234,7 +234,7 @@
                     <img ng-src="{{ResUrl+completeMessage.guide_card_id_photo}}">
                     <span class="imgbox-num">导游资格证书（1）</span>
 					<span class="shadow-btn pop-h">
-					   <a class="btn-uplook" ><i class="iconfont" ng-click="showPic(completeMessage.guide_card_id_photo)"></i></a>
+					   <a class="btn-uplook" ><i class="iconfont" ng-click="showPicEdiit(completeMessage.guide_card_id_photo)"></i></a>
 					   <a class="btn-updel"><i class="iconfont"   ng-click="delPic('guide_card_id_photo')"></i></a>
 				    </span>
                 </div>
@@ -242,13 +242,16 @@
                     <img ng-src="{{ResUrl+completeMessage.guide_card_no_photo}}">
                     <span class="imgbox-num">导游证（1）</span>
 					<span class="shadow-btn pop-h">
-					   <a class="btn-uplook"><i class="iconfont" ng-click="showPic(completeMessage.guide_card_no_photo)"></i></a>
+					   <a class="btn-uplook"><i class="iconfont" ng-click="showPicEdiit(completeMessage.guide_card_no_photo)"></i></a>
 					   <a class="btn-updel"><i class="iconfont"  ng-click="delPic('guide_card_no_photo')"></i></a>
 				    </span>
                 </div>
             </div>
             <div class="login-btn w-btn" ng-click="submitMessage()"><a>完   成</a></div>
         </form>
+        <div class="picAreaEdit" style="display: none">
+            <img  ng-src="{{showPicUrl}}">
+        </div>
     </div>
 </div>
 

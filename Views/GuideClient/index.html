@@ -12,8 +12,8 @@
 							</span>
                     </a>
                 </li>
-                <li class="setup">
-                    <a><i class="iconfont">&#xe60b;</i>退出</a>
+                <li class="setup"  ui-sref="index">
+                    <a><i class="iconfont" >&#xe60b;</i>退出</a>
                 </li>
             </ul>
         </li>
@@ -32,18 +32,18 @@
             </a>
         </div>
         <ul class="sidebar-content">
-            <li class="c-active">
+            <li class="c-active"  ng-click="changeTitle('消息中心')">
                 <a ui-sref=".guideInfoCenter"><i class="iconfont">&#xe605;</i>消息中心</a>
             </li>
             <li>
                 <a><i class="iconfont">&#xe604;</i><b></b>订单中心<i class="iconfont icon-show">&#xe640;</i></a>
                 <ul>
-                    <li><a ui-sref=".orderReceive">可接订单<b>10</b></a></li>
-                    <li><a ui-sref=".orderNow">进行中</a></li>
-                    <li><a ui-sref=".orderEnd">已完成</a></li>
+                    <li  ng-click="changeTitle('订单中心 > 可接订单')"><a ui-sref=".orderReceive">可接订单<b>10</b></a></li>
+                    <li  ng-click="changeTitle('订单中心 > 进行中')"><a ui-sref=".orderNow">进行中</a></li>
+                    <li  ng-click="changeTitle('订单中心 > 已完成')"><a ui-sref=".orderEnd">已完成</a></li>
                 </ul>
             </li>
-            <li>
+            <li  ng-click="changeTitle('投诉建议')">
                 <a ui-sref=".guideComplaint"><i class="iconfont">&#xe654;</i>投诉建议</a>
             </li>
         </ul>
@@ -51,7 +51,7 @@
     <div class="container-box">
         <div class="container-m">
             <div class="container-title">
-                <i class="iconfont">&#xe6a2;</i><span>消息中心</span>
+                <i class="iconfont">&#xe6a2;</i><span ng-bind="titleObj.Tiptitle"></span>
             </div>
             <div class="container-bg" ui-view="">
 

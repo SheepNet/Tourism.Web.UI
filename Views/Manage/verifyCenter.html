@@ -8,7 +8,7 @@
         <div class="order-table">
             <div class="choice-box clearfix">
                 <div class="search-box">
-                    <span class="search-img"><img src="images/search.png"></span>
+                    <span class="search-img"><img src="images/search.png"  ng-click="init()"></span>
                     <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
                 </div>
                 <div class="layui-inline" style="margin-left: 10px;display: none">
@@ -59,6 +59,7 @@
         </div>
     </div>
     <div ng-show="State=='detail'">
+        <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <guide_info></guide_info>
         <div class="text-center" ng-show="InfoObj.type==0">
             <a class="btn-cn btn-gray" ng-click="guideCheck(0)">不通过</a>

@@ -9,7 +9,7 @@
                 <option>按会员类型</option>
             </select>
             <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
+                <span class="search-img"><img src="images/search.png" ng-click="init()"></span>
                 <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
             </div>
             <div class="fr m-t-5"><a class="btn-import"><i class="iconfont">&#xe633;</i>导入导游</a></div>
@@ -33,10 +33,10 @@
                         <td ng-bind="key+1">1</td>
                         <td ng-bind="model.name">张明</td>
                         <td ng-bind="model.sex==1?'男':'女'">男</td>
-                        <td ng-bind="model.mobile">15101412144</td>
-                        <td ng-bind="model.check_time">2017-02-18 18:00</td>
-                        <td><span ng-bind="model.year"></span>年</td>
-                        <td ng-bind="model.guide_card_no"></td>
+                        <td ng-bind="model.mobile"></td>
+                        <td ng-bind="model.score==null?0:model.score">2017-02-18 18:00</td>
+                        <td><span ng-bind="model.level==1?'普通导游':'会员导游'"></span></td>
+                        <td ng-bind="model.star==1?'是':'否'"></td>
                         <td ng-click="ShowDetail(model.id)"><a><i class="iconfont">&#xe645;</i></a></td>
                     </tr>
                 </tbody>
@@ -49,6 +49,7 @@
 
     </div>
     <div ng-show="State=='detail'">
+        <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <guide_info></guide_info>
         <div class="text-center">
             <a class="btn-cn btn-gray" ng-click="editGuideInfo(5)">注&nbsp;&nbsp;&nbsp;&nbsp;销</a>
@@ -65,7 +66,7 @@
                 <span class="search-img"><img src="images/search.png"></span>
                 <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
             </div>
-            <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-import"><i class="iconfont">&#xe633;</i>返回</a></div>
+            <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         </div>
         <div class="teams-box">
             <div class="teams-part" ng-repeat="order in orderList">
@@ -97,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItems"
+            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItemsOrder"
                 max-size="maxSize" ng-change="pageChangedOrder()" boundary-links="false" boundary-link-numbers="true" rotate="false"
                 force-ellipses="true" previous-text="‹" next-text="›">
             </pagination>

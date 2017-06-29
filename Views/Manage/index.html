@@ -12,7 +12,7 @@
 							</span>
                     </a>
                 </li>
-                <li class="setup">
+                <li class="setup"  ui-sref="index">
                     <a><i class="iconfont">&#xe60b;</i>退出</a>
                 </li>
             </ul>
@@ -32,36 +32,36 @@
             </a>
         </div>
         <ul class="sidebar-content">
-            <li class="c-active">
+            <li class="c-active"  ng-click="changeTitle('消息中心')">
                 <a ui-sref=".infoCenter"><i class="iconfont">&#xe605;</i>消息中心</a>
             </li>
-            <li>
-                <a ui-sref=".verifyCenter"><i class="iconfont">&#xe6fd;</i>审核中心</a>
+            <li ng-click="changeTitle('审核中心')">
+                <a ui-sref=".verifyCenter"><i class="iconfont" >&#xe6fd;</i>审核中心</a>
             </li>
-            <li>
-                <a ui-sref=".orderManage"><i class="iconfont">&#xe604;</i>订单管理</a>
+            <li ng-click="changeTitle('订单管理')">
+                <a ui-sref=".orderManage"><i class="iconfont" >&#xe604;</i>订单管理</a>
             </li>
-            <li>
-                <a ui-sref=".guideMange"><i class="iconfont">&#xe60a;</i>导游管理</a>
+            <li ng-click="changeTitle('导游管理')">
+                <a ui-sref=".guideMange"><i class="iconfont" >&#xe60a;</i>导游管理</a>
             </li>
-            <li>
-                <a ui-sref=".agencyMange"><i class="iconfont">&#xe602;</i>旅行社管理</a>
+            <li ng-click="changeTitle('旅行社管理')">
+                <a ui-sref=".agencyMange"><i class="iconfont" >&#xe602;</i>旅行社管理</a>
             </li>
-            <li>
+            <li ng-click="changeTitle('统计中心')">
                 <a ui-sref=".statisticsCenter"><i class="iconfont">&#xe61e;</i>统计中心</a>
             </li>
-            <li>
+            <li ng-click="changeTitle('投诉中心')">
                 <a ui-sref=".complaintCenter"><i class="iconfont">&#xe654;</i>投诉中心</a>
             </li>
-            <li>
-                <a ui-sref=".messageSetting"><i class="iconfont">&#xe660;</i>短信配置</a>
+            <li ng-click="changeTitle('短信配置')">
+                <a ui-sref=".messageSetting"><i class="iconfont" >&#xe660;</i>短信配置</a>
             </li>
         </ul>
     </div>
     <div class="container-box"  >
         <div class="container-m">
             <div class="container-title">
-                <i class="iconfont">&#xe6a2;</i><span>消息中心</span>
+                <i class="iconfont">&#xe6a2;</i><span ng-bind="titleObj.Tiptitle"></span>
             </div>
             <div class="container-bg" ui-view="">
 

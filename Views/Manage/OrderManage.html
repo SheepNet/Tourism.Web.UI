@@ -11,46 +11,48 @@
         <div class="order-table">
             <div class="choice-box clearfix">
                 <select class="select-u">
-                <option>按发单时间顺序</option>
-                <option>按开团人数顺序</option>
-                <option>按费用顺序</option>
-            </select>
+                    <option>按发单时间顺序</option>
+                    <option>按开团人数顺序</option>
+                    <option>按费用顺序</option>
+                </select>
                 <div class="search-box">
-                    <span class="search-img"><img src="images/search.png"></span>
+                    <span class="search-img" ng-click="init()"><img src="images/search.png"></span>
                     <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
                 </div>
             </div>
             <div class="dis-table">
                 <table class="table-list">
                     <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>旅游地</th>
-                            <th>团号</th>
-                            <th>人数</th>
-                            <th>开团旅行社</th>
-                            <th>上团时间</th>
-                            <th>所需人数</th>
-                            <th>人均日费用</th>
-                            <th ng-if="type!=1">接单导游</th>
-                        </tr>
+                    <tr>
+                        <th>序号</th>
+                        <th>旅游地</th>
+                        <th>团号</th>
+                        <th>人数</th>
+                        <th>开团旅行社</th>
+                        <th>上团时间</th>
+                        <th>所需人数</th>
+                        <th>人均日费用</th>
+                        <th ng-if="type!=1">接单导游</th>
+                        <th>操作</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="(key,order) in orderList">
-                            <td ng-bind="key+1"></td>
-                            <td ng-bind="order.name"></td>
-                            <td ng-bind="order.order_no"></td>
-                            <td ng-bind="order.order_person"></td>
-                            <td ng-bind="order.travel_company_name"></td>
-                            <td ng-bind="order.begin_time"></td>
-                            <td ng-bind="order.guide_num"></td>
-                            <td ng-bind="order.guide_money"></td>
-                            <td ng-if="type!=1">
-                                <span ng-repeat="guideModel in order.guide">
+                    <tr ng-repeat="(key,order) in orderList">
+                        <td ng-bind="key+1"></td>
+                        <td ng-bind="order.name"></td>
+                        <td ng-bind="order.order_no"></td>
+                        <td ng-bind="order.order_person"></td>
+                        <td ng-bind="order.travel_company_name"></td>
+                        <td ng-bind="order.begin_time"></td>
+                        <td ng-bind="order.guide_num"></td>
+                        <td ng-bind="order.guide_money"></td>
+                        <td ng-if="type!=1">
+                                <span ng-repeat="guideModel in order.guide_list">
                                     <span ng-bind="guideModel.name"></span>&nbsp;&nbsp;
                                 </span>
-                            </td>
-                        </tr>
+                        </td>
+                        <td ng-click="ShowDetail(order.id)"><a><i class="iconfont">&#xe645;</i></a></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -69,14 +71,40 @@
                     next-text="›">
         </pagination>
     </div>
+    <div ng-show="State=='detail'">
+        <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
+        <order-detail></order-detail>
+        <order-guide></order-guide>
+        <div ng-show="orderObj.type>=3">
+            <p class="intro-stitle">导游评价</p>
+            <div ng-repeat="guideComment in orderDetail.guide">
+                <div class="col-sm-12 intro-line">
+                    <label>导游：<span ng-bind="guideComment.name"></span></label>
+                    <span ng-bind="guideComment.content"></span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center" ng-show="orderObj.type==3">
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="editOrder()">确认支付</a>
+
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
     // tab切换
     $(".order-table:first").show();
     $(".tab-order li:first").addClass("active-tab");
-    $(".tab-order li").click(function() {
+    $(".tab-order li").click(function () {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
         //$(".order-table").hide().eq($(".tab-order li").index(this)).show();
     });
+
+    $(".container-bg").on("click", ".img-more", function () {
+        $(this).parents(".person-infor").children(".guideintro-part").show(100);
+    })
+
+    $(".container-bg").on("click", ".img-up", function () {
+        $(".guideintro-part").parents(".person-infor").children(".guideintro-part").hide(100);
+    })
 </script>

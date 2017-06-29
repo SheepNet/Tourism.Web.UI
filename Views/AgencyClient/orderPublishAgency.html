@@ -8,11 +8,21 @@
             </div>
             <div class="col-md-6 order-line">
                 <label>团号</label>
-                <input name="order_no" type="text" ng-model="InfoObj.order_no" ng-maxlength="20" required>
+                <input name="order_no" type="text" ng-model="InfoObj.order_no" ng-maxlength="20" required ng-class="{'red':InfoObj.order_no==null || InfoObj.order_no.length==0}">
                 <div class="alert alert-danger help-block" ng-show="orderForm.order_no.$dirty && orderForm.order_no.$invalid">
                     请输入20位以内团号
                 </div>
             </div>
+
+            <div class="col-md-6 order-line">
+                <label>传真号码</label>
+                <input name="order_no" type="text" ng-model="InfoObj.order_fax" ng-maxlength="20" required>
+            </div>
+            <div class="col-md-6 order-line">
+                <label>联系电话</label>
+                <input name="order_no" type="text" ng-model="InfoObj.order_phone" ng-maxlength="20" required>
+            </div>
+
 
             <div class="col-md-6 order-line">
                 <label>订单名称</label>
@@ -56,7 +66,7 @@
             </div>
             <div class="col-md-12 order-line">
                 <label>特殊备注</label>
-                <textarea rows="4" name="remark" ng-model="InfoObj.remark" ng-maxlength="300" required></textarea>
+                <textarea rows="4" name="remark" ng-model="InfoObj.remark" ng-maxlength="300"></textarea>
                 <div class="alert alert-danger help-block" ng-show="orderForm.remark.$dirty && orderForm.remark.$invalid">
                     特殊备注在300个字以内
                 </div>
@@ -111,7 +121,7 @@
             <div class="col-md-6 order-line">
                 <label>学历要求</label>
                 <select ng-model="InfoObj.study_level">
-                    <option ng-repeat="studen_level in study_levelList" value="studen_level.key" ng-selected="studen_level.key==0">{{studen_level.name}}</option>
+                    <option ng-repeat="student_level in study_levelList" value="{{student_level.key}}" ng-selected="student_level.key==0">{{student_level.name}}</option>
                 </select>
             </div>
             <div class="col-md-6 order-line">

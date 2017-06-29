@@ -3,14 +3,22 @@
  */
 //主界面控制器
 Ctrl.controller("AgencyClientCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", "$location", function ($scope, $http, $sce, $state, $stateParams, $cookieStore, $location) {
-    var userMessage = $cookieStore.get("user");
+    var userMessage = $cookieStore.get("user_agency");
     $scope.ResUrl=rurl+"/resource/";
-    $scope.session_id = $cookieStore.get("session_id");
+    $scope.session_id = $cookieStore.get("session_id_agency");
     if (userMessage == null) {
         $location.path("index")
     }
     $scope.User = userMessage;
 
+    //标题信息
+    $scope.titleObj={
+        Tiptitle:"消息中心"
+    }
+
+    $scope.changeTitle=function(title){
+        $scope.titleObj.Tiptitle=title;
+    }
 
     //定义分页最大显示，全局通用
     $scope.maxSize = 7;
@@ -27,6 +35,7 @@ Ctrl.controller("AgencyClientCtrl", ["$scope", "$http", "$sce", "$state", "$stat
     $scope.onChange = function (val) {
         $scope.ratingVal = val;
     }
+
     $state.go("agencyClient.agencyInfoCenter");
 }]);
 
@@ -46,7 +55,7 @@ Ctrl.controller("OrderDetailAgencyCtrl", ["$scope", "$http", "$sce", "$state", "
 }]);
 
 //结束订单控制器
-Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "agencyService", function ($scope, $http, $sce, $state, $stateParams, agencyService) {
+Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "publicService", "agencyService", function ($scope, $http, $sce, $state, $stateParams,publicService,agencyService) {
 
     $scope.State = "index";
 
@@ -59,8 +68,15 @@ Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
         session_id: $scope.session_id
     };
 
-    //排序类型变换
+    //排序类型搜索
     $scope.OrdertypeChange = function () {
+        $scope.orderObj.page=1;
+        $scope.init();
+    }
+
+    //文本搜索
+    $scope.initText=function(){
+        $scope.orderObj.page=1;
         $scope.init();
     }
 
@@ -72,8 +88,9 @@ Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
         var promise = agencyService.getorderList($scope.orderObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="订单中心 > 已完成";
                 $scope.orderList = data.msg_body.order;
-                $scope.totalItems = data.msg_body.count.type_30_count;
+                $scope.totalItems = data.msg_body.type_30_count;
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -92,7 +109,8 @@ Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
         var promise = agencyService.getOrderDetail(id, $scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                $scope.orderDetail = data.msg_body.order;
+                $scope.titleObj.Tiptitle="订单中心 > 已完成 > 查看详情";
+                $scope.orderDetail = publicService.changeOrderData(data.msg_body.order);
                 $scope.guideList = [];
                 angular.forEach($scope.orderDetail.guide, function (item, key) {
                     var promiseGetGuide = agencyService.getGuideDetail(item.id, $scope.orderDetail.id, $scope.session_id);
@@ -126,6 +144,7 @@ Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
 
     $scope.turnToIndex = function () {
         $scope.State = "index";
+        $scope.titleObj.Tiptitle="订单中心 > 已完成";
     }
 
 }]);
@@ -154,8 +173,15 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
 
     //置顶对象预处理
 
-
+    //排序类型搜索
     $scope.OrdertypeChange = function () {
+        $scope.orderObj.page=1;
+        $scope.init();
+    }
+
+    //文本搜索
+    $scope.initText=function(){
+        $scope.orderObj.page=1;
         $scope.init();
     }
 
@@ -173,8 +199,9 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
         var promise = agencyService.getorderList($scope.orderObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="订单中心 > 进行中";
                 $scope.orderList = data.msg_body.order;
-                $scope.orderCount = data.msg_body.count;
+                $scope.orderCount = data.msg_body;
                 switch ($scope.orderObj.type) {
                     case 20:
                         $scope.totalItems = $scope.orderCount.type_20_count;
@@ -208,10 +235,26 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
         var promise = agencyService.getOrderDetail(id, $scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                $scope.orderDetail = data.msg_body.order;
+                switch ($scope.orderObj.type) {
+                    case 20:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 待确认 > 查看详情";
+                        break;
+                    case 21:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 待出团 > 查看详情";
+                        break;
+                    case 22:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 出团中 > 查看详情";
+                        break;
+                    case 23:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 待结束 > 查看详情";
+                        break;
+                    default:
+                        break;
+                }
+                $scope.orderDetail = publicService.changeOrderData(data.msg_body.order);
                 $scope.guideList = [];
                 angular.forEach($scope.orderDetail.guide, function (item, key) {
-                    var promiseGetGuide = agencyService.getGuideDetail(item.id, $scope.orderDetail.id, $scope.session_id);
+                    var promiseGetGuide = agencyService.getGuideDetail(item.id, id, $scope.session_id);
                     promiseGetGuide.then(function (data) {
                         if (data.err_code == 0) {
                             var guideObj = data.msg_body.data;
@@ -250,6 +293,7 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
 
     $scope.turnToIndex = function () {
         $scope.State = "index";
+        $scope.titleObj.Tiptitle="订单中心 > 进行中";
     }
 
     //待确认界面，点击弹出窗口
@@ -269,7 +313,7 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
     $scope.ConfirmOrder = function () {
         var obj = {
             id: $scope.orderDetail.id,
-            type: 20,
+            type: "t20",
             guide: [],
             session_id: $scope.session_id
         }
@@ -280,13 +324,6 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
                 })
             }
         });
-
-        //if(obj.guide.length!=$scope.orderDetail.guide_num){
-        //    var num=$scope.orderDetail.guide_num;
-        //    layer.msg("请选择"+num+"个导游", {icon: 0});
-        //    return true;
-        //}
-
         var promise = agencyService.editOrder(obj);
         promise.then(function (data) {
             if (data.err_code == 0) {
@@ -325,7 +362,7 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
     $scope.CloseOrder = function () {
         var obj = {
             id: $scope.orderDetail.id,
-            type: 36,
+            type: "t36",
             content: $scope.closeContent,
             session_id: $scope.session_id
         }
@@ -353,11 +390,11 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
     $scope.TopOrderAlert = function () {
         $scope.TopObj = {
             id: $scope.orderDetail.id,
-            type: 26,
+            type: "t26",
             star: 0,
             guide_sex: 0,
             guide_level: 0,
-            star: 0.5,
+            star: 0,
             language: [],
             study_level: 0,
             session_id: $scope.session_id,
@@ -538,7 +575,7 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
 
 //订单发布控制器
 Ctrl.controller("OrderPublishAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", "publicService", "agencyService", function ($scope, $http, $sce, $state, $stateParams, $cookieStore, publicService, agencyService) {
-    var userMessage = $cookieStore.get("user");
+    var userMessage = $cookieStore.get("user_agency");
     $scope.agencyName = userMessage.name;
 
     $scope.languageSelList = publicService.getLanguageList();
@@ -547,11 +584,12 @@ Ctrl.controller("OrderPublishAgencyCtrl", ["$scope", "$http", "$sce", "$state", 
 
     //设置默认信息
     $scope.InfoObj = {
-        star: 0.5,
+        star: 0,
         language: [],
         guide_sex: 0,
         guide_level: 0,
-        study_level: 0
+        study_level: 0,
+        session_id: $scope.session_id
     }
 
     //提交订单
@@ -581,7 +619,8 @@ Ctrl.controller("OrderPublishAgencyCtrl", ["$scope", "$http", "$sce", "$state", 
         var promise = agencyService.addOrder($scope.InfoObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
-
+                layer.msg("发布成功", {icon: 1})
+                $state.go("agencyClient.orderNowAgency");
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -636,13 +675,19 @@ Ctrl.controller("AgencyComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$s
         "content": "",
         "content_file": [
         ],
-        "complain_mobile": "投诉人手机",
+        "complain_mobile": "",
         "session_id":$scope.session_id
     }
 
     $scope.AddComplain=function(){
-        if($scope.complainObj.content.length>500){
-            layer.msg("投诉或建议在500字以内", {icon: 0});
+
+        if($scope.complainObj.content.length>500 ||$scope.complainObj.content.length==0){
+            layer.msg("投诉或建议为必填项，且少于500字", {icon: 0});
+            return true;
+        }
+
+        if($scope.complainObj.complain_mobile.length==0){
+            layer.msg("请填写联系方式", {icon: 0});
             return true;
         }
 
@@ -650,6 +695,16 @@ Ctrl.controller("AgencyComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$s
         promise.then(function (data) {
             if (data.err_code == 0) {
                 layer.msg("提交成功", {icon: 1})
+                $scope.complainObj=
+                {
+                    "complain_type": 1,
+                    "content": "",
+                    "content_file": [
+                    ],
+                    "complain_mobile": "",
+                    "session_id":$scope.session_id
+                }
+
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -664,19 +719,22 @@ Ctrl.controller("AgencyComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$s
 
     //图片上传
     $scope.file_changed = function(element) {
-        if($scope.complainObj.content_file.length)
-            var ele_id=angular.element(element).attr("id")
-        var uuid = $ui.fileupload({
-            fileSelector: '#'+ele_id,
-            type: FILETYPE.IMAGE,
-            moudle: 'BASE'
-        }).uuid;
-
-        $scope.$apply(function(){
-            $scope.complainObj.content_file.push({
-                id:uuid
-            })
-        })
+            if($scope.complainObj.content_file.length>2){
+                layer.msg("只能上传三张图片", {icon: 0})
+            }else {
+                var ele_id=angular.element(element).attr("id")
+                var uuid = $ui.fileupload({
+                    fileSelector: '#'+ele_id,
+                    //fileSelector: '#contentFile',
+                    type: FILETYPE.IMAGE,
+                    moudle: 'BASE'
+                }).uuid;
+                $scope.$apply(function(){
+                    $scope.complainObj.content_file.push({
+                        id:uuid
+                    })
+                })
+            }
     };
 
     //图片展示

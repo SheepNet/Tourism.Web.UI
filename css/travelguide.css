@@ -1901,6 +1901,12 @@ a:hover {
     border-radius: 6px;
 }
 
+.order-line input.red[type="text"],
+.order-line input.red[type="data"],
+.order-line input.red[type="number"]{
+    border-left:5px solid #f00;
+}
+
 .order-line textarea {
     min-width: 68%;
     display: inline-block;

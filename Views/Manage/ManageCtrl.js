@@ -5,14 +5,22 @@
 
 Ctrl.controller("ManageCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", "$location", function ($scope, $http, $sce, $state, $stateParams, $cookieStore, $location) {
     //获得user信息
-    var userMessage = $cookieStore.get("user");
+    var userMessage = $cookieStore.get("user_manage");
     $scope.ResUrl=rurl+"/resource/";
-    $scope.session_id = $cookieStore.get("session_id");
+    $scope.session_id =  $cookieStore.get("session_id_manage");
     if (userMessage == null) {
         $location.path("index")
     }
     $scope.User = userMessage;
     $state.go("manage.infoCenter");
+
+    $scope.titleObj={
+        Tiptitle:"消息中心"
+    }
+
+    $scope.changeTitle=function(title){
+        $scope.titleObj.Tiptitle=title
+    }
 
     //定义分页最大显示，全局通用
     $scope.maxSize = 7;
@@ -59,6 +67,7 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
 
 
     $scope.typeChange = function (type) {
+        $scope.InfoObj.page=1;
         $scope.InfoObj.type = type;
         $scope.init();
     }
@@ -69,6 +78,7 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise = centerService.getVerifyList($scope.InfoObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="审核中心"
                 $scope.type_0_count=data.msg_body.type_0_count;
                 $scope.type_1_count=data.msg_body.type_1_count;
                 if($scope.InfoObj.type==0){
@@ -98,7 +108,11 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise = centerService.GetCheckDetail(id, $scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-
+                if( $scope.InfoObj.type==0){
+                    $scope.titleObj.Tiptitle="审核中心 > 查看详情"
+                }else {
+                    $scope.titleObj.Tiptitle="审核中心 > 已审核 > 查看详情"
+                }
                 $scope.guideInfo = data.msg_body.check;
                 //$scope.guideInfo = data.msg_body.data;
                 $scope.State = 'detail';
@@ -143,10 +157,15 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         });
     }
 
+    //回到首页
+    $scope.turnToIndex = function () {
+        $scope.State = 'index';
+        $scope.titleObj.Tiptitle="审核中心";
+    }
 }]);
 
 //订单中心
-Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService", function ($scope, $http, $sce, $state, $stateParams, centerService) {
+Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService","publicService", function ($scope, $http, $sce, $state, $stateParams, centerService,publicService) {
     $scope.State = 'index';
 
     $scope.orderObj = {
@@ -154,19 +173,68 @@ Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         title: "",
         order_type: "1",
         page: 1,
-        page_size: 5,
+        page_size: 10,
         session_id: $scope.session_id
     }
 
     $scope.totalItems = 13;
 
-    $scope.type = 1;
 
-    $scope.ShowDetail = function () {
+    $scope.ShowDetail = function (id) {
+        var promise = centerService.getOrderDetail(id,$scope.session_id);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                //设置标题信息
+                switch ($scope.orderObj.type) {
+                    case 1:
+                        $scope.titleObj.Tiptitle="订单管理 > 待接";
+                        break;
+                    case 2:
+                        $scope.titleObj.Tiptitle="订单管理 > 进行中";
+                        break;
+                    case 3:
+                        $scope.titleObj.Tiptitle="订单管理 > 待支付";
+                        break;
+                    case 4:
+                        $scope.titleObj.Tiptitle="订单管理 > 异常订单";
+                        break;
+                    case 5:
+                        $scope.titleObj.Tiptitle="订单管理 > 已完成";
+                        break;
+                    default:
+                        break;
+                }
+                $scope.orderDetail=publicService.changeOrderData(data.msg_body.order);
+                $scope.guideList = [];
+                angular.forEach($scope.orderDetail.guide, function (item, key) {
+                    var promiseGetGuide = centerService.getGuideDetail(item.id, $scope.session_id);
+                    promiseGetGuide.then(function (data) {
+                        if (data.err_code == 0) {
+                            var guideObj = data.msg_body.data;
+                            guideObj.status = item.status;
+                            $scope.guideList.push(guideObj)
+                        } else {
+                            layer.msg(data.err_msg, {icon: 0});
+                        }
+                    }, function (data) {
+                        layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+                    });
+                    promiseGetGuide.catch(function (data) {
+                        layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+                    })
+                })
+                var guideList = $scope.orderDetail.guide;
+                $scope.State="detail";
+            }  else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
         $scope.State = 'detail';
-    }
-    $scope.ShowAgrncyHistory = function () {
-        $scope.State = 'history';
     }
 
     $scope.typeChange = function (type) {
@@ -182,9 +250,10 @@ Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         var promise = centerService.getOrderList($scope.orderObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="订单管理";
                 $scope.orderList = data.msg_body.order;
-                $scope.orderCount = data.msg_body.count;
-                switch ($scope.type) {
+                $scope.orderCount = data.msg_body;
+                switch ($scope.orderObj.type) {
                     case 1:
                         $scope.totalItems = $scope.orderCount.type_1_count;
                         break;
@@ -216,6 +285,34 @@ Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
     }
     $scope.init();
 
+    $scope.editOrder=function(){
+        layer.confirm('确定设为已支付？', function (i) {
+            var promise =  centerService.editOrderState($scope.orderDetail.id,35,$scope.session_id);
+            promise.then(function (data) {
+                if (data.err_code == 0) {
+                    layer.closeAll();
+                    layer.msg("操作成功", {icon: 1, time: 1000});
+                    $scope.State="index";
+                    $scope.init();
+                } else {
+                    layer.msg(data.err_msg, {icon: 0});
+                }
+            }, function (data) {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            });
+            promise.catch(function () {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            })
+        });
+    }
+
+    //回到首页
+    $scope.turnToIndex = function () {
+        $scope.State = 'index';
+        $scope.titleObj.Tiptitle="订单管理";
+    }
+
+
 }]);
 
 //导游管理
@@ -246,6 +343,7 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         var promise = centerService.getGuideDetail(id, $scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="导游管理 > 查看详情";
                 $scope.guideInfo = data.msg_body.data;
                 $scope.State = 'detail';
             }  else {
@@ -271,6 +369,7 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
             session_id: $scope.session_id
         }
         $scope.initOrder();
+        $scope.titleObj.Tiptitle="导游管理 > 查看详情 > 历史带团记录";
         $scope.State = 'history';
     }
 
@@ -285,6 +384,7 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         var promise = centerService.getGuideList($scope.InfoObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="导游管理";
                 $scope.totalItems = data.msg_body.total_count;
                 $scope.guideList = data.msg_body.guide;
             }
@@ -343,10 +443,24 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
 
     $scope.turnToIndex = function () {
         $scope.State = 'index';
+        $scope.titleObj.Tiptitle="导游管理";
     }
 
     $scope.turnToDetail = function () {
         $scope.State = 'detail';
+        $scope.titleObj.Tiptitle="导游管理 > 查看详情";
+    }
+
+    //图片展示
+    $scope.showPic = function (url) {
+        $scope.showPicUrl= $scope.ResUrl+url;
+        layer.open({
+            type: 1,
+            title:"查看图片",
+            shade: 0.3,
+            area:["800px","600px"],
+            content: $('.picArea')
+        });
     }
 
 }]);
@@ -388,6 +502,7 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise = centerService.getAgencyInfo($scope.agencyInfoObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="旅行社管理 > 查看详情";
                 $scope.totalItems1 = 5;
                 $scope.agencyInfo = data.msg_body.travel_company;
             } else {
@@ -409,10 +524,11 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
             title: "",
             order_type: 1,
             page: 1,
-            page_size: 10,
+            page_size: 5,
             session_id: $scope.session_id
         }
         $scope.initOrder();
+        $scope.titleObj.Tiptitle="旅行社管理 > 查看详情 > 历史开团记录";
         $scope.State = 'history';
     }
 
@@ -423,8 +539,9 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise = centerService.getAgencyList($scope.agencyObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="旅行社管理";
                 $scope.totalItems = data.msg_body.total_count;
-                $scope.agencyList = data.msg_body.guide;
+                $scope.agencyList = data.msg_body.travel_company;
             }  else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -439,7 +556,7 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
 
     //导游历史纪录初始化列表
     $scope.initOrder = function () {
-        var promise = centerService.getGuideHistory($scope.orderObj);
+        var promise = centerService.getAgencyHistory($scope.orderObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
                 $scope.totalItemsOrder = data.msg_body.total_count;
@@ -466,7 +583,7 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
             promise.then(function (data) {
                 if (data.err_code == 0) {
                     layer.closeAll();
-                    layer.msg("删除成功", {icon: 1, time: 1000});
+                    layer.msg("操作成功", {icon: 1, time: 1000});
                     $scope.State = 'index';
                     $scope.init();
                 } else {
@@ -479,6 +596,17 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
                 layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
             })
         });
+    }
+
+    //返回到详细页
+    $scope.turnToDetail = function () {
+        $scope.State = 'detail';
+        $scope.titleObj.Tiptitle="旅行社管理 > 查看详情";
+    }
+
+    $scope.turnToIndex = function () {
+        $scope.State = 'index';
+        $scope.titleObj.Tiptitle="旅行社管理";
     }
 
 }]);
@@ -503,7 +631,28 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         var promise = centerService.getComplainDetail(id, $scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="投诉中心 > 查看详情";
                 $scope.complainInfo = data.msg_body.complain;
+                switch ($scope.complainInfo.complain_type) {
+                    case 1:
+                        $scope.complainInfo.complain_text = '旅行社服务';
+                        break;
+                    case 2:
+                        $scope.complainInfo.complain_text  = '导游服务';
+                        break;
+                    case 3:
+                        $scope.complainInfo.complain_text  = '景区环境';
+                        break;
+                    case 4:
+                        $scope.complainInfo.complain_text  = '费用';
+                        break;
+                    case 5:
+                        $scope.complainInfo.complain_text  = '其它';
+                        break;
+                    default:
+                        $scope.complainInfo.complain_text  = '暂无';
+                        break;
+                }
                 $scope.State = 'detail';
             } else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -531,6 +680,7 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         var promise = centerService.getComplainList($scope.complainObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="投诉中心";
                 $scope.totalItems = data.msg_body.total_count;
                 $scope.complainList = data.msg_body.complain;
             } else {
@@ -550,7 +700,7 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         var promise = centerService.editComplain(id, type, $scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                layer.msg("操作成功", {icon: 0})
+                layer.msg("操作成功", {icon: 1})
                 $scope.init();
                 $scope.State = 'index';
             } else {
@@ -563,6 +713,24 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
             layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
     }
+
+    //图片展示
+    $scope.showPic = function (url) {
+        $scope.showPicUrl= $scope.ResUrl+url;
+        layer.open({
+            type: 1,
+            title:"查看图片",
+            shade: 0.3,
+            area:["800px","600px"],
+            content: $('.picArea')
+        });
+    }
+
+    $scope.turnToIndex = function () {
+        $scope.State = 'index';
+        $scope.titleObj.Tiptitle="投诉中心";
+    }
+
 
 }]);
 

@@ -15,7 +15,7 @@
                     <option value="3">按费用顺序</option>
                 </select>
                 <div class="search-box">
-                    <span class="search-img"><img src="images/search.png"></span>
+                    <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
                     <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
                 </div>
             </div>
@@ -79,10 +79,10 @@
         </div>
     </div>
     <div ng-show="State=='detail'">
+        <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <order-detail></order-detail>
         <div class="text-center">
-            <a class="btn-cn btn-gray btn-acceptorder" ng-click="turnToIndex()">返回</a>
-            <a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==20" ng-click="CancelOrderAlert(orderDetail.id)">取消订单</a>
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==20 || orderObj.type==21" ng-click="CancelOrderAlert(orderDetail.id)">取消订单</a>
             <a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==23" ng-click="EndOrderAlert(orderDetail.id)">结束行程</a>
         </div>
     </div>
@@ -106,7 +106,7 @@
         </div>
         <div class="pop-btn">
             <a class="btn-gray" ng-click="closeAlert()">去确认</a>
-            <a class="btn-yellow" ng-click="CancelOrder()">已确认</a>
+            <a class="btn-yellow" ng-click="CancelOrder(orderDetail.id)">已确认</a>
         </div>
     </div>
 
@@ -128,7 +128,7 @@
         </div>
         <div class="pop-btn">
             <a class="btn-gray" ng-click="closeAlert()">取&nbsp;&nbsp;消</a>
-            <a class="btn-yellow" ng-click="EndOrder()" EndOrder>确&nbsp;&nbsp;定</a>
+            <a class="btn-yellow" ng-click="EndOrder()">确&nbsp;&nbsp;定</a>
         </div>
     </div>
 </div>

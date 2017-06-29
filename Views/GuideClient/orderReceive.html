@@ -7,7 +7,7 @@
                 <option value="3">按费用顺序</option>
             </select>
             <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
+                <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
                 <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
             </div>
         </div>
@@ -68,9 +68,9 @@
         </pagination>
     </div>
     <div ng-show="State=='detail'">
+        <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <order-detail></order-detail>
         <div class="text-center">
-            <a class="btn-cn gray btn-acceptorder" ng-click="turnToIndex()">返回</a>
             <a class="btn-cn btn-yellow btn-acceptorder" ng-click="RecieveOrder(orderDetail.id)">接&nbsp;&nbsp;&nbsp;单</a>
         </div>
     </div>

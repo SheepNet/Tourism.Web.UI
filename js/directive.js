@@ -14,6 +14,23 @@ Ctrl.directive("orderDetail", function () {
     }
 });
 
+Ctrl.directive("orderGuide", function () {
+    return {
+        restrict: "E",
+        templateUrl: "Views/temp/orderGuide.html",
+        replace: true,
+    }
+});
+
+Ctrl.directive("agencyInfo", function () {
+    return {
+        restrict: "E",
+        templateUrl: "Views/temp/agencyInfo.html",
+        replace: true,
+    }
+});
+
+
 //打星指令
 Ctrl.directive('star', function () {
     return {
@@ -31,7 +48,7 @@ Ctrl.directive('star', function () {
         },
         controller: function($scope){
             if($scope.ratingValue==null){
-                $scope.ratingValue=1;
+                $scope.ratingValue=0;
             }
             $scope.ratingValue = $scope.ratingValue || 0;
             $scope.max = $scope.max || 5;
@@ -80,7 +97,7 @@ Ctrl.directive('star', function () {
             };
             updateStars();
 
-            scope.$watch('ratingValue', function (oldVal, newVal) {
+            scope.$watch('ratingValue', function (newVal,oldVal) {
                 if (newVal) {
                     updateStars();
                 }

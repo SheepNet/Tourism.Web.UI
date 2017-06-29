@@ -1,6 +1,9 @@
 <div>
     <div class="person-detail clearfix">
-        <div class="person-left"><img src="images/default_person.png"></div>
+        <div class="person-left">
+            <img ng-src="{{ResUrl+guideInfo.guide_card_no_photo}}">
+            <!--<img src="images/default_person.png">-->
+        </div>
         <div class="person-infor">
             <div class="p-m1">
                 <span class="pp-name" ng-bind="guideInfo.name"></span><i class="iconfont icon-woman">&#xe607;</i><span
@@ -96,7 +99,7 @@
 							   <!--<a class="btn-updel"><i class="iconfont"></i></a>-->
 							</span>
         </li>
-        <li><img src="images/book03.png">
+        <li style="display: none"><img src="images/book03.png">
             <span class="imgbox-num">合同（16）</span>
 							<span class="shadow-btn pop-h1">
 							   <a class="btn-uplook"><i class="iconfont"></i></a>

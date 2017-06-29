@@ -3,14 +3,24 @@
  */
 //主界面控制器
 Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore","$location", function ($scope, $http, $sce, $state, $stateParams, $cookieStore,$location) {
-    var userMessage = $cookieStore.get("user");
+    var userMessage = $cookieStore.get("user_guide");
     $scope.ResUrl=rurl+"/resource/";
-    $scope.session_id = $cookieStore.get("session_id");
+    $scope.session_id = $cookieStore.get("session_id_guide");
     if (userMessage == null) {
         $location.path("index")
     }
     $scope.User = userMessage;
     $state.go("guideClient.guideInfoCenter");
+
+    //标题信息
+    $scope.titleObj={
+        Tiptitle:"消息中心"
+    }
+
+    $scope.changeTitle=function(title){
+        $scope.titleObj.Tiptitle=title
+    }
+
 
     //定义分页最大显示，全局通用
     $scope.maxSize = 7;
@@ -95,7 +105,7 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
         })
     }
 
-    var userMessage = $cookieStore.get("user");
+    var userMessage = $cookieStore.get("user_guide");
     if (userMessage == null) {
         $location.path("index")
     }
@@ -155,6 +165,8 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
             if (data.err_code == 0) {
                 layer.msg("完成编辑", {icon: 1,time:1000});
                 $scope.initGuideInfo();
+                userMessage.guide_card_no=$scope.completeMessage.guide_card_no;
+                $cookieStore.put("user", userMessage);
                 $scope.completeMode = true;
             } else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -172,9 +184,21 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
         $scope.showPicUrl= $scope.ResUrl+url;
         layer.open({
             type: 1,
+            title:"查看图片",
             shade: 0.3,
-            title: false,
+            area:["800px","600px"],
             content: $('.picArea')
+        });
+    }
+
+    $scope.showPicEdiit = function (url) {
+        $scope.showPicUrl= $scope.ResUrl+url;
+        layer.open({
+            type: 1,
+            title:"查看图片",
+            shade: 0.3,
+            area:["800px","600px"],
+            content: $('.picAreaEdit')
         });
     }
 
@@ -222,7 +246,7 @@ Ctrl.controller("OrderDetailCtrl", ["$scope", "$http", "$sce", "$state", "$state
 }]);
 
 //可接受订单控制器
-Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService", function ($scope, $http, $sce, $state, $stateParams,gudieService) {
+Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService","publicService", function ($scope, $http, $sce, $state, $stateParams,gudieService,publicService) {
 
     $scope.State="index";
     //初始化星星
@@ -256,7 +280,15 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.init();
     }
 
+    //排序字段改变
     $scope.OrdertypeChange=function(){
+        $scope.orderObj.page=1;
+        $scope.init();
+    }
+
+    //文本搜索
+    $scope.initText=function(){
+        $scope.orderObj.page=1;
         $scope.init();
     }
 
@@ -264,8 +296,9 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise=gudieService.getorderList($scope.orderObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="订单中心 > 可接订单";
                 $scope.orderList=data.msg_body.order;
-                $scope.totalItems = data.msg_body.count.type_10_count;
+                $scope.totalItems = data.msg_body.type_10_count;
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -283,7 +316,8 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         var promise=gudieService.getorderDetail(id,$scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                $scope.orderDetail=data.msg_body.order;
+                $scope.titleObj.Tiptitle="订单中心 > 可接订单 > 订单详情";
+                $scope.orderDetail=publicService.changeOrderData(data.msg_body.order);
                 $scope.State="detail";
             } else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -298,11 +332,12 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
 
     $scope.turnToIndex=function(){
         $scope.State="index";
+        $scope.titleObj.Tiptitle="订单中心 > 可接订单";
     }
 
     $scope.RecieveOrder=function(id){
         $scope.submitObj={
-            id:"",
+            id:id,
             type:"a10",
             content:"",
             session_id:$scope.session_id
@@ -336,7 +371,7 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
 }]);
 
 //正在进行订单控制器
-Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService", function ($scope, $http, $sce, $state, $stateParams,gudieService) {
+Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService","publicService", function ($scope, $http, $sce, $state, $stateParams,gudieService,publicService) {
     $scope.State="index";
     //初始化星星
     $scope.orderDetail={
@@ -362,7 +397,15 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         session_id:$scope.session_id
     }
 
+    //排序字段搜索
     $scope.OrdertypeChange=function(){
+        $scope.orderObj.page=1;
+        $scope.init();
+    }
+
+    //文本搜索
+    $scope.initText=function(){
+        $scope.orderObj.page=1;
         $scope.init();
     }
 
@@ -380,8 +423,9 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         var promise=gudieService.getorderList($scope.orderObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="订单中心 > 进行中";
                 $scope.orderList=data.msg_body.order;
-                $scope.orderCount=data.msg_body.count;
+                $scope.orderCount=data.msg_body;
                 switch($scope.orderObj.type)
                 {
                     case 20:
@@ -416,7 +460,23 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         var promise=gudieService.getorderDetail(id,$scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                $scope.orderDetail=data.msg_body.order;
+                switch ($scope.orderObj.type) {
+                    case 20:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 待确认 > 查看详情";
+                        break;
+                    case 21:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 待出团 > 查看详情";
+                        break;
+                    case 22:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 出团中 > 查看详情";
+                        break;
+                    case 23:
+                        $scope.titleObj.Tiptitle="订单中心 > 进行中 > 待结束 > 查看详情";
+                        break;
+                    default:
+                        break;
+                }
+                $scope.orderDetail=publicService.changeOrderData(data.msg_body.order);
                 $scope.State="detail";
             } else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -431,8 +491,10 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
 
     $scope.turnToIndex=function(){
         $scope.State="index";
+        $scope.titleObj.Tiptitle="订单中心 > 进行中";
     }
 
+    //关闭订单
     $scope.CancelOrderAlert =function(id){
         //预定义提交对象
         $scope.submitObj={
@@ -454,6 +516,10 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
     }
 
     $scope.CancelOrder =function(id){
+        if($scope.orderObj.type==21 && $scope.submitObj.content==""){
+            layer.msg("请填写取消订单的理由", {icon: 0, time: 1000});
+            return true;
+        }
         var promise = gudieService.editOrder($scope.submitObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
@@ -526,7 +592,7 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
 }]);
 
 //结束订单控制器
-Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService", function ($scope, $http, $sce, $state, $stateParams,gudieService) {
+Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","gudieService","publicService", function ($scope, $http, $sce, $state, $stateParams,gudieService,publicService) {
 
     $scope.State="index";
 
@@ -543,7 +609,14 @@ Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         $scope.init();
     }
 
+    //排序字段搜索
     $scope.OrdertypeChange=function(){
+        $scope.orderObj.page=1;
+        $scope.init();
+    }
+    //文本搜索
+    $scope.initText=function(){
+        $scope.orderObj.page=1;
         $scope.init();
     }
 
@@ -551,8 +624,9 @@ Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         var promise=gudieService.getorderList($scope.orderObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="订单中心 > 已完成";
                 $scope.orderList=data.msg_body.order;
-                $scope.totalItems=data.msg_body.count.type_30_count;
+                $scope.totalItems=data.msg_body.type_30_count;
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -570,7 +644,8 @@ Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         var promise=gudieService.getorderDetail(id,$scope.session_id);
         promise.then(function (data) {
             if (data.err_code == 0) {
-                $scope.orderDetail=data.msg_body.order;
+                $scope.titleObj.Tiptitle="订单中心 > 已完成 > 查看详情";
+                $scope.orderDetail=publicService.changeOrderData(data.msg_body.order);
                 $scope.State="detail";
             } else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -581,6 +656,11 @@ Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         promise.catch(function (data) {
             layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
+    }
+
+    $scope.turnToIndex=function(){
+        $scope.State="index";
+        $scope.titleObj.Tiptitle="订单中心 > 已完成";
     }
 
 
@@ -595,13 +675,18 @@ Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$st
         "content": "",
         "content_file": [
         ],
-        "complain_mobile": "投诉人手机",
+        "complain_mobile": "",
         "session_id":$scope.session_id
     }
 
     $scope.AddComplain=function(){
-        if($scope.complainObj.content.length>500){
-            layer.msg("投诉或建议在500字以内", {icon: 0});
+        if($scope.complainObj.content.length>500 ||$scope.complainObj.content.length==0){
+            layer.msg("投诉或建议为必填项，且少于500字", {icon: 0});
+            return true;
+        }
+
+        if($scope.complainObj.complain_mobile.length==0){
+            layer.msg("请填写联系方式", {icon: 0});
             return true;
         }
 
@@ -609,6 +694,15 @@ Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$st
         promise.then(function (data) {
             if (data.err_code == 0) {
                 layer.msg("提交成功", {icon: 1})
+                $scope.complainObj=
+                {
+                    "complain_type": 1,
+                    "content": "",
+                    "content_file": [
+                    ],
+                    "complain_mobile": "",
+                    "session_id":$scope.session_id
+                }
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -623,19 +717,22 @@ Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$st
 
     //图片上传
     $scope.file_changed = function(element) {
-        if($scope.complainObj.content_file.length)
-        var ele_id=angular.element(element).attr("id")
-        var uuid = $ui.fileupload({
-            fileSelector: '#'+ele_id,
-            type: FILETYPE.IMAGE,
-            moudle: 'BASE'
-        }).uuid;
-
-        $scope.$apply(function(){
-            $scope.complainObj.content_file.push({
-                id:uuid
+        if($scope.complainObj.content_file.length>2){
+            layer.msg("只能上传三张图片", {icon: 0})
+        }else {
+            var ele_id=angular.element(element).attr("id")
+            var uuid = $ui.fileupload({
+                fileSelector: '#'+ele_id,
+                //fileSelector: '#contentFile',
+                type: FILETYPE.IMAGE,
+                moudle: 'BASE'
+            }).uuid;
+            $scope.$apply(function(){
+                $scope.complainObj.content_file.push({
+                    id:uuid
+                })
             })
-        })
+        }
     };
 
     //删除图片
@@ -647,10 +744,22 @@ Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$st
                     index=key;
                }
            });
-           if(index1!=-1){
+           if(index!=-1){
                $scope.complainObj.content_file.splice(index,1)
            }
        }
+    }
+
+    //图片展示
+    $scope.showPic = function (url) {
+        $scope.showPicUrl= $scope.ResUrl+url;
+        layer.open({
+            type: 1,
+            title:"查看图片",
+            shade: 0.3,
+            area:["800px","600px"],
+            content: $('.picArea')
+        });
     }
 
 

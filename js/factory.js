@@ -68,7 +68,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getList:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/notify/list'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'travel/center/notify/list',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -119,7 +119,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getGuideList:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/guide/list'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'travel/center/guide/list',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -127,10 +127,10 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             return promise;
         },
         //获得导游详情
-        getGuideDetail:function(obj){
+        getGuideDetail:function(id,session_id){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/guide/query.json',{params:obj}).success(function (data) {
+            $http.get(Url+'travel/center/guide/query',{params:{id:id,session_id:session_id}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -142,7 +142,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
             $http.post(
-                    Url+'travel/center/check/check.json',
+                    Url+'travel/center/guide/edit',
                 {
                     id:id,
                     type:type,
@@ -159,7 +159,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getGuideHistory:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/guide/order/list'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'travel/center/guide/order/list',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -170,10 +170,32 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getOrderList:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/order/list'+obj.type+'.json',{params:obj})
+            $http.get(Url+'travel/center/order/list',{params:obj})
                 .success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
+        getOrderDetail:function(id,session_id){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.get(Url+'travel/center/order/query',{params:{id:id,session_id:session_id}})
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
+        editOrderState:function(id,type,session_id){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(Url+'travel/center/order/edit',{id:id,type:type,session_id:session_id})
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
                 deferred.reject(error);
             });
             return promise;
@@ -218,7 +240,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getAgencyList:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'	travel/center/travel_company/list'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'	travel/center/travel_company/list',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -229,7 +251,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getAgencyInfo:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'	travel/center/travel_company/query'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'	travel/center/travel_company/query',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -240,7 +262,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getAgencyHistory:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'travel/center/travel_company/order/list'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'travel/center/travel_company/order/list',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -252,7 +274,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
             $http.post(
-                    Url+'travel/center/travel_company/del.json',
+                    Url+'travel/center/travel_company/del',
                 {
                     id:id,
                     session_id:session_id
@@ -268,7 +290,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getComplainList:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'	travel/center/complain/list'+obj.page+'.json',{params:obj}).success(function (data) {
+            $http.get(Url+'	travel/center/complain/list',{params:obj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -279,7 +301,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
         getComplainDetail:function(id,session_id){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'	travel/center/complain/query.json',{params:{id:id,session_id:session_id}}).success(function (data) {
+            $http.get(Url+'	travel/center/complain/query',{params:{id:id,session_id:session_id}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -291,7 +313,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
             $http.post(
-                    Url+'travel/center/complain/edit.json',
+                    Url+'travel/center/complain/edit',
                 {
                     id:id,
                     type:type,
@@ -326,7 +348,7 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
 
-            $http.get(Url+'	travel/guide/order/list'+orderObj.type+'.json',{params:orderObj}).success(function (data) {
+            $http.get(Url+'	travel/guide/order/list',{params:orderObj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -338,7 +360,7 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
 
-            $http.get(Url+'	travel/guide/order/query.json',{params:{id:id,session_id:session_id}}).success(function (data) {
+            $http.get(Url+'	travel/guide/order/query',{params:{id:id,session_id:session_id}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -350,7 +372,7 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
             $http.post(
-                    Url+'travel/center/guide/check.json',
+                    Url+'travel/center/guide/check',
                 {
                     id:id,
                     check_status:check_status,
@@ -367,7 +389,7 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
         editOrder:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.post(Url+'travel/guide/order/edit.json', obj)
+            $http.post(Url+'travel/guide/order/edit', obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {
@@ -379,7 +401,7 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
         addComplian:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.post(Url+'travel/center/complain/add.json', obj)
+            $http.post(Url+'travel/guide/complain/add', obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {
@@ -397,7 +419,7 @@ Ctrl.factory("agencyService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
 
-            $http.get(Url+'	travel/travel_company/order/list'+orderObj.type+'.json',{params:orderObj}).success(function (data) {
+            $http.get(Url+'	travel/travel_company/order/list',{params:orderObj}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -408,7 +430,7 @@ Ctrl.factory("agencyService",["$http", "$q",function ($http,$q) {
         getOrderDetail:function(id,session_id){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'	travel/travel_company/order/query.json',{params:{id:id,session_id:session_id}}).success(function (data) {
+            $http.get(Url+'	travel/travel_company/order/query',{params:{id:id,session_id:session_id}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -419,7 +441,7 @@ Ctrl.factory("agencyService",["$http", "$q",function ($http,$q) {
         getGuideDetail:function(id,order_id,session_id){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.get(Url+'	travel/travel_company/guide/query.json',{params:{id:id,session_id:session_id}}).success(function (data) {
+            $http.get(Url+'	travel/travel_company/guide/query',{params:{id:id,order_id:order_id,session_id:session_id}}).success(function (data) {
                 deferred.resolve(data);
             }).error(function (error) {
                 deferred.reject(error);
@@ -430,7 +452,7 @@ Ctrl.factory("agencyService",["$http", "$q",function ($http,$q) {
         addOrder:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.post(Url+'travel/travel_company/order/add.json', obj)
+            $http.post(Url+'travel/travel_company/order/add', obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {
@@ -442,7 +464,7 @@ Ctrl.factory("agencyService",["$http", "$q",function ($http,$q) {
         editOrder:function(obj){
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $http.post(Url+'travel/travel_company/order/edit.json', obj)
+            $http.post(Url+'travel/travel_company/order/edit', obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {
@@ -500,8 +522,19 @@ Ctrl.factory("publicService",["$http", "$q",function ($http,$q) {
         //获得语言列表
         getLanguageList:function(){
             return [
-                "中文", "英文", "日文", "法文", "西班牙"
+                "汉语", "英语", "韩语","日语", "法语", "俄语"
             ];
+        },
+        //处理需要转换的订单数据
+        changeOrderData:function(order){
+            var studentLevelList=this.getStudentLevelList();
+            order.language=angular.fromJson(order.language);
+            if(isNaN(order.study_level)){
+                order.study_level="无要求";
+            }else {
+                order.study_level=studentLevelList[order.study_level].name;
+            }
+            return order;
         }
     }
 }]);

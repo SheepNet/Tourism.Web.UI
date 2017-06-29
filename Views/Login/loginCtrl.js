@@ -28,19 +28,23 @@ Ctrl.controller("LoginController", ["$scope", "$http", "$sce", "$state", "loginS
         //验证手机号码位数
         loginService.login($scope.user_id, $scope.password).then(function (data) {
             if (data.err_code == 0) {
-                $cookieStore.put("session_id", data.msg_body.session_id);
                 var userMessage = data.msg_body.user;
                 var turnUrl = "";
                 if (userMessage.type == 1) {
                     turnUrl = 'guideClient';
+                    $cookieStore.put("user_guide", userMessage);
+                    $cookieStore.put("session_id_guide", data.msg_body.session_id);
                 }
                 if (userMessage.type == 2) {
                     turnUrl = 'agencyClient';
+                    $cookieStore.put("user_agency", userMessage);
+                    $cookieStore.put("session_id_agency", data.msg_body.session_id);
                 }
                 if (userMessage.type == 3) {
                     turnUrl = 'manage';
+                    $cookieStore.put("user_manage", userMessage);
+                    $cookieStore.put("session_id_manage", data.msg_body.session_id);
                 }
-                $cookieStore.put("user", userMessage);
                 $state.go(turnUrl);
             } else {
                 layer.msg(data.err_msg, {icon: 0});
