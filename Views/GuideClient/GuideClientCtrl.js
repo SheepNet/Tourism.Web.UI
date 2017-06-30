@@ -42,10 +42,10 @@ Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$state
 }]);
 
 //消息中心控制器
-Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService", function ($scope, $http, $sce, $state, $stateParams, centerService) {
-    $scope.reportData = [];
+Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService","publicService", function ($scope, $http, $sce, $state, $stateParams, centerService,publicService) {
 
     $scope.InfoObj={
+        type:"21,22,23,31,14,12,51,52,53,30",
         title:"",
         begin_date:"",
         end_date:"",
@@ -53,11 +53,6 @@ Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         page_size:10,
         session_id:$scope.session_id
     }
-
-    $scope.currentPage = 1;
-    $scope.totalItems = 13;
-    $scope.pagesize = 7;
-
 
     $scope.ToEdit = function () {
         $state.go("guideClient.joinUs");
@@ -69,7 +64,7 @@ Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         var promise = centerService.getList($scope.InfoObj);
         promise.then(function (data) {
             $scope.totalItems = data.msg_body.total_count;
-            $scope.infoList = data.msg_body.notify;
+            $scope.infoList = publicService.getRightInfo(data.msg_body.notify);
         }, function (data) {
             layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         });
@@ -82,11 +77,38 @@ Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         console.log(angular.element(".startTime").val());
     }
 
+    $scope.turnToDetail=function(type,id){
+        switch (type) {
+            case 21:
+                $state.go("guideClient.joinUs");
+                break;
+            case 22:
+            case 23:
+            case 31:
+                $state.go("guideClient.guideEdit");
+                break;
+            case 14:
+            case 12:
+                $state.go("guideClient.orderEnd", {"type": type,"id":id});
+                break;
+            case 51:
+            case 52:
+            case 53:
+            case 30:
+                $state.go("guideClient.orderNow", {"type": type,"id":id});
+                break;
+            default:
+                break;
+        }
+    }
+
     $scope.init();
 }]);
 
 //个人中心控制器
 Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","$cookieStore","$location","centerService","gudieService", function ($scope, $http, $sce, $state, $stateParams,$cookieStore,$location,centerService,gudieService) {
+
+    $scope.titleObj.Tiptitle="个人中心";
 
     //初始化导游信息
     $scope.initGuideInfo=function(){
@@ -110,10 +132,10 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
         $location.path("index")
     }
     if(userMessage.guide_card_no==null){
-        $scope.completeMode = false;
+        $scope.State = "edit"
     }else {
         $scope.initGuideInfo();
-        $scope.completeMode = true;
+        $scope.State = "index"
     }
 
     $scope.InfoObj={
@@ -167,7 +189,7 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
                 $scope.initGuideInfo();
                 userMessage.guide_card_no=$scope.completeMessage.guide_card_no;
                 $cookieStore.put("user", userMessage);
-                $scope.completeMode = true;
+                $scope.State = "index"
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -235,8 +257,6 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
             }
         })
     };
-
-
 
 }]);
 
@@ -588,6 +608,33 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         layer.closeAll();
     };
 
+    //判断跳转
+    var turnType=$stateParams.type;
+    var turnId=$stateParams.id;
+
+    if(turnType!=""){
+        //为51进入待出团界面
+        if(turnType==51){
+            $scope.orderObj.type=20;
+            $scope.ShowDetail(turnId);
+        }
+        //为52进入出团中界面
+        if(turnType==52){
+            $scope.orderObj.type=21;
+            $scope.ShowDetail(turnId);
+        }
+        //为53进入待支付界面
+        if(turnType==53){
+            $scope.orderObj.type=22;
+            $scope.ShowDetail(turnId);
+        }
+        //为30进入已完成界面
+        if(turnType=30){
+            $scope.orderObj.type=23;
+            $scope.ShowDetail(turnId);
+        }
+    }
+
 
 }]);
 
@@ -663,6 +710,13 @@ Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         $scope.titleObj.Tiptitle="订单中心 > 已完成";
     }
 
+    //判断跳转
+    var turnType=$stateParams.type;
+    var turnId=$stateParams.id;
+
+    if(turnType!=""){
+        $scope.ShowDetail(turnId);
+    }
 
 }]);
 
@@ -768,6 +822,7 @@ Ctrl.controller("guideComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$st
 //投诉中心控制器
 Ctrl.controller("JoinUsCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", function ($scope, $http, $sce, $state, $stateParams) {
 
+    $scope.titleObj.Tiptitle="加入我们";
     $scope.step=1;
 
     $scope.DownaAreement=function(){

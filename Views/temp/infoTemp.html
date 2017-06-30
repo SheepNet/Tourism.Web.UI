@@ -1,0 +1,25 @@
+<div>
+    <div class="teams-part" ng-repeat="info in infoList">
+        <div class="radius-top"><img src="images/radius_top.png"></div>
+        <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
+        <div class="team-infor clearfix">
+            <div class="team-img {{info.ClassName}}">
+                <img ng-src="{{info.Image}}"></div>
+            <div class="team-text">
+                <h5 ng-bind="info.title">周庄烟雨水乡一日游</h5>
+                <p class="team-detail" ng-bind="info.desc">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
+                <p class="team-time" ng-bind="info.sub_desc">2017.02.21 08:00~2017.02.21 16:00</p>
+            </div>
+            <div class="team-state">
+                <p ng-bind="info.notify_time">2017-02-15 15:31</p>
+                <div class="team-pay" ng-show="info.order_info!=null&& info.order_info2!=null">
+                    <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="info.order_info"></span>人</span>
+                    <i class="iconfont cr">&#xe613;</i><span>￥<span ng-bind="info.order_info2"></span>/次</span>
+                </div>
+            </div>
+        </div>
+        <div class="team-btn">
+            <a class="btn-cn btn-empty-yellow" ng-click="turnToDetail(info.type,info.page_id)">查看详情</a>
+        </div>
+    </div>
+</div>

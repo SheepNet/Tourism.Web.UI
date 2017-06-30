@@ -1,5 +1,5 @@
 <div ng-controller="GuideEditCtrl">
-    <div ng-show="completeMode">
+    <div ng-show="State=='index'">
     <ul class="tab-order clearfix">
         <li>我的信息</li>
         <li>帐号管理</li>
@@ -177,7 +177,7 @@
         </div>
     </div>
     </div>
-    <div ng-show="!completeMode">
+    <div ng-show="State=='edit'">
         <form class="information-content" name="registForm">
             <h1 class="login-title m-b-30">完善资料</h1>
             <div class="information-line" >
@@ -253,6 +253,8 @@
             <img  ng-src="{{showPicUrl}}">
         </div>
     </div>
+
+
 </div>
 
 <script type="text/javascript">

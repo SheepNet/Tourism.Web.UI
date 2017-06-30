@@ -1,22 +1,22 @@
 <div ng-controller="OrderManageCtrl">
     <div ng-show="State=='index'">
         <ul class="tab-order clearfix">
-            <li ng-click="typeChange(1)">待接(<span ng-bind="orderCount.type_1_count"></span>)</li>
-            <li ng-click="typeChange(2)">进行中(<span ng-bind="orderCount.type_2_count"></span>)</li>
-            <li ng-click="typeChange(3)">待支付(<span ng-bind="orderCount.type_3_count"></span>)</li>
-            <li ng-click="typeChange(4)">异常订单(<span ng-bind="orderCount.type_4_count"></span>)</li>
-            <li ng-click="typeChange(5)">已完成(<span ng-bind="orderCount.type_5_count"></span>)</li>
+            <li ng-click="typeChange(1)" ng-class="{'active-tab':orderObj.type==1}">待接(<span ng-bind="orderCount.type_1_count"></span>)</li>
+            <li ng-click="typeChange(2)" ng-class="{'active-tab':orderObj.type==2}">进行中(<span ng-bind="orderCount.type_2_count"></span>)</li>
+            <li ng-click="typeChange(3)" ng-class="{'active-tab':orderObj.type==3}">待支付(<span ng-bind="orderCount.type_3_count"></span>)</li>
+            <li ng-click="typeChange(4)" ng-class="{'active-tab':orderObj.type==4}">异常订单(<span ng-bind="orderCount.type_4_count"></span>)</li>
+            <li ng-click="typeChange(5)" ng-class="{'active-tab':orderObj.type==5}">已完成(<span ng-bind="orderCount.type_5_count"></span>)</li>
         </ul>
         <!--   待接    -->
         <div class="order-table">
             <div class="choice-box clearfix">
-                <select class="select-u">
-                    <option>按发单时间顺序</option>
-                    <option>按开团人数顺序</option>
-                    <option>按费用顺序</option>
+                <select class="select-u" ng-model="orderObj.order_type" ng-change="initText()">
+                    <option value="1">按发单时间顺序</option>
+                    <option value="2">按开团人数顺序</option>
+                    <option value="3">按费用顺序</option>
                 </select>
                 <div class="search-box">
-                    <span class="search-img" ng-click="init()"><img src="images/search.png"></span>
+                    <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
                     <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 </table>
             </div>
         </div>
-        <pagination class="pagination-sm pull-right"
+        <pagination ng-show="totalItems>0" class="pagination-sm pull-right"
                     items-per-page="orderObj.page_size"
                     ng-model="orderObj.page"
                     total-items="totalItems"
@@ -85,8 +85,10 @@
             </div>
         </div>
         <div class="text-center" ng-show="orderObj.type==3">
-            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="editOrder()">确认支付</a>
-
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="editOrder()">线下支付</a>
+        </div>
+        <div class="text-center" ng-show="orderObj.type==4">
+            <a class="btn-cn btn-yellow btn-acceptorder" ng-click="editOrder()">线下退款</a>
         </div>
     </div>
 </div>
@@ -94,7 +96,7 @@
 <script type="text/javascript">
     // tab切换
     $(".order-table:first").show();
-    $(".tab-order li:first").addClass("active-tab");
+   // $(".tab-order li:first").addClass("active-tab");
     $(".tab-order li").click(function () {
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
         //$(".order-table").hide().eq($(".tab-order li").index(this)).show();

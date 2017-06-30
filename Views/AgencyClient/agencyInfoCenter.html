@@ -11,38 +11,30 @@
             <input type="text" class="" placeholder="Search">
         </div>
     </div>
-    <div class="teams-part">
-        <div class="radius-top"><img src="images/radius_top.png"></div>
-        <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-        <div class="team-infor clearfix">
-            <div class="team-img color-03"><img src="images/state03.png"></div>
-            <div class="team-text">
-                <h5>周庄烟雨水乡一日游</h5>
-                <p class="team-detail">双桥、张厅、沈厅、迷楼、福安桥、张陵公园、单桥、李厅</p>
-                <p class="team-time">2017.02.21 08:00~2017.02.21 16:00</p>
-            </div>
-            <div class="team-state">
-                <p>2017-02-15 15:31</p>
-                <div class="team-pay">
-                    <i class="iconfont cb">&#xe61c;</i><span>1人</span>
-                    <i class="iconfont cr">&#xe613;</i><span>￥300/次</span>
-                </div>
-            </div>
-        </div>
-        <div class="team-btn">
-            <a class="btn-cn btn-empty-yellow">查看详情</a>
-        </div>
-    </div>
-    <div class="teams-part">
-        <div class="team-infor team-100 clearfix">
-            <div class="team-img color-06"><img src="images/state06.png"></div>
-            <div class="massage-notice">
-                <h5>导服评价
-                    <p class="message-time">2017-02-15 15:31</p>
-                </h5>
-                <p class="team-detail">
-                    该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。该旅行社最近频繁关闭订单。</p>
-            </div>
-        </div>
-    </div>
+
+    <info-temp></info-temp>
+    <!--<div class="teams-part">-->
+    <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+    <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+    <!--<div class="team-infor clearfix">-->
+    <!--<div class="team-img color-01"><img src="images/state01.png"></div>-->
+    <!--<div class="massage-notice">-->
+    <!--<h5>温馨提示-->
+    <!--<p class="message-time">2017-02-15 15:31</p>-->
+    <!--</h5>-->
+    <!--<p class="team-detail">只有与导服中心签约合同，成为导服中心的会员导游才能在本平台接订单哦，可进入个人中心下载合同模块，上传合同，等待导服中心审核。</p>-->
+    <!--</div>-->
+
+    <!--</div>-->
+
+    <!--<div class="team-btn">-->
+    <!--<a class="btn-cn btn-yellow" ng-click="ToEdit()">立即签约</a>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <pagination ng-show="totalItems>0" class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems" max-size="maxSize"
+                ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true" rotate="false" force-ellipses="true" previous-text="‹"
+                next-text="›">
+    </pagination>
+
 </div>

@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <pagination class="pagination-sm pull-right"
+            <pagination ng-show="totalItems>0" class="pagination-sm pull-right"
                         items-per-page="orderObj.page_size"
                         ng-model="orderObj.page"
                         total-items="totalItems"

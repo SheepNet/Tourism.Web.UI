@@ -16,17 +16,17 @@
 
             <div class="col-md-6 order-line">
                 <label>传真号码</label>
-                <input name="order_no" type="text" ng-model="InfoObj.order_fax" ng-maxlength="20" required>
+                <input name="order_no" type="text" ng-model="InfoObj.order_fax" ng-maxlength="20" required  ng-class="{'red':InfoObj.order_fax==null || InfoObj.order_fax.length==0}">
             </div>
             <div class="col-md-6 order-line">
                 <label>联系电话</label>
-                <input name="order_no" type="text" ng-model="InfoObj.order_phone" ng-maxlength="20" required>
+                <input name="order_no" type="text" ng-model="InfoObj.order_phone" ng-maxlength="20" required ng-class="{'red':InfoObj.order_phone==null || InfoObj.order_phone.length==0}">
             </div>
 
 
             <div class="col-md-6 order-line">
                 <label>订单名称</label>
-                <input type="text" name="name" ng-model="InfoObj.name" ng-maxlength="50" required>
+                <input type="text" name="name" ng-model="InfoObj.name" ng-maxlength="50" required  ng-class="{'red':InfoObj.name==null || InfoObj.name.length==0}">
                 <div class="alert alert-danger help-block" ng-show="orderForm.name.$dirty && orderForm.name.$invalid">
                     订单名称在50个字以内
                 </div>
@@ -48,21 +48,21 @@
             </div>
             <div class="col-md-12 order-line">
                 <label>行程简介</label>
-                <textarea rows="5" name="desc" ng-model="InfoObj.desc" ng-maxlength="300" required></textarea>
+                <textarea rows="5" name="desc" ng-model="InfoObj.desc" ng-maxlength="300" required  ng-class="{'red':InfoObj.desc==null || InfoObj.desc.length==0}"></textarea>
                 <div class="alert alert-danger help-block" ng-show="orderForm.desc.$dirty && orderForm.desc.$invalid">
                     行程简介在300个字以内
                 </div>
             </div>
             <div class="col-md-6 order-line">
                 <label>集合地点</label>
-                <input type="text" name="order_address" ng-model="InfoObj.order_address" ng-maxlength="50" required>
+                <input type="text" name="order_address" ng-model="InfoObj.order_address" ng-maxlength="50" required  ng-class="{'red':InfoObj.order_address==null || InfoObj.order_address.length==0}">
                 <div class="alert alert-danger help-block" ng-show="orderForm.order_address.$dirty && orderForm.order_address.$invalid">
                     集合地点在50个字以内
                 </div>
             </div>
             <div class="col-md-6 order-line">
                 <label>游客人数</label>
-                <input type="number" ng-model="InfoObj.order_person" required> 人
+                <input type="number" ng-model="InfoObj.order_person" required  ng-class="{'red':InfoObj.order_person==null || InfoObj.order_person.length==0}"> 人
             </div>
             <div class="col-md-12 order-line">
                 <label>特殊备注</label>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-6 order-line">
                 <label>人均酬金</label>
-                <input type="number" type="text" ng-model="InfoObj.guide_money" placeholder="最多10000元" required> 元
+                <input type="number" type="text" ng-model="InfoObj.guide_money" placeholder="最多10000元" required  ng-class="{'red':InfoObj.guide_money==null || InfoObj.guide_money.length==0}"> 元
                 <div class="alert alert-danger help-block" ng-show="InfoObj.guide_money>10000">
                     人均酬金不超过10000元
                 </div>
@@ -90,14 +90,14 @@
         <div class="orderbox clearfix">
             <div class="col-md-6 order-line">
                 <label>导游人数</label>
-                <input type="number" ng-model="InfoObj.guide_num" placeholder="最多100人" required> 人
+                <input type="number" ng-model="InfoObj.guide_num" placeholder="最多100人" required  ng-class="{'red':InfoObj.guide_num==null || InfoObj.guide_num.length==0}"> 人
                 <div class="alert alert-danger help-block" ng-show="InfoObj.guide_num>100">
                     导游人数不能超过100人
                 </div>
             </div>
             <div class="col-md-6 order-line">
                 <label>应标人数</label>
-                <input type="number" placeholder="最多应标人数" ng-model="InfoObj.guide_max_num" required>人
+                <input type="number" placeholder="最多应标人数" ng-model="InfoObj.guide_max_num" required  ng-class="{'red':InfoObj.guide_max_num==null || InfoObj.guide_max_num.length==0}">人
             </div>
             <div class="col-md-6 order-line">
                 <label>性别要求</label>

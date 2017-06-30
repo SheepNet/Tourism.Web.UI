@@ -535,6 +535,41 @@ Ctrl.factory("publicService",["$http", "$q",function ($http,$q) {
                 order.study_level=studentLevelList[order.study_level].name;
             }
             return order;
+        },
+        //处理获得对应的图片和类名
+        getRightInfo:function(infoList){
+            var list=[];
+            angular.forEach(infoList,function(item,key){
+                switch (item.type) {
+                    //导服中心部分
+                    case 32:
+                        item.ClassName = "color-02";
+                        item.Image="images/state02.png";
+                        break;
+                    case 36:
+                    case 37:
+                        item.ClassName = "color-03";
+                        item.Image="images/state03.png";
+                        break;
+                    case 41:
+                        item.ClassName = "color-04";
+                        item.Image="images/state04.png";
+                        break;
+                    case 61:
+                        item.ClassName = "color-05";
+                        item.Image="images/state05.png";
+                        break;
+                    //导游端
+                    case 21:
+                        item.ClassName = "color-01";
+                        item.Image="images/state01.png";
+                        break;
+                    default:
+                        break;
+                }
+                list.push(item)
+            })
+            return list;
         }
     }
 }]);

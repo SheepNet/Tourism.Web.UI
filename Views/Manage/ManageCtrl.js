@@ -15,7 +15,8 @@ Ctrl.controller("ManageCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
     $state.go("manage.infoCenter");
 
     $scope.titleObj={
-        Tiptitle:"消息中心"
+        Tiptitle:"消息中心",
+        NowTitle:1,
     }
 
     $scope.changeTitle=function(title){
@@ -38,16 +39,80 @@ Ctrl.controller("ManageCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.ratingVal = val;
     }
 
+
+
 }]);
 
 //消息中心控制器
-Ctrl.controller("InfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", function ($scope, $http, $sce, $state, $stateParams) {
+Ctrl.controller("InfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","centerService","publicService", function ($scope, $http, $sce, $state, $stateParams,centerService,publicService) {
+
+    $scope.InfoObj={
+        type:"31,36,37,41,61",
+        title:"",
+        begin_date:"",
+        end_date:"",
+        page:1,
+        page_size:5,
+        session_id:$scope.session_id
+    }
+
+    $scope.pageChanged = function () {
+        $scope.init();
+    }
+    $scope.init = function () {
+        var promise = centerService.getList($scope.InfoObj);
+        promise.then(function (data) {
+            $scope.totalItems = data.msg_body.total_count;
+            $scope.infoList = publicService.getRightInfo(data.msg_body.notify);
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    $scope.searchInfo = function () {
+        console.log(angular.element(".startTime").val());
+    }
+
+    $scope.initText=function(){
+        $scope.InfoObj.page=1;
+        $scope.init();
+    }
+
+    $scope.init();
+
+    $scope.turnToDetail=function(type,id){
+        switch (type) {
+            //导服中心部分
+            case 32:
+            case 36:
+            case 37:
+                $state.go("manage.orderManage", {"type": type,"id":id});
+
+                break;
+            case 41:
+                $state.go("manage.verifyCenter", {"type": type,"id":id});
+
+                break;
+            case 61:
+                $state.go("manage.complaintCenter", {"type": type,"id":id});
+
+                break;
+            default:
+                break;
+        }
+    }
 
 }]);
 
 //审核中心
 Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", "centerService", function ($scope, $http, $sce, $state, $stateParams, $cookieStore, centerService) {
+
     $scope.State = 'index';
+    //左边列表状态
+    $scope.titleObj.NowTitle=2
 
     $scope.reportData = [];
 
@@ -71,6 +136,13 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.InfoObj.type = type;
         $scope.init();
     }
+
+    //文本搜索
+    $scope.initText = function () {
+        $scope.InfoObj.page=1;
+        $scope.init();
+    }
+
     $scope.pageChanged = function () {
         $scope.init();
     }
@@ -103,7 +175,7 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
 
     var now_id = "";
 
-    $scope.verifyGuide = function (id) {
+    $scope.ShowDetail = function (id) {
         now_id = id;
         var promise = centerService.GetCheckDetail(id, $scope.session_id);
         promise.then(function (data) {
@@ -162,11 +234,23 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.State = 'index';
         $scope.titleObj.Tiptitle="审核中心";
     }
+
+    //判断跳转
+    var turnType=$stateParams.type;
+    var turnId=$stateParams.id;
+
+    if(turnType==41){
+        //$scope.orderObj.type=3;
+        $scope.ShowDetail(turnId);
+    }
+
 }]);
 
 //订单中心
 Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService","publicService", function ($scope, $http, $sce, $state, $stateParams, centerService,publicService) {
     $scope.State = 'index';
+    //左边列表状态
+     $scope.titleObj.NowTitle=3
 
     $scope.orderObj = {
         type: 1,
@@ -176,9 +260,6 @@ Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         page_size: 10,
         session_id: $scope.session_id
     }
-
-    $scope.totalItems = 13;
-
 
     $scope.ShowDetail = function (id) {
         var promise = centerService.getOrderDetail(id,$scope.session_id);
@@ -240,6 +321,11 @@ Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
     $scope.typeChange = function (type) {
         $scope.orderObj.page = 1;
         $scope.orderObj.type = type;
+        $scope.init();
+    }
+
+    $scope.initText = function (type) {
+        $scope.orderObj.page = 1;
         $scope.init();
     }
 
@@ -312,6 +398,23 @@ Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         $scope.titleObj.Tiptitle="订单管理";
     }
 
+    //判断跳转
+    var turnType=$stateParams.type;
+    var turnId=$stateParams.id;
+
+    if(turnType!=""){
+        //为31进待支付界面
+        if(turnType==31){
+            $scope.orderObj.type=3;
+            $scope.ShowDetail(turnId);
+        }
+        //为36，37进待异常订单界面
+        if(turnType==36||turnType==37){
+            $scope.orderObj.type=4;
+            $scope.ShowDetail(turnId);
+        }
+    }
+
 
 }]);
 
@@ -336,6 +439,12 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         session_id: $scope.session_id
     }
     var now_id = "";
+
+    //主界面文本搜索
+    $scope.initText=function(){
+        $scope.InfoObj.page=1;
+        $scope.init();
+    }
 
     //查看详情
     $scope.ShowDetail = function (id) {
@@ -422,6 +531,11 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         })
     }
 
+    $scope.initTextOrder=function(){
+        $scope.orderObj.page=1;
+        $scope.init();
+    }
+
     //升级或注销导游
     $scope.editGuideInfo = function (type) {
         var promise = centerService.editGuideInfo(now_id, type, $scope.session_id);
@@ -468,10 +582,7 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
 //旅行社管理
 Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService", function ($scope, $http, $sce, $state, $stateParams, centerService) {
     $scope.State = 'index';
-    //初始化打星的分数
-    $scope.agencyInfo = {
-        star: 1
-    };
+
     $scope.agencyObj = {
         title: "",
         begin_date: "",
@@ -494,6 +605,11 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         page: 1,
         page_size: 10,
         session_id: $scope.session_id
+    }
+
+    $scope.initText=function(){
+        $scope.agencyObj.page=1;
+        $scope.init();
     }
 
     $scope.ShowDetail = function (id) {
@@ -576,6 +692,12 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.initOrder();
     }
 
+    //文本框输入搜索
+    $scope.initTextOrder=function(){
+        $scope.orderObj.page=1;
+        $scope.init();
+    }
+
     //停用旅行社
     $scope.DelAgency = function (id) {
         layer.confirm('确定停用该旅社吗？', function (i) {
@@ -614,6 +736,8 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
 //投诉中心
 Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService", function ($scope, $http, $sce, $state, $stateParams, centerService) {
 
+    //左边列表状态
+    $scope.titleObj.NowTitle=7
     //查询对象
     $scope.complainObj = {
         title: "",
@@ -667,6 +791,12 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
 
     //排序方式切换方法
     $scope.complainTypeChange = function () {
+        $scope.complainObj.page=1;
+        $scope.init();
+    }
+
+    $scope.initText = function () {
+        $scope.complainObj.page=1;
         $scope.init();
     }
 
@@ -729,6 +859,15 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
     $scope.turnToIndex = function () {
         $scope.State = 'index';
         $scope.titleObj.Tiptitle="投诉中心";
+    }
+
+    //判断跳转
+    var turnType=$stateParams.type;
+    var turnId=$stateParams.id;
+
+    if(turnType==61){
+        $scope.orderObj.type=3;
+        $scope.ShowDetail(turnId);
     }
 
 

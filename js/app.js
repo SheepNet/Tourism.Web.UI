@@ -81,14 +81,17 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('manage.verifyCenter', {
             url: '/verifyCenter',
+            params: {"type": "","id":""},
             templateUrl: 'Views/Manage/verifyCenter.html'
         })
         .state('manage.orderManage', {
             url: '/orderManage',
+            params: {"type": "","id":""},
             templateUrl: 'Views/Manage/orderManage.html'
         })
         .state('manage.complaintCenter', {
             url: '/complaintCenter',
+            params: {"type": "","id":""},
             templateUrl: 'Views/Manage/complaintCenter.html'
         })
         .state('manage.messageSetting', {
@@ -121,10 +124,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('guideClient.orderNow', {
             url: '/orderNow',
+            params: {"type": "","id":""},
             templateUrl: 'Views/GuideClient/orderNow.html'
         })
         .state('guideClient.orderEnd', {
             url: '/orderEnd',
+            params: {"type": "","id":""},
             templateUrl: 'Views/GuideClient/orderEnd.html'
         })
         .state('guideClient.guideComplaint', {
@@ -153,10 +158,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('agencyClient.orderEndAgency', {
             url: '/orderEndAgency',
+            params: {"type": "","id":""},
             templateUrl: 'Views/AgencyClient/orderEndAgency.html'
         })
         .state('agencyClient.orderNowAgency', {
             url: '/orderNowAgency',
+            params: {"type": "","id":""},
             templateUrl: 'Views/AgencyClient/orderNowAgency.html'
         })
         .state('agencyClient.orderPublishAgency', {

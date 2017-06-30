@@ -9,7 +9,7 @@
                 <option>按会员类型</option>
             </select>
             <div class="search-box">
-                <span class="search-img" ng-click="init()"><img src="images/search.png"></span>
+                <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
                 <input type="text" placeholder="Search" ng-model="agencyObj.title">
             </div>
             <div class="fr m-t-5"><a class="btn-import"><i class="iconfont">&#xe633;</i>导入旅行社</a></div>
@@ -75,7 +75,7 @@
                 <option value="2">按时间倒序</option>
             </select>
             <div class="search-box">
-                <span class="search-img"><img src="images/search.png"></span>
+                <span class="search-img" ng-click="initTextOrder()"><img src="images/search.png"></span>
                 <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
             </div>
             <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>

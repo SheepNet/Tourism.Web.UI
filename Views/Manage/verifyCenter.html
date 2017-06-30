@@ -8,7 +8,7 @@
         <div class="order-table">
             <div class="choice-box clearfix">
                 <div class="search-box">
-                    <span class="search-img"><img src="images/search.png"  ng-click="init()"></span>
+                    <span class="search-img"  ng-click="initText()"><img src="images/search.png"></span>
                     <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
                 </div>
                 <div class="layui-inline" style="margin-left: 10px;display: none">
@@ -46,7 +46,7 @@
                         <td ng-bind="model.check_time">2017-02-18 18:00</td>
                         <td ><span ng-bind="model.year==null?0:model.year"></span>年</td>
                         <td ng-bind="model.guide_card_no"></td>
-                        <td ng-click="ShowDetail()"><a  ng-click="verifyGuide(model.id)"><i class="iconfont">&#xe645;</i></a></td>
+                        <td ng-click="ShowDetail()"><a  ng-click="ShowDetail(model.id)"><i class="iconfont">&#xe645;</i></a></td>
                     </tr>
                     </tbody>
                 </table>

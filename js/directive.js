@@ -30,6 +30,13 @@ Ctrl.directive("agencyInfo", function () {
     }
 });
 
+Ctrl.directive("infoTemp", function () {
+    return {
+        restrict: "E",
+        templateUrl: "Views/temp/infoTemp.html",
+        replace: true,
+    }
+});
 
 //打星指令
 Ctrl.directive('star', function () {

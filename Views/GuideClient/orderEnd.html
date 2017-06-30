@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <pagination class="pagination-sm pull-right"
+        <pagination ng-show="totalItemsOrder>0" class="pagination-sm pull-right"
                     items-per-page="orderObj.page_size"
                     ng-model="orderObj.page"
                     total-items="totalItemsOrder"
@@ -72,9 +72,5 @@
     <div ng-show="State=='detail'">
         <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <order-detail></order-detail>
-        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==2"
-                                    ng-click="turnToIndex()">取消订单</a></div>
-        <div class="text-center"><a class="btn-cn btn-yellow btn-acceptorder" ng-show="orderObj.type==4"
-                                    ng-click="turnToIndex()">结束行程</a></div>
     </div>
 </div>

@@ -40,8 +40,64 @@ Ctrl.controller("AgencyClientCtrl", ["$scope", "$http", "$sce", "$state", "$stat
 }]);
 
 //消息中心控制器
-Ctrl.controller("AgencyInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", function ($scope, $http, $sce, $state, $stateParams) {
-    //$state.go("agencyClient.agencyInfoCenter");
+Ctrl.controller("AgencyInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","centerService","publicService", function ($scope, $http, $sce, $state, $stateParams,centerService,publicService) {
+
+    $scope.InfoObj={
+        type:"31,29,37,20,51,52,53,30",
+        title:"",
+        begin_date:"",
+        end_date:"",
+        page:1,
+        page_size:10,
+        session_id:$scope.session_id
+    }
+
+
+    $scope.pageChanged = function () {
+        $scope.init();
+    }
+    $scope.init = function () {
+        var promise = centerService.getList($scope.InfoObj);
+        promise.then(function (data) {
+            $scope.totalItems = data.msg_body.total_count;
+            $scope.infoList = publicService.getRightInfo(data.msg_body.notify);
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    $scope.searchInfo = function () {
+        console.log(angular.element(".startTime").val());
+    }
+
+    $scope.turnToDetail=function(type,id){
+        switch (type){
+            //转向个人中心
+            case 31:
+                $state.go("agencyClient.agencyEdit");
+                break;
+            // 转向正在进行订单
+            case 29:
+            case 37:
+            case 20:
+            case 51:
+            case 52:
+            case 53:
+                $state.go("agencyClient.orderNowAgency", {"type": type,"id":id});
+                break;
+            //转向已完成订单
+            case 30:
+                $state.go("agencyClient.orderEndAgency", {"type": type,"id":id});
+                break;
+            default:
+                break;
+        }
+    }
+
+    $scope.init();
 }]);
 
 //个人信息中心控制器
@@ -145,6 +201,16 @@ Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
     $scope.turnToIndex = function () {
         $scope.State = "index";
         $scope.titleObj.Tiptitle="订单中心 > 已完成";
+    }
+
+    //判断跳转
+    var turnType=$stateParams.type;
+    var turnId=$stateParams.id;
+    if(turnType!=""){
+        //为51进入待出团界面
+        if(turnType==30){
+            $scope.ShowDetail(turnId);
+        }
     }
 
 }]);
@@ -570,6 +636,32 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
         $scope.TopObj.guide_level = level;
     }
 
+    //判断跳转
+    var turnType=$stateParams.type;
+    var turnId=$stateParams.id;
+    if(turnType!=""){
+        //为51进入待出团界面
+        switch (turnType) {
+            case 20:
+                $scope.orderObj.type=20;
+
+                break;
+            case 29:
+            case 37:
+            case 51:
+                $scope.orderObj.type=21;
+                break;
+            case 52:
+                $scope.orderObj.type=22;
+                break;
+            case 53:
+                $scope.orderObj.type=23;
+                break;
+            default:
+                break;
+        }
+        $scope.ShowDetail(turnId);
+    }
 
 }]);
 
