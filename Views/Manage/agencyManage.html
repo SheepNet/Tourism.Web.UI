@@ -12,21 +12,25 @@
                 <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
                 <input type="text" placeholder="Search" ng-model="agencyObj.title">
             </div>
-            <div class="fr m-t-5"><a class="btn-import"><i class="iconfont">&#xe633;</i>导入旅行社</a></div>
+            <div class="fr m-t-5">
+                <a class="btn-import"><i class="iconfont">&#xe633;</i>导入旅行社</a>
+                <input id="import_agency" class="upload-file-input"  name="upload" type="file"
+                       onchange="angular.element(this).scope().file_changed(this)" />
+            </div>
         </div>
         <div class="dis-table">
             <table class="table-list">
                 <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>名称</th>
-                        <th>星级</th>
-                        <th>统一社会信用代码</th>
-                        <th>单位座机</th>
-                        <th>法人代表</th>
-                        <th>法人手机</th>
-                        <th>操作</th>
-                    </tr>
+                <tr>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>星级</th>
+                    <th>统一社会信用代码</th>
+                    <th>单位座机</th>
+                    <th>法人代表</th>
+                    <th>法人手机</th>
+                    <th>操作</th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="(key,agency) in agencyList">
@@ -44,7 +48,7 @@
                 </tr>
                 </tbody>
             </table>
-            <pagination class="pagination-sm pull-right"
+            <pagination ng-show="totalItems>0" class="pagination-sm pull-right"
                         items-per-page="agencyObj.page_size"
                         ng-model="agencyObj.page"
                         total-items="totalItems"
@@ -64,7 +68,7 @@
         <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         <agency-info></agency-info>
         <div class="text-center m-t-30 m-b-30">
-            <a class="btn-cn btn-yellow"  ng-click="DelAgency(agencyInfo.id)">停&nbsp;&nbsp;&nbsp;&nbsp;用</a>
+            <a class="btn-cn btn-yellow" ng-click="DelAgency(agencyInfo.id)">停&nbsp;&nbsp;&nbsp;&nbsp;用</a>
         </div>
     </div>
 
@@ -78,39 +82,15 @@
                 <span class="search-img" ng-click="initTextOrder()"><img src="images/search.png"></span>
                 <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
             </div>
-            <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
-        </div>
-        <div class="teams-box">
-            <div class="teams-part" ng-repeat="order in orderList">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team02.png"></div>
-                    <div class="team-text">
-                        <h5 ng-bind="order.name"></h5>
-                        <p class="team-detail" ng-bind="order.desc"></p>
-                        <!--这边做特殊处理-->
-                        <p class="team-time">{{order.begin_time}}~{{order.end_time}}</p>
-                    </div>
-                    <div class="team-state">
-                        <p ng-bind="order.guide_comment.comment_time">2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥<span
-                                ng-bind="order.guide_money"></span>/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-comment">
-                    <p><div style="display: inline" star rating-value="order.guide_comment.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></p>
-                    <p class="team-comment-text" ng-bind="order.guide_comment.content">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>
-                </div>
+            <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a>
             </div>
         </div>
-        <pagination class="pagination-sm pull-right"
+        <p class="noorder" ng-show="totalItemsOrder==0"><img src="images/noorder.png"></p>
+        <order-history></order-history>
+        <pagination ng-show="totalItemsOrder>0" class="pagination-sm pull-right"
                     items-per-page="orderObj.page_size"
                     ng-model="orderObj.page"
-                    total-items="totalItems"
+                    total-items="totalItemsOrder"
                     max-size="maxSize"
                     ng-change="pageChangedOrder()"
                     boundary-links="false"
@@ -127,7 +107,7 @@
     // tab切换
     $(".comment-list:first").show();
     $(".tab-comment li:first").addClass("comment-on");
-    $(".tab-comment li").click(function() {
+    $(".tab-comment li").click(function () {
         $(this).addClass("comment-on").removeClass("").siblings().removeClass("comment-on").addClass("");
         $(".comment-list").hide().eq($(".tab-comment li").index(this)).show();
     });

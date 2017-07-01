@@ -12,7 +12,11 @@
                 <span class="search-img"  ng-click="initText()"><img src="images/search.png" ng-click="init()"></span>
                 <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
             </div>
-            <div class="fr m-t-5"><a class="btn-import"><i class="iconfont">&#xe633;</i>导入导游</a></div>
+            <div class="fr m-t-5">
+                <a class="btn-import"><i class="iconfont">&#xe633;</i>导入导游</a>
+                <input id="import_guide" class="upload-file-input"  name="upload" type="file"
+                       onchange="angular.element(this).scope().file_changed(this)" />
+            </div>
         </div>
         <div class="dis-table">
             <table class="table-list">
@@ -42,7 +46,7 @@
                 </tbody>
             </table>
         </div>
-        <pagination class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems" max-size="maxSize"
+        <pagination ng-show="totalItems>0" class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems" max-size="maxSize"
             ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true" rotate="false" force-ellipses="true"
             previous-text="‹" next-text="›">
         </pagination>
@@ -68,37 +72,39 @@
             </div>
             <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         </div>
-        <div class="teams-box">
-            <div class="teams-part" ng-repeat="order in orderList">
-                <div class="radius-top"><img src="images/radius_top.png"></div>
-                <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
-                <div class="team-infor clearfix">
-                    <div class="team-img"><img src="images/team02.png"></div>
-                    <div class="team-text">
-                        <h5 ng-bind="order.name"></h5>
-                        <p class="team-detail" ng-bind="order.desc"></p>
-                        <!--这边做特殊处理-->
-                        <p class="team-time">{{order.begin_time}}~{{order.end_time}}</p>
-                    </div>
-                    <div class="team-state">
-                        <p ng-bind="order.guide_comment.comment_time">2017-02-15 15:31</p>
-                        <div class="team-pay">
-                            <i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>
-                            <i class="iconfont cr">&#xe613;</i><span>￥<span
-                                ng-bind="order.guide_money"></span>/次</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="team-comment">
-                    <p>
-                        <div style="display: inline" star rating-value="order.guide_comment.star" max="5" on-hover="onHover"
-                            on-leave="onLeave" readonly="true">
-                    </p>
-                    <p class="team-comment-text" ng-bind="order.guide_comment.content">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>
-                    </div>
-                </div>
-            </div>
-            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItemsOrder"
+        <p class="noorder" ng-show="totalItemsOrder==0"><img src="images/noorder.png"></p>
+        <order-history></order-history>
+        <!--<div class="teams-box">-->
+            <!--<div class="teams-part" ng-repeat="order in orderList">-->
+                <!--<div class="radius-top"><img src="images/radius_top.png"></div>-->
+                <!--<div class="radius-bottom"><img src="images/radius_bottom.png"></div>-->
+                <!--<div class="team-infor clearfix">-->
+                    <!--<div class="team-img"><img src="images/team02.png"></div>-->
+                    <!--<div class="team-text">-->
+                        <!--<h5 ng-bind="order.name"></h5>-->
+                        <!--<p class="team-detail" ng-bind="order.desc"></p>-->
+                        <!--&lt;!&ndash;这边做特殊处理&ndash;&gt;-->
+                        <!--<p class="team-time">{{order.begin_time}}~{{order.end_time}}</p>-->
+                    <!--</div>-->
+                    <!--<div class="team-state">-->
+                        <!--<p ng-bind="order.guide_comment.comment_time">2017-02-15 15:31</p>-->
+                        <!--<div class="team-pay">-->
+                            <!--<i class="iconfont cb">&#xe61c;</i><span><span ng-bind="order.guide_num"></span>人</span>-->
+                            <!--<i class="iconfont cr">&#xe613;</i><span>￥<span-->
+                                <!--ng-bind="order.guide_money"></span>/次</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="team-comment">-->
+                    <!--<p>-->
+                        <!--<div style="display: inline" star rating-value="order.guide_comment.star" max="5" on-hover="onHover"-->
+                            <!--on-leave="onLeave" readonly="true">-->
+                    <!--</p>-->
+                    <!--<p class="team-comment-text" ng-bind="order.guide_comment.content">认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。认真负责，有责任心。</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <pagination ng-show="totalItemsOrder>0" class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItemsOrder"
                 max-size="maxSize" ng-change="pageChangedOrder()" boundary-links="false" boundary-link-numbers="true" rotate="false"
                 force-ellipses="true" previous-text="‹" next-text="›">
             </pagination>

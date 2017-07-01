@@ -166,6 +166,18 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             });
             return promise;
         },
+        //导入导游
+        importGuide:function(obj){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(Url+'travel/guide/guide/check', obj)
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
         //获得订单列表接口
         getOrderList:function(obj){
             var deferred = $q.defer();
@@ -178,6 +190,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             });
             return promise;
         },
+        //获得订单详情接口
         getOrderDetail:function(id,session_id){
             var deferred = $q.defer();
             var promise = deferred.promise;
@@ -189,6 +202,7 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
             });
             return promise;
         },
+        //编辑订单状态
         editOrderState:function(id,type,session_id){
             var deferred = $q.defer();
             var promise = deferred.promise;
@@ -279,6 +293,18 @@ Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
                     id:id,
                     session_id:session_id
                 })
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
+        //导入旅社
+        importAgency:function(obj){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(Url+'travel/center/travel_company/export', obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {
@@ -408,12 +434,36 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
                 deferred.reject(error);
             });
             return promise;
+        },
+        //提交合同
+        submitCheck:function(obj){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(Url+'travel/guide/guide/check', obj)
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
         }
     }
 }]);
 
 Ctrl.factory("agencyService",["$http", "$q",function ($http,$q) {
     return{
+        //获得导游详情
+        getAgencyInfo:function(session_id){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.get(Url+'travel/travel_company/travel_company/query',{params:{session_id:session_id}}).success(function (data) {
+                deferred.resolve(data);
+            }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+            //http://chinaz.live/travel/guide/guide/query?
+        },
         //获得订单列表
         getorderList:function(orderObj){
             var deferred = $q.defer();
@@ -563,6 +613,11 @@ Ctrl.factory("publicService",["$http", "$q",function ($http,$q) {
                     case 21:
                         item.ClassName = "color-01";
                         item.Image="images/state01.png";
+                        break;
+                    //旅行社端
+                    case 20:
+                        item.ClassName = "color-08";
+                        item.Image="images/state08.png";
                         break;
                     default:
                         break;

@@ -68,7 +68,8 @@
             <label>导服中心注册号：</label>
             <span ng-bind="guideInfo.center_register_guide_id"></span>
         </div>
-        <div class="col-sm-4 intro-line">
+        <!--<div class="col-sm-4 intro-line" ng-show="guideInfo.order_num!=null">-->
+        <div class="col-sm-4 intro-line" ng-show="guideInfo.come=='manage'">
             <label>历史带团记录：</label>
             <span><a class="look-hisrecord" ng-click="ShowGudieHistory()">查看</a></span>
         </div>

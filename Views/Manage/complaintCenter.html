@@ -35,7 +35,7 @@
             </tr>
             </tbody>
         </table>
-        <pagination class="pagination-sm pull-right"
+        <pagination ng-show="totalItems>0" class="pagination-sm pull-right"
                     items-per-page="complainObj.page_size"
                     ng-model="complainObj.page"
                     total-items="totalItems"

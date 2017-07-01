@@ -168,8 +168,8 @@
             <!--</tr>-->
             <tr>
                 <td colspan="5">合计</td>
-                <td>10</td>
-                <td>10</td>
+                <td ng-bind="agencyInfo.sum_normal_num"></td>
+                <td ng-bind="agencyInfo.sum_num">10</td>
             </tr>
             </tbody>
         </table>
@@ -291,53 +291,68 @@
     <div class="col-sm-4">
         <div class="input-box">
             <label>开团次数：</label>
-            <span><span ng-bind="agencyInfo.order_num"></span>次</span>
+            <span><span ng-bind="agencyInfo.order_num==null?0:agencyInfo.order_num"></span>次</span>
         </div>
     </div>
-    <div class="col-sm-4">
+    <!--<div class="col-sm-4" ng-show="agencyInfo.order_num!=null">-->
+        <div class="col-sm-4" ng-show="agencyInfo.come=='manage'">
         <div class="intro-line">
             <label>历史开团记录：</label>
             <span><a class="look-hisrecord" ng-click="ShowAgencyHistory()">查看</a></span>
         </div>
     </div>
-    <div class="col-sm-12 m-t-20">
+    <div class="col-sm-12 m-t-20"  ng-show="agencyInfo.come=='manage'">
         <label>导游评价：</label>
         <div class="commentbox">
             <ul class="tab-comment clearfix">
-                <li>全部<span>（2）</span></li>
-                <li>好评<span>（1）</span></li>
-                <li>中评<span>（1）</span></li>
-                <li>差评<span>（0）</span></li>
+                <li ng-click="commentType('1,2,3,4,5')" ng-class="{'comment-on':agencyInfoObj.type=='1,2,3,4,5'}">全部<span>（<span ng-bind="agencyInfo.guide_comment_count.all"></span>）</span></li>
+                <li ng-click="commentType('4,5')"  ng-class="{'comment-on':agencyInfoObj.type=='4,5'}">好评<span>（<span ng-bind="agencyInfo.guide_comment_count.good"></span>）</span></li>
+                <li ng-click="commentType('3')"  ng-class="{'comment-on':agencyInfoObj.type=='3'}">中评<span>（<span ng-bind="agencyInfo.guide_comment_count.normal"></span>）</span></li>
+                <li ng-click="commentType('1,2')"  ng-class="{'comment-on':agencyInfoObj.type=='1,2'}">差评<span>（<span ng-bind="agencyInfo.guide_comment_count.bad"></span>）</span></li>
             </ul>
             <div class="comment-list-now">
                 <ul class="comment-m">
-                    <li>
+                    <li ng-repeat="guide_comment in agencyInfo.guide_comment">
                         <div class="comment-mleft">
-                            <span class="cm-img"><img src="images/default_person.png"></span>
-                            <span class="cm-name">吴曦</span>
-                            <span class="cm-honor"><img src="images/honer.png"></span>
+                            <span class="cm-img"><img ng-src="{{ResUrl+guide_comment.photo}}"></span>
+                            <span class="cm-name" ng-bind="guide_comment.name">吴曦</span>
+                            <span class="cm-honor" ng-show="guide_comment.level==3"><img src="images/honer.png"></span>
                         </div>
                         <div class="comment-mright">
-                            <p class="cm-star"><img src="images/star.png"></p>
-                            <p class="cm-txt">旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。</p>
-                            <p class="cm-data"> 2016-09-22 11:27</p>
+                            <p class="cm-star">
+                            <div style="display: inline;height:20px" star rating-value="guide_comment.comment_star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+                            </p>
+                            <p class="cm-txt" ng-bind="guide_comment.content">旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无旅行社总旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。旅行社总是无故取消订单。是无故取消订单。</p>
+                            <p class="cm-data" ng-bind="guide_comment.comment_time"> 2016-09-22 11:27</p>
                         </div>
                     </li>
-                    <li>
-                        <div class="comment-mleft">
-                            <span class="cm-img"><img src="images/default_person.png"></span>
-                            <span class="cm-name">吴曦</span>
-                            <span class="cm-honor"><img src="images/honer.png"></span>
-                        </div>
-                        <div class="comment-mright">
-                            <p class="cm-star"><img src="images/star.png"></p>
-                            <p class="cm-txt">旅行社总是无故取消订单。</p>
-                            <p class="cm-data"> 2016-09-22 11:27</p>
-                        </div>
-                    </li>
+                    <!--<li>-->
+                        <!--<div class="comment-mleft">-->
+                            <!--<span class="cm-img"><img src="images/default_person.png"></span>-->
+                            <!--<span class="cm-name">吴曦</span>-->
+                            <!--<span class="cm-honor"><img src="images/honer.png"></span>-->
+                        <!--</div>-->
+                        <!--<div class="comment-mright">-->
+                            <!--<p class="cm-star"><img src="images/star.png"></p>-->
+                            <!--<p class="cm-txt">旅行社总是无故取消订单。</p>-->
+                            <!--<p class="cm-data"> 2016-09-22 11:27</p>-->
+                        <!--</div>-->
+                    <!--</li>-->
                 </ul>
             </div>
-            <div class="text-center">分页</div>
+            <pagination ng-show="totalItemsAgencyInfo>0" class="pagination-sm pull-right"
+                        items-per-page="agencyInfoObj.page_size"
+                        ng-model="agencyInfoObj.page"
+                        total-items="totalItemsAgencyInfo"
+                        max-size="maxSize"
+                        ng-change="pageChangedAgencyInfo()"
+                        boundary-links="false"
+                        boundary-link-numbers="true"
+                        rotate="false"
+                        force-ellipses="true"
+                        previous-text="‹"
+                        next-text="›">
+            </pagination>
         </div>
     </div>
     <div class="col-sm-12 m-t-20">

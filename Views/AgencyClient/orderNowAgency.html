@@ -26,6 +26,7 @@
                 <div class="fr m-t-5"><a class="btn-import" ng-click="publicOrder()"><i class="iconfont">&#xe70e;</i>发布新订单</a>
                 </div>
             </div>
+            <p class="noorder" ng-show="totalItems==0"><img src="images/noorder.png"></p>
             <div class="teams-box">
                 <div class="teams-part" ng-repeat="order in orderList">
                     <div class="radius-top"><img src="images/radius_top.png"></div>
@@ -110,7 +111,7 @@
                 <!--</div>-->
                 <!--</div>-->
             </div>
-            <pagination class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page"
+            <pagination ng-show="totalItems>0" class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page"
                         total-items="totalItems"
                         max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true"
                         rotate="false"

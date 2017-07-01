@@ -186,6 +186,7 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
                     $scope.titleObj.Tiptitle="审核中心 > 已审核 > 查看详情"
                 }
                 $scope.guideInfo = data.msg_body.check;
+                $scope.guideInfo.come="manage";
                 //$scope.guideInfo = data.msg_body.data;
                 $scope.State = 'detail';
             } else {
@@ -234,6 +235,61 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.State = 'index';
         $scope.titleObj.Tiptitle="审核中心";
     }
+
+    //返回到详细页
+    $scope.turnToDetail = function () {
+        $scope.State = 'detail';
+        if( $scope.InfoObj.type==0){
+            $scope.titleObj.Tiptitle="审核中心 > 查看详情"
+        }else {
+            $scope.titleObj.Tiptitle="审核中心 > 已审核 > 查看详情"
+        }
+    }
+
+    //历史记录
+    $scope.ShowGudieHistory = function () {
+        $scope.orderObj = {
+            id: $scope.guideInfo.id,
+            title: "",
+            order_type: 1,
+            page: 1,
+            page_size: 10,
+            session_id: $scope.session_id
+        }
+        $scope.initOrder();
+        $scope.titleObj.Tiptitle="审核中心 > 查看详情 > 历史带团记录";
+        $scope.State = 'history';
+    }
+
+    //导游历史纪录初始化列表
+    $scope.initOrder = function () {
+        var promise = centerService.getAgencyHistory($scope.orderObj);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                $scope.totalItemsOrder = data.msg_body.total_count;
+                $scope.orderList = data.msg_body.order;
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function () {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    };
+
+    //历史记录也页数变化
+    $scope.pageChangedOrder = function () {
+        $scope.initOrder();
+    }
+
+    //文本框输入搜索
+    $scope.initTextOrder=function(){
+        $scope.orderObj.page=1;
+        $scope.initOrder();
+    }
+
 
     //判断跳转
     var turnType=$stateParams.type;
@@ -454,6 +510,7 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
             if (data.err_code == 0) {
                 $scope.titleObj.Tiptitle="导游管理 > 查看详情";
                 $scope.guideInfo = data.msg_body.data;
+                $scope.guideInfo.come="manage";
                 $scope.State = 'detail';
             }  else {
                 layer.msg(data.err_msg, {icon: 0});
@@ -533,7 +590,7 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
 
     $scope.initTextOrder=function(){
         $scope.orderObj.page=1;
-        $scope.init();
+        $scope.initOrder();
     }
 
     //升级或注销导游
@@ -577,12 +634,42 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         });
     }
 
+
+    //上传文件
+    $scope.file_changed = function (element) {
+        var ele_id = angular.element(element).attr("id")
+        var uuid = $ui.fileupload({
+            fileSelector: '#' + ele_id,
+            type: FILETYPE.FILE,
+            moudle: 'BASE'
+        }).uuid;
+        $scope.importGuide(uuid);
+    };
+
+    //导入导游
+    $scope.importGuide=function(file_id){
+        var promise = centerService.importGuide({file_id:file_id,session_id: $scope.session_id});
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                layer.msg(data.err_msg, {icon: 1})
+            }else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
 }]);
 
 //旅行社管理
 Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "centerService", function ($scope, $http, $sce, $state, $stateParams, centerService) {
     $scope.State = 'index';
 
+    //首页查询对象
     $scope.agencyObj = {
         title: "",
         begin_date: "",
@@ -592,6 +679,7 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         session_id: $scope.session_id
     };
 
+    //历史页查询对象
     $scope.orderObj = {
         title: "",
         order_type: 1,
@@ -600,10 +688,12 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         session_id: $scope.session_id
     }
 
+    //旅行社查询对象
     $scope.agencyInfoObj = {
         id: "",
         page: 1,
         page_size: 10,
+        type:"1,2,3,4,5",
         session_id: $scope.session_id
     }
 
@@ -612,15 +702,40 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.init();
     }
 
-    $scope.ShowDetail = function (id) {
-        $scope.State = 'detail';
-        $scope.agencyInfoObj.id = id;
+    //获得旅行社详细信息
+    $scope.initAgency =function(){
         var promise = centerService.getAgencyInfo($scope.agencyInfoObj);
         promise.then(function (data) {
             if (data.err_code == 0) {
                 $scope.titleObj.Tiptitle="旅行社管理 > 查看详情";
-                $scope.totalItems1 = 5;
+                $scope.totalItemsAgencyInfo = 5;
                 $scope.agencyInfo = data.msg_body.travel_company;
+                //预处理一些格式
+                $scope.agencyInfo.come="agency";
+                $scope.agencyInfo.sum_normal_num=0;
+                $scope.agencyInfo.sum_num=0;
+                angular.forEach($scope.agencyInfo.parter,function(item,key){
+                    $scope.agencyInfo.sum_normal_num+=item.normal_num;
+                    $scope.agencyInfo.sum_num+=item.num;
+                })
+
+                switch ($scope.agencyInfoObj.type) {
+                    case "1,2,3,4,5":
+                        $scope.totalItemsAgencyInfo = $scope.agencyInfo.guide_comment_count.all;
+                        break;
+                    case "1,2":
+                        $scope.totalItemsAgencyInfo = $scope.agencyInfo.guide_comment_count.bad;
+                        break;
+                    case "3":
+                        $scope.totalItemsAgencyInfo = $scope.agencyInfo.guide_comment_count.normal;
+                        break;
+                    case "4,5":
+                        $scope.totalItemsAgencyInfo = $scope.agencyInfo.guide_comment_count.good;
+                        break;
+                    default:
+                        $scope.complainInfo.complain_text  = '暂无';
+                        break;
+                }
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -630,8 +745,26 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         promise.catch(function (data) {
             layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
-
     }
+
+    //旅行社详情换页
+    $scope.pageChangedAgencyInfo=function(){
+        $scope.initAgency();
+    }
+
+    //切换评价类型
+    $scope.commentType=function(type){
+        $scope.agencyInfoObj.type=type;
+        $scope.initAgency();
+    }
+
+    //查询旅行社
+    $scope.ShowDetail = function (id) {
+        $scope.State = 'detail';
+        $scope.agencyInfoObj.id = id;
+        $scope.initAgency();
+    }
+
 
     //查看旅行社历史记录
     $scope.ShowAgencyHistory = function () {
@@ -688,6 +821,7 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         })
     };
 
+    //历史记录也页数变化
     $scope.pageChangedOrder = function () {
         $scope.initOrder();
     }
@@ -695,7 +829,7 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
     //文本框输入搜索
     $scope.initTextOrder=function(){
         $scope.orderObj.page=1;
-        $scope.init();
+        $scope.initOrder();
     }
 
     //停用旅行社
@@ -718,6 +852,34 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
                 layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
             })
         });
+    }
+
+    //上传文件
+    $scope.file_changed = function (element) {
+        var ele_id = angular.element(element).attr("id")
+        var uuid = $ui.fileupload({
+            fileSelector: '#' + ele_id,
+            type: FILETYPE.FILE,
+            moudle: 'BASE'
+        }).uuid;
+        $scope.importAgency(uuid);
+    };
+
+    //导入旅行社
+    $scope.importAgency=function(file_id){
+        var promise = centerService.importAgency({file_id:file_id,session_id: $scope.session_id});
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                layer.msg(data.err_msg, {icon: 1})
+            }else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
     }
 
     //返回到详细页

@@ -51,7 +51,7 @@
                     </tbody>
                 </table>
             </div>
-            <pagination class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems"
+            <pagination  ng-show="totalItems>0" class="pagination-sm" items-per-page="InfoObj.page_size" ng-model="InfoObj.page" total-items="totalItems"
                         max-size="maxSize" ng-change="pageChanged()" boundary-links="false" boundary-link-numbers="true"
                         rotate="false" force-ellipses="true" previous-text="‹"
                         next-text="›">
@@ -66,7 +66,25 @@
             <a class="btn-cn btn-yellow" ng-click="guideCheck(1)">通&nbsp;&nbsp;&nbsp;&nbsp;过</a>
         </div>
     </div>
-
+    <div ng-show="State=='history'">
+        <div class="choice-box clearfix">
+            <select class="select-u" ng-model="orderObj.order_type" ng-change="initOrder()">
+                <option value="1">按星级顺序</option>
+                <option value="2">按时间倒序</option>
+            </select>
+            <div class="search-box">
+                <span class="search-img"  ng-click="initTextOrder()"><img src="images/search.png"></span>
+                <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
+            </div>
+            <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
+        </div>
+        <p class="noorder" ng-show="totalItemsOrder==0"><img src="images/noorder.png"></p>
+        <order-history></order-history>
+        <pagination ng-show="totalItemsOrder>0" class="pagination-sm pull-right" items-per-page="orderObj.page_size" ng-model="orderObj.page" total-items="totalItemsOrder"
+                    max-size="maxSize" ng-change="pageChangedOrder()" boundary-links="false" boundary-link-numbers="true" rotate="false"
+                    force-ellipses="true" previous-text="‹" next-text="›">
+        </pagination>
+    </div>
 </div>
 
 <script type="text/javascript">

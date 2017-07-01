@@ -38,6 +38,14 @@ Ctrl.directive("infoTemp", function () {
     }
 });
 
+Ctrl.directive("orderHistory", function () {
+    return {
+        restrict: "E",
+        templateUrl: "Views/temp/orderHistory.html",
+        replace: true,
+    }
+});
+
 //打星指令
 Ctrl.directive('star', function () {
     return {

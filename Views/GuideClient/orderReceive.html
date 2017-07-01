@@ -11,6 +11,7 @@
                 <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
             </div>
         </div>
+        <p class="noorder" ng-show="totalItems==0"><img src="images/noorder.png"></p>
         <div class="teams-box">
             <div class="teams-part" ng-repeat="order in orderList">
                 <div class="radius-top"><img src="images/radius_top.png"></div>

@@ -18,6 +18,10 @@ ul.rating {
     color: #ffee33;
 }
 
+.comment-m .rating  li {
+    padding: 0px;
+}
+
 
 /*半星部分代码*/
 

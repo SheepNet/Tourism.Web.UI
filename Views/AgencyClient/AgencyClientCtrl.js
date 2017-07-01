@@ -101,8 +101,33 @@ Ctrl.controller("AgencyInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$
 }]);
 
 //个人信息中心控制器
-Ctrl.controller("AgencyEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", function ($scope, $http, $sce, $state, $stateParams) {
-    //$state.go("agencyClient.agencyInfoCenter");
+Ctrl.controller("AgencyEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","agencyService", function ($scope, $http, $sce, $state, $stateParams,agencyService) {
+
+    $scope.init = function () {
+        var promise = agencyService.getAgencyInfo($scope.session_id);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                $scope.titleObj.Tiptitle="个人中心";
+                $scope.agencyInfo = data.msg_body.travel_company;
+                //预处理一些格式
+                $scope.agencyInfo.come="agency";
+                $scope.agencyInfo.sum_normal_num=0;
+                $scope.agencyInfo.sum_num=0;
+                angular.forEach($scope.agencyInfo.parter,function(item,key){
+                    $scope.agencyInfo.sum_normal_num+=item.normal_num;
+                    $scope.agencyInfo.sum_num+=item.num;
+                })
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+    $scope.init();
 }]);
 
 //订单详情界面
