@@ -2,11 +2,11 @@
     <form name="orderForm">
         <p class="intro-stitle">订单信息</p>
         <div class="m-b-30 clearfix">
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>旅行社名称</label>
                 <input type="text" ng-model="agencyName" disabled>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>团号</label>
                 <input name="order_no" type="text" ng-model="InfoObj.order_no" ng-maxlength="20" required ng-class="{'red':InfoObj.order_no==null || InfoObj.order_no.length==0}">
                 <div class="alert alert-danger help-block" ng-show="orderForm.order_no.$dirty && orderForm.order_no.$invalid">
@@ -14,24 +14,24 @@
                 </div>
             </div>
 
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>传真号码</label>
                 <input name="order_no" type="text" ng-model="InfoObj.order_fax" ng-maxlength="20" required  ng-class="{'red':InfoObj.order_fax==null || InfoObj.order_fax.length==0}">
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>联系电话</label>
                 <input name="order_no" type="text" ng-model="InfoObj.order_phone" ng-maxlength="20" required ng-class="{'red':InfoObj.order_phone==null || InfoObj.order_phone.length==0}">
             </div>
 
 
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>订单名称</label>
                 <input type="text" name="name" ng-model="InfoObj.name" ng-maxlength="50" required  ng-class="{'red':InfoObj.name==null || InfoObj.name.length==0}">
                 <div class="alert alert-danger help-block" ng-show="orderForm.name.$dirty && orderForm.name.$invalid">
                     订单名称在50个字以内
                 </div>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>旅游时间</label>
                 <div class="layui-inline">
                     <input class="layui-input startTime" time-change placeholder="开始时间" ng-model="InfoObj.begin_time" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
@@ -53,14 +53,14 @@
                     行程简介在300个字以内
                 </div>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>集合地点</label>
                 <input type="text" name="order_address" ng-model="InfoObj.order_address" ng-maxlength="50" required  ng-class="{'red':InfoObj.order_address==null || InfoObj.order_address.length==0}">
                 <div class="alert alert-danger help-block" ng-show="orderForm.order_address.$dirty && orderForm.order_address.$invalid">
                     集合地点在50个字以内
                 </div>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>游客人数</label>
                 <input type="number" ng-model="InfoObj.order_person" required  ng-class="{'red':InfoObj.order_person==null || InfoObj.order_person.length==0}"> 人
             </div>
@@ -71,14 +71,14 @@
                     特殊备注在300个字以内
                 </div>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label style="float: left">截止时间</label>
                 <div class="layui-inline endTime">
                     <input style="float: left;" class="layui-input" time-change placeholder="招募截至时间" ng-model="InfoObj.enter_end_time" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
                         required>
                 </div>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>人均酬金</label>
                 <input type="number" type="text" ng-model="InfoObj.guide_money" placeholder="最多10000元" required  ng-class="{'red':InfoObj.guide_money==null || InfoObj.guide_money.length==0}"> 元
                 <div class="alert alert-danger help-block" ng-show="InfoObj.guide_money>10000">
@@ -88,18 +88,18 @@
         </div>
         <p class="intro-stitle">导游要求</p>
         <div class="orderbox clearfix">
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>导游人数</label>
                 <input type="number" ng-model="InfoObj.guide_num" placeholder="最多100人" required  ng-class="{'red':InfoObj.guide_num==null || InfoObj.guide_num.length==0}"> 人
                 <div class="alert alert-danger help-block" ng-show="InfoObj.guide_num>100">
                     导游人数不能超过100人
                 </div>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>应标人数</label>
                 <input type="number" placeholder="最多应标人数" ng-model="InfoObj.guide_max_num" required  ng-class="{'red':InfoObj.guide_max_num==null || InfoObj.guide_max_num.length==0}">人
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>性别要求</label>
                 <span class="sex-require">
                 <span><input type="radio" name="sex" checked ng-click="changeSex(0)"> 无要求</span>
@@ -107,24 +107,24 @@
                 <span><input type="radio" name="sex" ng-click="changeSex(2)"> 女</span>
                 </span>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>品牌导游</label>
                 <span class="sex-require">
                 <span><input type="radio" name="guide"  checked  ng-click="changeRequire(0)"> 无要求</span>
                 <span><input type="radio" name="guide"  ng-click="changeRequire(1)"> 是</span>
                 </span>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label style="float: left">评分要求：</label>
                 <div style="float: left" star rating-value="InfoObj.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>学历要求</label>
                 <select ng-model="InfoObj.study_level">
                     <option ng-repeat="student_level in study_levelList" value="{{student_level.key}}" ng-selected="student_level.key==0">{{student_level.name}}</option>
                 </select>
             </div>
-            <div class="col-md-6 order-line">
+            <div class="col-md-4 order-line">
                 <label>语言要求</label>
                 <span class="language">
                 <span ng-repeat="lang in InfoObj.language track by $index">

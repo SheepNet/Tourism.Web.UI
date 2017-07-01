@@ -1877,7 +1877,7 @@ a:hover {
 }
 
 .order-line>label {
-    width: 80px;
+    width: 90px;
     text-align: right;
     padding-right: 10px;
     margin: 0;
@@ -2613,4 +2613,11 @@ a:hover {
     left: 0;
     padding: 2px 0;
     opacity: 0;
+}
+.inline-block{
+    display: inline-block;
+}
+.inline-block .upload-file-input{
+    right:0;
+    left:auto;
 }

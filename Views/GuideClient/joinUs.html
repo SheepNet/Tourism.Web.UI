@@ -73,9 +73,11 @@
         </ul>
         <p class="bz-text">请仔细做最后确认，将完整的纸质合同进行拍照并点击【上传】按钮进行上传</p>
         <div class="text-center">
-            <a class="btn-cn btn-yellow">上&nbsp;&nbsp;&nbsp;&nbsp;传</a>
-            <input id="guide_check_file" class="upload-file-input" name="upload" type="file" accept="image/png, image/jpeg, image/gif"
-                   onchange="angular.element(this).scope().file_changed(this)" />
+            <div class="uploadbox inline-block">
+                <a class="btn-cn btn-yellow">上&nbsp;&nbsp;&nbsp;&nbsp;传</a>
+                <input id="guide_check_file" class="upload-file-input" name="upload" type="file" accept="image/png, image/jpeg, image/gif"
+                    onchange="angular.element(this).scope().file_changed(this)" />
+            </div>
             <a class="btn-cn btn-yellow" ng-click="submitCheck()">提&nbsp;&nbsp;&nbsp;&nbsp;交</a>
         </div>
         <div class="bz-imgbox">
@@ -94,20 +96,18 @@
             <!--<a class="next" onClick="tt.next();"></a>-->
         </div>
     </div>
-    <div class="picArea" style="display: none">
-        <img  ng-src="{{showPicUrl}}">
-    </div>
+
 </div>
-<!--<script type="text/javascript">-->
-    <!--// 上传图片轮播-->
-    <!--var tt=new TouchSlider('slider',{-->
-        <!--duration:800,    //动画速度-->
-        <!--interval:3000,   //动画时间间隔-->
-        <!--direction:0,-->
-        <!--autoplay:false,   //自动播放-->
-        <!--align:'left',-->
-        <!--mousewheel:false,-->
-        <!--mouse:true,      //鼠标滚动-->
-        <!--fullsize:false   //全屏-->
-    <!--});-->
-<!--</script>-->
+<script type="text/javascript">
+    // 上传图片轮播
+    var tt=new TouchSlider('slider',{
+        duration:800,    //动画速度
+        interval:3000,   //动画时间间隔
+        direction:0,
+        autoplay:false,   //自动播放
+        align:'left',
+        mousewheel:false,
+        mouse:true,      //鼠标滚动
+        fullsize:false   //全屏
+    });
+</script>

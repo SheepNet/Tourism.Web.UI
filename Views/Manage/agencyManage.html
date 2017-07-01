@@ -12,7 +12,7 @@
                 <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
                 <input type="text" placeholder="Search" ng-model="agencyObj.title"  ng-keyup="searchKey($event)">
             </div>
-            <div class="fr m-t-5">
+            <div class="fr m-t-5 uploadbox">
                 <a class="btn-import"><i class="iconfont">&#xe633;</i>导入旅行社</a>
                 <input id="import_agency" class="upload-file-input"  name="upload" type="file"
                        onchange="angular.element(this).scope().file_changed(this)" />
