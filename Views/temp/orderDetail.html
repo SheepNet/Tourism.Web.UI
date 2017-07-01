@@ -1,6 +1,9 @@
 <div>
     <div class="intro-title clearfix">
-        <div class="intro-logo"><img src="images/team01.png"></div>
+        <div class="intro-logo">
+            <img src="images/default_travel_company.png" ng-show="orderDetail.photo==null || orderDetail.photo==''">
+            <img ng-src="{{ResUrl+orderDetail.photo}}" ng-show="orderDetail.photo!=null&&orderDetail.photo!=''">
+        </div>
         <div class="intro-text">
             <h2 ng-bind="orderDetail.name"></h2>
             <h5>

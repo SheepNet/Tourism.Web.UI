@@ -1,14 +1,14 @@
 <div ng-controller="AgencyInfoCenterCtrl">
     <div class="choice-box clearfix">
-        <select class="select-u">
-            <option>全部</option>
-            <option>待确认</option>
-            <option>待结束</option>
-            <option>新评价</option>
+        <select class="select-u" ng-model="InfoObj.type" ng-change="initText()">
+            <option value="31,29,37,20,51,52,53,30">全部</option>
+            <option value="31,29,37">特殊消息</option>
+            <option value="20,51,52,53,30">常规消息</option>
         </select>
+
         <div class="search-box">
-            <span class="search-img"><img src="images/search.png"></span>
-            <input type="text" class="" placeholder="Search">
+            <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
+            <input type="text" class="" placeholder="Search" ng-model="InfoObj.title" ng-keyup="searchKey($event)">
         </div>
     </div>
 

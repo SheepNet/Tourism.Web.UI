@@ -9,7 +9,7 @@
             <div class="choice-box clearfix">
                 <div class="search-box">
                     <span class="search-img"  ng-click="initText()"><img src="images/search.png"></span>
-                    <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
+                    <input type="text" class="" placeholder="Search" ng-model="InfoObj.title" ng-keyup="searchKey($event)">
                 </div>
                 <div class="layui-inline" style="margin-left: 10px;display: none">
                     <input class="layui-input" time-change placeholder="开始时间" ng-model="InfoObj.begin_date"
@@ -74,7 +74,7 @@
             </select>
             <div class="search-box">
                 <span class="search-img"  ng-click="initTextOrder()"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
+                <input type="text" class="" placeholder="Search" ng-model="orderObj.title" ng-keyup="searchKeyHistory($event)">
             </div>
             <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         </div>

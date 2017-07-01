@@ -2,13 +2,13 @@
     <div ng-show="State=='index'">
         <div class="choice-box clearfix">
             <select class="select-u" ng-model="orderObj.order_type" ng-change="OrdertypeChange()">
-                <option value="1">按发单时间顺序</option>
-                <option value="2">按开团人数顺序</option>
-                <option value="3">按费用顺序</option>
+                <option value="1">默认排序</option>
+                <option value="2">按开团日期倒序</option>
+                <option value="3">按开团日期顺序</option>
             </select>
             <div class="search-box">
                 <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search">
+                <input type="text" class="" placeholder="Search" ng-model="orderObj.title" ng-keyup="searchKey($event)">
             </div>
         </div>
         <p class="noorder" ng-show="totalItems==0"><img src="images/noorder.png"></p>

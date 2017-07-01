@@ -153,8 +153,11 @@
         <div class="guide-account">
             <div class="guideimgbox">
                 <div class="setimg">
-                    <img src="images/default_person.png">
+                    <img src="images/default_person.png" ng-show="guideInfo.photo==null || guideInfo.photo==''">
+                    <img ng-src="{{ResUrl+guideInfo.photo}}" ng-show="guideInfo.photo!=null&&guideInfo.photo!=''">
                     <span class="changeimg">更改头像</span>
+                    <input id="photo" class="upload-file-input" name="upload" type="file" accept="image/png, image/jpeg, image/gif"
+                           onchange="angular.element(this).scope().file_changed_head(this)"/>
                 </div>
             </div>
             <div class="guideaccountbox">
@@ -251,7 +254,7 @@
             <div class="login-btn w-btn" ng-click="submitMessage()"><a>完   成</a></div>
         </form>
         <div class="picAreaEdit" style="display: none">
-            <img  ng-src="{{showPicUrl}}">
+            <img  class="image_show"  ng-src="{{showPicUrl}}">
         </div>
     </div>
 

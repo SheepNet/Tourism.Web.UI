@@ -76,6 +76,14 @@ Ctrl.controller("InfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stateP
         console.log(angular.element(".startTime").val());
     }
 
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
+
     $scope.initText=function(){
         $scope.InfoObj.page=1;
         $scope.init();
@@ -136,6 +144,15 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.InfoObj.type = type;
         $scope.init();
     }
+
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
+
 
     //文本搜索
     $scope.initText = function () {
@@ -224,8 +241,9 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.showPicUrl= $scope.ResUrl+url;
         layer.open({
             type: 1,
+            title:"查看图片",
             shade: 0.3,
-            title: false,
+            area:["800px","600px"],
             content: $('.picArea')
         });
     }
@@ -283,6 +301,15 @@ Ctrl.controller("VerifyCenterCtrl", ["$scope", "$http", "$sce", "$state", "$stat
     $scope.pageChangedOrder = function () {
         $scope.initOrder();
     }
+
+    //键盘搜索事件-历史订单
+    $scope.searchKeyHistory = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initTextOrder();
+        }
+    }
+
 
     //文本框输入搜索
     $scope.initTextOrder=function(){
@@ -379,6 +406,15 @@ Ctrl.controller("OrderManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         $scope.orderObj.type = type;
         $scope.init();
     }
+
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
+
 
     $scope.initText = function (type) {
         $scope.orderObj.page = 1;
@@ -588,6 +624,15 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
         })
     }
 
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
+
+    //文本搜索
     $scope.initTextOrder=function(){
         $scope.orderObj.page=1;
         $scope.initOrder();
@@ -632,6 +677,14 @@ Ctrl.controller("GudieManageCtrl", ["$scope", "$http", "$sce", "$state", "$state
             area:["800px","600px"],
             content: $('.picArea')
         });
+    }
+
+    //键盘搜索事件-历史订单
+    $scope.searchKeyHistory = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initTextOrder();
+        }
     }
 
 
@@ -697,6 +750,13 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         session_id: $scope.session_id
     }
 
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
     $scope.initText=function(){
         $scope.agencyObj.page=1;
         $scope.init();
@@ -832,6 +892,14 @@ Ctrl.controller("AgencyManageCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.initOrder();
     }
 
+    //键盘搜索事件-历史订单
+    $scope.searchKeyHistory = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initTextOrder();
+        }
+    }
+
     //停用旅行社
     $scope.DelAgency = function (id) {
         layer.confirm('确定停用该旅社吗？', function (i) {
@@ -957,11 +1025,18 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
         $scope.init();
     }
 
+    //文本搜索
     $scope.initText = function () {
         $scope.complainObj.page=1;
         $scope.init();
     }
-
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
     //换页方法
     $scope.pageChanged = function () {
         $scope.init();
@@ -975,6 +1050,28 @@ Ctrl.controller("ComplaintCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
                 $scope.titleObj.Tiptitle="投诉中心";
                 $scope.totalItems = data.msg_body.total_count;
                 $scope.complainList = data.msg_body.complain;
+                angular.forEach($scope.complainList,function(item,key){
+                    switch (item.complain_type) {
+                        //导服中心部分
+                        case 1:
+                           item.complain_type_text="旅行社服务";
+                            break;
+                        case 2:
+                            item.complain_type_text="导游服务";
+                            break;
+                        case 3:
+                            item.complain_type_text="景区环境";
+                            break;
+                        case 4:
+                            item.complain_type_text="费用";
+                            break;
+                        case 5:
+                            item.complain_type_text="其它";
+                            break;
+                        default:
+                            break;
+                    }
+                });
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }

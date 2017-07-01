@@ -1,15 +1,13 @@
 <div ng-controller="GuideInfoCenterCtrl">
     <div class="choice-box clearfix">
-        <select class="select-u">
-            <option>全部</option>
-            <option>新订单</option>
-            <option>新确认</option>
-            <option>新结束</option>
-            <option>新评价</option>
+        <select class="select-u" ng-model="InfoObj.type" ng-change="initText()">
+            <option value="21,22,23,31,14,12,51,52,53,30">全部</option>
+            <option value="21,22,23,31,14,12">特殊消息</option>
+            <option value="51,52,53,30">常规消息</option>
         </select>
         <div class="search-box">
-            <span class="search-img"><img src="images/search.png"></span>
-            <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
+            <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
+            <input type="text" class="" placeholder="Search" ng-model="InfoObj.title"  ng-keyup="searchKey($event)">
         </div>
         <div style="display: none" class="layui-inline">
             <input class="layui-input startTime" placeholder="开始时间" ng-model="startTime" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})">

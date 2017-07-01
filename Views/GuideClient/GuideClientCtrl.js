@@ -2,7 +2,7 @@
  * Created by YOUNG on 2017/5/30.
  */
 //主界面控制器
-Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", "$location", function ($scope, $http, $sce, $state, $stateParams, $cookieStore, $location) {
+Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore", "$location","gudieService", function ($scope, $http, $sce, $state, $stateParams, $cookieStore, $location,gudieService) {
     var userMessage = $cookieStore.get("user_guide");
     $scope.ResUrl = rurl + "/resource/";
     $scope.session_id = $cookieStore.get("session_id_guide");
@@ -14,7 +14,8 @@ Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$state
 
     //标题信息
     $scope.titleObj = {
-        Tiptitle: "消息中心"
+        Tiptitle: "消息中心",
+        count:0
     }
 
     $scope.changeTitle = function (title) {
@@ -38,6 +39,34 @@ Ctrl.controller("GuideClientCtrl", ["$scope", "$http", "$sce", "$state", "$state
         $scope.ratingVal = val;
     }
 
+    //初始化可接订单
+    $scope.orderObj = {
+        type: 10,
+        title: "",
+        order_type: "1",
+        page: 1,
+        page_size: 5,
+        session_id: $scope.session_id
+    };
+
+    $scope.init = function () {
+        var promise = gudieService.getorderList($scope.orderObj);
+        promise.then(function (data) {
+            if (data.err_code == 0) {
+                $scope.titleObj.count = $scope.totalItems = data.msg_body.type_10_count;
+            } else {
+                layer.msg(data.err_msg, {icon: 0});
+            }
+        }, function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        });
+        promise.catch(function (data) {
+            layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+        })
+    }
+
+    $scope.init();
+
 
 }]);
 
@@ -60,6 +89,20 @@ Ctrl.controller("GuideInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$s
     $scope.pageChanged = function () {
         $scope.init();
     }
+
+    $scope.initText=function(){
+        $scope.InfoObj.page=1;
+        $scope.init();
+    }
+
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
+
     $scope.init = function () {
         var promise = centerService.getList($scope.InfoObj);
         promise.then(function (data) {
@@ -262,6 +305,35 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
         })
     };
 
+
+    //上传文件
+    $scope.file_changed_head = function (element) {
+
+        var ele_id = angular.element(element).attr("id")
+        var uuid = $ui.fileupload({
+            fileSelector: '#' + ele_id,
+            type: FILETYPE.IMAGE,
+            moudle: 'BASE'
+        }).uuid;
+
+        $scope.$apply(function () {
+            $scope.guideInfo.photo=uuid;
+            var promise = gudieService.photoEdit({photo:uuid,session_id:$scope.session_id});
+            promise.then(function (data) {
+                if (data.err_code == 0) {
+                    layer.msg("头像替换成功", {icon: 0})
+                } else {
+                    layer.msg(data.err_msg, {icon: 0});
+                }
+            }, function (data) {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            });
+            promise.catch(function (data) {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            })
+        })
+    };
+
     //$scope.init
 
 }]);
@@ -318,6 +390,14 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
         $scope.init();
     }
 
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
+
     $scope.init = function () {
         var promise = gudieService.getorderList($scope.orderObj);
         promise.then(function (data) {
@@ -325,6 +405,7 @@ Ctrl.controller("OrderReceiveCtrl", ["$scope", "$http", "$sce", "$state", "$stat
                 $scope.titleObj.Tiptitle = "订单中心 > 可接订单";
                 $scope.orderList = data.msg_body.order;
                 $scope.totalItems = data.msg_body.type_10_count;
+                $scope.titleObj.count = $scope.totalItems;
             } else {
                 layer.msg(data.err_msg, {icon: 0});
             }
@@ -433,6 +514,14 @@ Ctrl.controller("OrderNowCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
     $scope.initText = function () {
         $scope.orderObj.page = 1;
         $scope.init();
+    }
+
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
     }
 
     $scope.pageChanged = function () {
@@ -672,6 +761,13 @@ Ctrl.controller("OrderEndCtrl", ["$scope", "$http", "$sce", "$state", "$statePar
         $scope.init();
     }
 
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
     $scope.init = function () {
         var promise = gudieService.getorderList($scope.orderObj);
         promise.then(function (data) {
@@ -855,10 +951,10 @@ Ctrl.controller("JoinUsCtrl", ["$scope", "$http", "$sce", "$state", "$stateParam
         }).uuid;
 
         $scope.$apply(function () {
-            //插入一个对象
-            var li = document.createElement('li');
-            li.innerHTML = '<li></li><img src="' + ($scope.ResUrl + uuid) + '"></li>';
-            tt.append(li);
+            ////插入一个对象
+            //var li = document.createElement('li');
+            //li.innerHTML = '<li></li><img src="' + ($scope.ResUrl + uuid) + '"></li>';
+            //tt.append(li);
             $scope.InfoObj.file.push({
                 file_id: uuid
             });
@@ -866,6 +962,11 @@ Ctrl.controller("JoinUsCtrl", ["$scope", "$http", "$sce", "$state", "$stateParam
     };
 
     $scope.submitCheck = function () {
+
+        if($scope.InfoObj.file.length!=2){
+            layer.msg("请上传两张图片", {icon: 0});
+            return true;
+        }
 
         var promise = gudieService.submitCheck($scope.InfoObj);
         promise.then(function (data) {
@@ -881,6 +982,33 @@ Ctrl.controller("JoinUsCtrl", ["$scope", "$http", "$sce", "$state", "$stateParam
         promise.catch(function (data) {
             layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
         })
+    }
+
+    //删除图片
+    $scope.delPic = function (id) {
+        if ($scope.InfoObj.file.length > 0) {
+            var index = -1;
+            angular.forEach($scope.InfoObj.file, function (item, key) {
+                if (item.file_id == id) {
+                    index = key;
+                }
+            });
+            if (index != -1) {
+                $scope.InfoObj.file.splice(index, 1)
+            }
+        }
+    }
+
+    //图片展示
+    $scope.showPic = function (url) {
+        $scope.showPicUrl = $scope.ResUrl + url;
+        layer.open({
+            type: 1,
+            title: "查看图片",
+            shade: 0.3,
+            area: ["800px", "600px"],
+            content: $('.picArea')
+        });
     }
 
 }]);

@@ -8,8 +8,8 @@
             <option value="61">新投诉</option>
         </select>
         <div class="search-box">
-            <span class="search-img"><img src="images/search.png"></span>
-            <input type="text" class="" placeholder="Search">
+            <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
+            <input type="text" class="" placeholder="Search" ng-model="InfoObj.title"  ng-keyup="searchKey($event)">
         </div>
     </div>
     <info-temp></info-temp>

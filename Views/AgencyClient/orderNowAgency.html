@@ -15,13 +15,13 @@
         <div class="teams-list">
             <div class="choice-box clearfix">
                 <select class="select-u" ng-model="orderObj.order_type" ng-change="OrdertypeChange()">
-                    <option value="1">按发单时间顺序</option>
-                    <option value="2">按开团人数顺序</option>
-                    <option value="3">按费用顺序</option>
+                    <option value="1">默认排序</option>
+                    <option value="2">按开团日期倒序</option>
+                    <option value="3">按开团日期顺序</option>
                 </select>
                 <div class="search-box">
                     <span class="search-img"  ng-click="initText()"><img src="images/search.png"></span>
-                    <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
+                    <input type="text" class="" placeholder="Search" ng-model="orderObj.title"  ng-keyup="searchKey($event)">
                 </div>
                 <div class="fr m-t-5"><a class="btn-import" ng-click="publicOrder()"><i class="iconfont">&#xe70e;</i>发布新订单</a>
                 </div>
@@ -585,11 +585,11 @@
 
     // 覆盖显示
     $(".teams-list").on("mouseover", ".team-infor .guideimg", function () {
-        $(this).children(".guide-pop").show();
+        //$(this).children(".guide-pop").show();
     });
 
     $(".teams-list").on("mouseleave", ".team-infor .guideimg", function () {
-        $(this).children(".guide-pop").hide();
+        //$(this).children(".guide-pop").hide();
     });
 
     $(".team-infor .guideimg").mouseover(function () {

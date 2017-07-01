@@ -22,6 +22,20 @@ ul.rating {
     padding: 0px;
 }
 
+.picArea .image_show{
+    display:block;
+    margin: 10px auto;
+    max-height: 550px;
+    max-width: 750px;
+}
+
+
+.picAreaEdit .image_show{
+    display:block;
+    margin: 10px auto;
+    max-height: 550px;
+    max-width: 750px;
+}
 
 /*半星部分代码*/
 

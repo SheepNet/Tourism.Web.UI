@@ -47,21 +47,6 @@ Ctrl.factory("loginService",["$http", "$q","Md5",function ($http,$q,Md5) {
     }
 }]);
 
-Ctrl.factory("photoService", [
-    function () {
-        return {
-            setPhoto: function (type) {
-                var Photo = "";
-                    switch (type) {
-                        case 10:
-                            Photo = "images/state02.png";
-                            break;
-                    }
-                return Photo;
-            }
-        }
-    }]);
-
 Ctrl.factory("centerService",["$http", "$q",function ($http,$q) {
     return{
         //获得消息中心信息
@@ -446,6 +431,18 @@ Ctrl.factory("gudieService",["$http", "$q",function ($http,$q) {
                 deferred.reject(error);
             });
             return promise;
+        },
+        //保存头像
+        photoEdit:function(obj){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(Url+'travel/guide/guide/photo/edit', obj)
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
         }
     }
 }]);
@@ -515,6 +512,18 @@ Ctrl.factory("agencyService",["$http", "$q",function ($http,$q) {
             var deferred = $q.defer();
             var promise = deferred.promise;
             $http.post(Url+'travel/travel_company/order/edit', obj)
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (error) {
+                deferred.reject(error);
+            });
+            return promise;
+        },
+        //保存头像
+        photoEdit:function(obj){
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $http.post(Url+'travel/travel_company/travel_company/photo/edit', obj)
                 .success(function (data) {
                     deferred.resolve(data);
                 }).error(function (error) {

@@ -1,13 +1,14 @@
 <div>
     <div class="dashed-border"></div>
     <p class="intro-stitle">接团导游</p>
-    <div class="guidebox" ng-repeat="(key,guide) in guideList">
+    <div class="guidebox" ng-repeat="(key,guideInfo) in guideList">
         <div class="guide-check" ng-class="{'on-check':guide.status==1}" ng-click="ChangeStatus(key)"
              ng-show="orderObj.type==20"><input type="checkbox"></div>
         <div class="guide-infor clearfix">
             <div class="person-left" ng-style="{border:guide.status==1?'1px solid #ffbc52':'1px solid #ccc'}">
                 <!--<img src="images/default_person.png">-->
-                <img ng-src="{{ResUrl+guide.guide_card_no_photo}}">
+                <img src="images/default_person.png" ng-show="guideInfo.photo==null || guideInfo.photo==''">
+                <img ng-src="{{ResUrl+guideInfo.photo}}" ng-show="guideInfo.photo!=null&&guideInfo.photo!=''">
             </div>
             <div class="person-infor">
                 <div class="p-m1">
@@ -15,7 +16,9 @@
                     <i class="iconfont" ng-class="{'icon-man':guide.sex==1,'icon-woman':guide.sex==2}">&#xe607;</i>
                     <span class="pp-age"><span ng-bind="guide.age"></span>岁</span><span
                         class="acrossline">|</span>
-                        <span class="pp-gimg">品牌导游:<img src="images/honer.png" ng-show="guide.level==1"><span
+                        <span class="pp-gimg">
+                             <span ng-bind="guideInfo.level==1?'普通导游':(guideInfo.level==2?'会员导游':'品牌导游')">
+                                 <img src="images/honer.png" ng-show="guide.level==3"><span
                                 ng-show="guide.level!=1">否</span></span><span class="acrossline">|</span>
                         <span class="pp-scroe">平均评分<div style="display:inline;" star rating-value="guide.star" max="5"
                                                         on-hover="onHover" on-leave="onLeave"

@@ -7,7 +7,7 @@
         </select>
         <div class="search-box">
             <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
-            <input type="text" placeholder="Search" ng-model="complainObj.title">
+            <input type="text" placeholder="Search" ng-model="complainObj.title" ng-keyup="searchKey($event)">
         </div>
     </div>
     <div class="dis-table">
@@ -28,7 +28,7 @@
                 <td ng-bind="model.order_num">1</td>
                 <td ng-bind="model.complain_name">刘丽</td>
                 <td ng-bind="model.complain_mobile">18345698523</td>
-                <td ng-bind="model.complain_type">导游服务</td>
+                <td ng-bind="model.complain_type_text">导游服务</td>
                 <td ng-bind="model.content" title="model.content">不负责任，态度差</td>
                 <td ng-bind="model.complain_time">2017.02.28 16:02</td>
                 <td ng-click="ShowDetail(model.id)"><a><i class="iconfont">&#xe645;</i></a></td>
@@ -54,7 +54,7 @@
          <div class="fr m-t-5" ng-click="turnToIndex()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
             <p class="intro-stitle">投诉建议</p>
             <div class="m-l-13">
-                <p class="complaint-title"  ng-bind="complainInfo.complain_text">旅行社服务</p>
+                <p class="complaint-title" >投诉类型:<span ng-bind="complainInfo.complain_text"></span></p>
                 <div class="complaint-content" ng-bind="complainInfo.content">
                     <!--<p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>-->
                     <!--<p>安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目区乱涂乱刻等原因。安全管理制度不健全，应急预案不完善，安全责任落实不到位，景区内安全设施陈旧，警示标识缺乏，上榜旅游安全保障最差景区。此外，还擅自增加自费项目、游客在景区乱涂乱刻等原因。</p>-->

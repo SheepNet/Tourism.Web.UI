@@ -10,13 +10,15 @@
         <div class="teams-list">
             <div class="choice-box clearfix">
                 <select class="select-u" ng-model="orderObj.order_type" ng-change="OrdertypeChange()">
-                    <option value="1">按发单时间顺序</option>
-                    <option value="2">按开团人数顺序</option>
-                    <option value="3">按费用顺序</option>
+                    <option value="1">默认排序</option>
+                    <option value="2">费用从高到低</option>
+                    <option value="3">星级从高到低</option>
+                    <option value="4">按开团日期倒序</option>
+                    <option value="5">按开团日期顺序</option>
                 </select>
                 <div class="search-box">
                     <span class="search-img" ng-click="initText()"><img src="images/search.png"></span>
-                    <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
+                    <input type="text" class="" placeholder="Search" ng-model="orderObj.title"  ng-keyup="searchKey($event)">
                 </div>
             </div>
             <p class="noorder" ng-show="totalItems==0"><img src="images/noorder.png"></p>
@@ -25,7 +27,10 @@
                     <div class="radius-top"><img src="images/radius_top.png"></div>
                     <div class="radius-bottom"><img src="images/radius_bottom.png"></div>
                     <div class="team-infor clearfix">
-                        <div class="team-img"><img src="images/team01.png"></div>
+                        <div class="team-img">
+                            <img src="images/default_travel_company.png" ng-show="order.photo==null || order.photo==''">
+                            <img ng-src="{{ResUrl+order.photo}}" ng-show="order.photo!=null&&order.photo!=''">
+                        </div>
                         <div class="team-text">
                             <h5 ng-bind="order.name"></h5>
                             <p class="team-detail" ng-bind="order.desc"></p>
@@ -60,7 +65,7 @@
                     </div>
                     <div class="team-btn">
                         <a class="btn-cn btn-empty-yellow" ng-click="turnToDetail(order.id)">查看详情</a>
-                        <a class="btn-cn btn-yellow" ng-show="orderObj.type==23">结束</a>
+                        <a class="btn-cn btn-yellow" ng-show="orderObj.type==23"  ng-click="EndOrderAlert(order.id)">结束</a>
                     </div>
                 </div>
             </div>
@@ -141,11 +146,12 @@
         $(this).addClass("active-tab").removeClass("").siblings().removeClass("active-tab").addClass("");
         //$(".teams-list").hide().eq($(".tab-order li").index(this)).show();
     });
-    $(".teams-box").on("mouseover", ".team-infor .team-img", function () {
-        $(this).parent().children(".team-pop").show();
-    });
 
-    $(".teams-box").on("mouseleave", ".team-infor .team-img", function () {
-        $(this).parent().children(".team-pop").hide();
-    });
+//    $(".teams-box").on("mouseover", ".team-infor .team-img", function () {
+//        $(this).parent().children(".team-pop").show();
+//    });
+//
+//    $(".teams-box").on("mouseleave", ".team-infor .team-img", function () {
+//        $(this).parent().children(".team-pop").hide();
+//    });
 </script>

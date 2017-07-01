@@ -12,8 +12,11 @@
         <div class="guide-account">
             <div class="guideimgbox">
                 <div class="setimg">
-                    <img src="images/default_person.png">
+                    <img src="images/default_person.png" ng-show="agencyInfo.photo==null || agencyInfo.photo==''">
+                    <img ng-src="{{ResUrl+agencyInfo.photo}}" ng-show="agencyInfo.photo!=null&&agencyInfo.photo!=''">
                     <span class="changeimg">更改头像</span>
+                    <input id="photo" class="upload-file-input" name="upload" type="file" accept="image/png, image/jpeg, image/gif"
+                           onchange="angular.element(this).scope().file_changed_head(this)"/>
                 </div>
             </div>
             <div class="guideaccountbox">

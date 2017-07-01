@@ -52,6 +52,19 @@ Ctrl.controller("AgencyInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$
         session_id:$scope.session_id
     }
 
+    //文本搜索
+    $scope.initText = function () {
+        $scope.InfoObj.page = 1;
+        $scope.init();
+    }
+
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
 
     $scope.pageChanged = function () {
         $scope.init();
@@ -101,7 +114,7 @@ Ctrl.controller("AgencyInfoCenterCtrl", ["$scope", "$http", "$sce", "$state", "$
 }]);
 
 //个人信息中心控制器
-Ctrl.controller("AgencyEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams","agencyService", function ($scope, $http, $sce, $state, $stateParams,agencyService) {
+Ctrl.controller("AgencyEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "$cookieStore","agencyService", function ($scope, $http, $sce, $state, $stateParams,$cookieStore,agencyService) {
 
     $scope.init = function () {
         var promise = agencyService.getAgencyInfo($scope.session_id);
@@ -128,6 +141,36 @@ Ctrl.controller("AgencyEditCtrl", ["$scope", "$http", "$sce", "$state", "$stateP
         })
     }
     $scope.init();
+
+    //上传文件
+    $scope.file_changed_head = function (element) {
+
+        var ele_id = angular.element(element).attr("id")
+        var uuid = $ui.fileupload({
+            fileSelector: '#' + ele_id,
+            type: FILETYPE.IMAGE,
+            moudle: 'BASE'
+        }).uuid;
+
+        $scope.$apply(function () {
+            $scope.agencyInfo.photo=uuid;
+            $scope.User.photo=uuid;
+            $cookieStore.put("user_agency", $scope.User);
+            var promise = agencyService.photoEdit({photo:uuid,session_id:$scope.session_id});
+            promise.then(function (data) {
+                if (data.err_code == 0) {
+                    layer.msg("头像替换成功", {icon: 0})
+                } else {
+                    layer.msg(data.err_msg, {icon: 0});
+                }
+            }, function (data) {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            });
+            promise.catch(function (data) {
+                layer.msg("系统或网络异常,请稍后再尝试!", {icon: 0})
+            })
+        })
+    };
 }]);
 
 //订单详情界面
@@ -161,6 +204,13 @@ Ctrl.controller("OrderEndAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
         $scope.init();
     }
 
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
+    }
     $scope.pageChanged = function () {
         $scope.init();
     }
@@ -274,6 +324,14 @@ Ctrl.controller("OrderNowAgencyCtrl", ["$scope", "$http", "$sce", "$state", "$st
     $scope.initText=function(){
         $scope.orderObj.page=1;
         $scope.init();
+    }
+
+    //键盘搜索事件
+    $scope.searchKey = function(e) {
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+            $scope.initText();
+        }
     }
 
     $scope.pageChanged = function () {

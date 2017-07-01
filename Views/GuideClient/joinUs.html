@@ -80,28 +80,34 @@
         </div>
         <div class="bz-imgbox">
             <div class="bz-sliderbox">
-                <ul id="slider">
-                    <!--<li><img src="images/docimg01.jpg"></li>-->
-                    <!--这里repeat的没有错，就是要一个不存在的数组，这个插件需要一个默认的高度，不然会报错-->
-                    <li ng-repeat="file in list1"><img ng-src="{{ResUrl+file.file_id}}"></li>
+                <ul class="imgbox clearfix">
+                    <li ng-repeat="file in InfoObj.file">
+                        <img  ng-src="{{ResUrl+file.file_id}}">
+							<span class="shadow-btn pop-h1">
+							   <a class="btn-uplook"  ng-click="showPic(file.file_id)"><i class="iconfont"></i></a>
+							   <a class="btn-updel"  ng-click="delPic(file.file_id)"><i class="iconfont"></i></a>
+							</span>
+                    </li>
                 </ul>
             </div>
-            <a class="prev" onClick="tt.prev();"></a>
-            <a class="next" onClick="tt.next();"></a>
+            <!--<a class="prev" onClick="tt.prev();"></a>-->
+            <!--<a class="next" onClick="tt.next();"></a>-->
         </div>
     </div>
-
+    <div class="picArea" style="display: none">
+        <img  ng-src="{{showPicUrl}}">
+    </div>
 </div>
-<script type="text/javascript">
-    // 上传图片轮播
-    var tt=new TouchSlider('slider',{
-        duration:800,    //动画速度
-        interval:3000,   //动画时间间隔
-        direction:0,
-        autoplay:false,   //自动播放
-        align:'left',
-        mousewheel:false,
-        mouse:true,      //鼠标滚动
-        fullsize:false   //全屏
-    });
-</script>
+<!--<script type="text/javascript">-->
+    <!--// 上传图片轮播-->
+    <!--var tt=new TouchSlider('slider',{-->
+        <!--duration:800,    //动画速度-->
+        <!--interval:3000,   //动画时间间隔-->
+        <!--direction:0,-->
+        <!--autoplay:false,   //自动播放-->
+        <!--align:'left',-->
+        <!--mousewheel:false,-->
+        <!--mouse:true,      //鼠标滚动-->
+        <!--fullsize:false   //全屏-->
+    <!--});-->
+<!--</script>-->

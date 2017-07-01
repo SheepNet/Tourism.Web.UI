@@ -9,8 +9,8 @@
                 <option>按会员类型</option>
             </select>
             <div class="search-box">
-                <span class="search-img"  ng-click="initText()"><img src="images/search.png" ng-click="init()"></span>
-                <input type="text" class="" placeholder="Search" ng-model="InfoObj.title">
+                <span class="search-img"  ng-click="initText()"><img src="images/search.png"></span>
+                <input type="text" class="" placeholder="Search" ng-model="InfoObj.title" ng-keyup="searchKey($event)">
             </div>
             <div class="fr m-t-5">
                 <a class="btn-import"><i class="iconfont">&#xe633;</i>导入导游</a>
@@ -63,12 +63,15 @@
     <div ng-show="State=='history'">
         <div class="choice-box clearfix">
             <select class="select-u" ng-model="orderObj.order_type" ng-change="initOrder()">
-                <option value="1">按星级顺序</option>
-                <option value="2">按时间倒序</option>
+                <option value="1">开团人数</option>
+                <option value="2">导游人数</option>
+                <option value="3">费用</option>
+                <option value="4">开团日期</option>
+                <option value="5">状态</option>
             </select>
             <div class="search-box">
                 <span class="search-img"  ng-click="initTextOrder()"><img src="images/search.png"></span>
-                <input type="text" class="" placeholder="Search" ng-model="orderObj.title">
+                <input type="text" class="" placeholder="Search" ng-model="orderObj.title" ng-keyup="searchKeyHistory($event)">
             </div>
             <div class="fr m-t-5" ng-click="turnToDetail()"><a class="btn-cn btn-yellow">返&nbsp;&nbsp;&nbsp;&nbsp;回</a></div>
         </div>
