@@ -124,6 +124,7 @@
         <div class="pop-main">
             <p class="pop-title">请您为本次合作的旅行社评价吧！</p>
             <div class="pop-line">
+                <input type="checkbox" ng-checked="submitObj.star!=0" ng-click="submitObj.star=0">
                 <label>服务评星</label>
                 <div style="display: inline" star rating-value="submitObj.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
             </div>

@@ -31,7 +31,7 @@
                     订单名称在50个字以内
                 </div>
             </div>
-            <div class="col-md-4 order-line">
+            <div class="col-md-12 order-line">
                 <label>旅游时间</label>
                 <div class="layui-inline">
                     <input class="layui-input startTime" time-change placeholder="开始时间" ng-model="InfoObj.begin_time" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
@@ -46,7 +46,7 @@
                 </div>
                 <!--<span class="order-line-time"><input type="text"> 至 <input type="text"></span>-->
             </div>
-            <div class="col-md-12 order-line">
+            <div class="col-md-4 order-line">
                 <label>行程简介</label>
                 <textarea rows="5" name="desc" ng-model="InfoObj.desc" ng-maxlength="300" required  ng-class="{'red':InfoObj.desc==null || InfoObj.desc.length==0}"></textarea>
                 <div class="alert alert-danger help-block" ng-show="orderForm.desc.$dirty && orderForm.desc.$invalid">
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="col-md-4 order-line">
-                <label style="float: left">截止时间</label>
+                <label  style="float: left">截止时间</label>
                 <div class="layui-inline endTime">
                     <input style="float: left;" class="layui-input" time-change placeholder="招募截至时间" ng-model="InfoObj.enter_end_time" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm',choose:checkDate})"
                         required>
@@ -115,8 +115,11 @@
                 </span>
             </div>
             <div class="col-md-4 order-line">
-                <label style="float: left">评分要求：</label>
-                <div style="float: left" star rating-value="InfoObj.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
+                <input style="margin-left: 5px" type="checkbox" ng-checked="InfoObj.star!=0" ng-click="InfoObj.star=0">
+                <label >评分要求：</label>
+
+              <div style="display: inline" star rating-value="InfoObj.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="false"></div>
+                <!--<input style="margin-left: 5px" type="checkbox" ng-checked="InfoObj.star==0" ng-click="InfoObj.star=0">无要求-->
             </div>
             <div class="col-md-4 order-line">
                 <label>学历要求</label>

@@ -75,19 +75,20 @@
         <div class="text-center">
             <div class="uploadbox inline-block">
                 <a class="btn-cn btn-yellow">上&nbsp;&nbsp;&nbsp;&nbsp;传</a>
-                <input id="guide_check_file" class="upload-file-input" name="upload" type="file" accept="image/png, image/jpeg, image/gif"
-                    onchange="angular.element(this).scope().file_changed(this)" />
+                <input id="guide_check_file" class="upload-file-input" name="upload" type="file"
+                       accept="image/png, image/jpeg, image/gif"
+                       onchange="angular.element(this).scope().file_changed(this)"/>
             </div>
             <a class="btn-cn btn-yellow" ng-click="submitCheck()">提&nbsp;&nbsp;&nbsp;&nbsp;交</a>
         </div>
         <div class="bz-imgbox">
             <div class="bz-sliderbox">
                 <ul class="imgbox clearfix">
-                    <li ng-repeat="file in InfoObj.file">
-                        <img  ng-src="{{ResUrl+file.file_id}}">
+                    <li ng-show="InfoObj.file.length>0" ng-repeat="(key,file) in InfoObj.file">
+                        <img ng-src="{{ResUrl+file.file_id}}">
 							<span class="shadow-btn pop-h1">
-							   <a class="btn-uplook"  ng-click="showPic(file.file_id)"><i class="iconfont"></i></a>
-							   <a class="btn-updel"  ng-click="delPic(file.file_id)"><i class="iconfont"></i></a>
+                                <a class="btn-uplook" ng-click="showPic(file.file_id)"><i class="iconfont"></i></a>
+					            <a class="btn-updel" ng-click="delPic(file.file_id)"><i class="iconfont"> </i></a>
 							</span>
                     </li>
                 </ul>
@@ -95,19 +96,23 @@
             <!--<a class="prev" onClick="tt.prev();"></a>-->
             <!--<a class="next" onClick="tt.next();"></a>-->
         </div>
+
+        <div class="picArea" style="display: none">
+            <img class="image_show" ng-src="{{showPicUrl}}">
+        </div>
     </div>
 
 </div>
 <script type="text/javascript">
     // 上传图片轮播
-    var tt=new TouchSlider('slider',{
-        duration:800,    //动画速度
-        interval:3000,   //动画时间间隔
-        direction:0,
-        autoplay:false,   //自动播放
-        align:'left',
-        mousewheel:false,
-        mouse:true,      //鼠标滚动
-        fullsize:false   //全屏
-    });
+    //    var tt=new TouchSlider('slider',{
+    //        duration:800,    //动画速度
+    //        interval:3000,   //动画时间间隔
+    //        direction:0,
+    //        autoplay:false,   //自动播放
+    //        align:'left',
+    //        mousewheel:false,
+    //        mouse:true,      //鼠标滚动
+    //        fullsize:false   //全屏
+    //    });
 </script>

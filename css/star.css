@@ -37,6 +37,15 @@ ul.rating {
     max-width: 750px;
 }
 
+.setimg .upload-file-input{
+    width: 115px;
+    height: 115px;
+    position: absolute;
+    top:0;
+    left: 0;
+    opacity: 0;
+}
+
 /*半星部分代码*/
 
 /*.rating .halfstar {*/

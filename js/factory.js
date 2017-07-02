@@ -587,7 +587,7 @@ Ctrl.factory("publicService",["$http", "$q",function ($http,$q) {
         //处理需要转换的订单数据
         changeOrderData:function(order){
             var studentLevelList=this.getStudentLevelList();
-            order.language=angular.fromJson(order.language);
+            //order.language=angular.fromJson(order.language);
             if(isNaN(order.study_level)){
                 order.study_level="无要求";
             }else {

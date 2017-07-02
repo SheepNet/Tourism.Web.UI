@@ -318,6 +318,8 @@ Ctrl.controller("GuideEditCtrl", ["$scope", "$http", "$sce", "$state", "$statePa
 
         $scope.$apply(function () {
             $scope.guideInfo.photo=uuid;
+            $scope.User.photo=uuid;
+            $cookieStore.put("user_guide", $scope.User);
             var promise = gudieService.photoEdit({photo:uuid,session_id:$scope.session_id});
             promise.then(function (data) {
                 if (data.err_code == 0) {

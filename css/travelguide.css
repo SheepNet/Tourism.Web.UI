@@ -2542,7 +2542,7 @@ a:hover {
 }
 
 .bz-sliderbox li img {
-    width: 302px;
+    /*width: 302px;*/
     max-height: 439px;
     overflow: hidden;
     border: 1px solid #ccc;

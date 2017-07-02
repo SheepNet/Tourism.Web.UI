@@ -113,9 +113,9 @@ Ctrl.directive('star', function () {
             updateStars();
 
             scope.$watch('ratingValue', function (newVal,oldVal) {
-                if (newVal) {
+                //if (newVal) {
                     updateStars();
-                }
+                //}
             });
             scope.$watch('max', function (oldVal, newVal) {
                 if (newVal) {

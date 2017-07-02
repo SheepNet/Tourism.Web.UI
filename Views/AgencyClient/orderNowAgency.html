@@ -231,8 +231,9 @@
                     </span>
                 </div>
                 <div class="col-md-6 order-zd">
-                    <label style="float: left">评分要求</label>
-                    <div style="float: left" star rating-value="TopObj.star" max="5" on-hover="onHover"
+                    <input type="checkbox" ng-checked="TopObj.star!=0" ng-click="TopObj.star=0">
+                    <label>评分要求</label>
+                    <div style="display: inline" star rating-value="TopObj.star" max="5" on-hover="onHover"
                          on-leave="onLeave" readonly="false"></div>
                     </span>
                 </div>
@@ -300,6 +301,7 @@
                               ng-bind="guide.name">王晓曦</span>
                     </div>
                     <div class="pop-line">
+                        <input type="checkbox" ng-checked="guide.star!=0" ng-click="guide.star=0">
                         <label>服务评星</label>
                         <div style="display: inline" star rating-value="guide.star" max="5" on-hover="onHover"
                              on-leave="onLeave" readonly="false"></div>

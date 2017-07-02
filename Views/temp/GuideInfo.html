@@ -1,14 +1,17 @@
 <div>
     <div class="person-detail clearfix">
         <div class="person-left">
-            <img ng-src="{{ResUrl+guideInfo.guide_card_no_photo}}">
+            <img src="images/default_person.png" ng-show="guideInfo.photo==null || guideInfo.photo==''">
+            <img ng-src="{{ResUrl+guideInfo.photo}}" ng-show="guideInfo.photo!=null&&guideInfo.photo!=''">
             <!--<img src="images/default_person.png">-->
         </div>
         <div class="person-infor">
             <div class="p-m1">
-                <span class="pp-name" ng-bind="guideInfo.name"></span><i class="iconfont icon-woman">&#xe607;</i><span
+                <span class="pp-name" ng-bind="guideInfo.name"></span><i class="iconfont" ng-class="{'icon-man':guideInfo.sex==1,'icon-woman':guideInfo.sex==2}">&#xe607;</i><span
                     class="pp-age"><span ng-bind="guideInfo.age"></span>岁</span><span class="acrossline">|</span>
-                <span class="pp-gimg">品牌导游:<img src="images/honer.png" ng-show="guideInfo.level==1"><span ng-show="guideInfo.level!=1">否</span></span><span class="acrossline">|</span>
+                <span class="pp-gimg">
+                    <span ng-bind="guideInfo.level==1?'普通导游':(guideInfo.level==2?'会员导游':'品牌导游')"></span><img src="images/honer.png" ng-show="guideInfo.level==3"></span>
+                    <span class="acrossline">|</span>
                 <span class="pp-scroe">平均评分<div style="display: inline" star rating-value="guideInfo.star" max="5" on-hover="onHover" on-leave="onLeave" readonly="true"></div></span><span class="acrossline">|</span>带团年限：<span
                    ><span ng-bind="guideInfo.year"></span>年</span>
             </div>
@@ -100,11 +103,11 @@
 							   <!--<a class="btn-updel"><i class="iconfont"></i></a>-->
 							</span>
         </li>
-        <li style="display: none"><img src="images/book03.png">
-            <span class="imgbox-num">合同（16）</span>
+        <li ng-show="guideInfo.file.length>0" ng-repeat="(key,file) in guideInfo.file">
+            <img  ng-src="{{ResUrl+file.file_id}}">
+            <span class="imgbox-num">合同（<span ng-bind="key+1"></span>）</span>
 							<span class="shadow-btn pop-h1">
-							   <a class="btn-uplook"><i class="iconfont"></i></a>
-							   <a class="btn-updel"><i class="iconfont"></i></a>
+                                <a class="btn-uplook" ng-click="showPic(file.file_id)"><i class="iconfont"></i></a>
 							</span>
         </li>
     </ul>
@@ -168,6 +171,6 @@
         </div>
     </div>
     <div class="picArea" style="display: none">
-        <img  ng-src="{{showPicUrl}}">
+        <img class="image_show"  ng-src="{{showPicUrl}}">
     </div>
 </div>

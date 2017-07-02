@@ -840,6 +840,11 @@ Ctrl.controller("OrderPublishAgencyCtrl", ["$scope", "$http", "$sce", "$state", 
         $scope.InfoObj.guide_level = level;
     };
 
+    //重置评分要求
+    $scope.ResetStar=function(){
+        $scope.InfoObj.star=0;
+    }
+
 }]);
 
 Ctrl.controller("AgencyComplaintCtrl", ["$scope", "$http", "$sce", "$state", "$stateParams", "gudieService", function ($scope, $http, $sce, $state, $stateParams, gudieService) {
